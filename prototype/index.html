@@ -1,0 +1,688 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#FAF9F6">
+<title>اِوالو — نمونهٔ موبایلی</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v10H3z"/></symbol>
+<symbol id="goal" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></symbol>
+<symbol id="check" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></symbol>
+<symbol id="timer" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></symbol>
+<symbol id="book" viewBox="0 0 24 24"><path d="M4 5h6a2 2 0 012 2v13a2 2 0 00-2-2H4zM20 5h-6a2 2 0 00-2 2v13a2 2 0 012-2h6z"/></symbol>
+<symbol id="plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+<symbol id="bell" viewBox="0 0 24 24"><path d="M6 16v-5a6 6 0 0112 0v5l2 2H4zM10 21h4"/></symbol>
+<symbol id="cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+<symbol id="user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></symbol>
+<symbol id="spark" viewBox="0 0 24 24"><path d="M12 3l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/></symbol>
+<symbol id="chev" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></symbol>
+<symbol id="chevl" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
+<symbol id="x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+<symbol id="chart" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></symbol>
+<symbol id="lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></symbol>
+<symbol id="sliders" viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></symbol>
+<symbol id="more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></symbol>
+</defs></svg>
+<main class="app">
+
+<!-- ========== بُرد ۴ · آشنایی ========== -->
+<section class="screen" id="welcome" aria-label="خوش‌آمدگویی"><div class="body hero">
+<div class="orb" style="width:190px;height:190px"><div class="orb" style="width:120px;height:120px;background:#C9DACE"><div class="orb" style="width:66px;height:66px;background:var(--forest);color:#fff"><svg class="i" style="width:32px;height:32px"><use href="#spark"/></svg></div></div></div>
+<h1 style="font-size:40px">اِوالو</h1>
+<p class="s" style="font-size:17px">کمی بهتر، هر روز؛<br>به شیوهٔ خودت و با سرعت خودت.</p>
+<div class="col" style="width:100%;margin-top:30px"><a class="btn" href="#intro">شروع کنیم</a><a class="btn t" href="#login">حساب دارم؛ ورود</a></div>
+</div></section>
+
+<section class="screen" id="intro" aria-label="معرفی"><div class="body">
+<div class="top"><span style="flex:1"></span><a class="btn t sm" href="#register">رد کردن</a></div>
+<div class="col" style="gap:10px;margin:10px 0">
+<div class="card mint"><div class="row"><span class="ck d"></span><div class="grow"><h3>پیاده‌روی کوتاه</h3><div class="xs">انجام شد</div></div></div></div>
+<div class="card" style="margin-right:24px"><div class="row"><span class="ck p"></span><div class="grow"><h3>نوشتن پیشنهاد</h3><div class="xs">نیمه‌کاره</div></div></div></div>
+<div class="card sand"><div class="row"><span class="ck k"></span><div class="grow"><h3>کشش شبانه</h3><div class="xs">امروز رد شد؛ مشکلی نیست</div></div></div></div>
+</div>
+<h1>ثبت واقعی، بدون سرزنش</h1>
+<p class="s" style="font-size:15px">اِوالو فرق «برنامه‌ریزی‌شده»، «انجام‌شده»، «نیمه‌کاره» و «ثبت‌نشده» را می‌شناسد. روزی که چیزی ثبت نشود، شکست حساب نمی‌شود.</p>
+<span style="flex:1"></span>
+<a class="btn" href="#personalize">ادامه</a>
+</div></section>
+
+<section class="screen" id="personalize"><div class="body">
+<div class="top"><a class="ib bg back" href="#intro" aria-label="بازگشت"><svg class="i"><use href="#chev"/></svg></a></div>
+<h1>این روزها بیشتر دنبال چه چیزی هستی؟</h1>
+<p class="s">هر چند مورد را که خواستی انتخاب کن؛ هر وقت بخواهی عوض می‌شود.</p>
+<div class="g2">
+<div class="card mint" style="border:2px solid var(--forest)"><h3>عادت‌های سالم</h3><div class="xs">انتخاب شد</div></div>
+<div class="card"><h3>تمرکز عمیق</h3></div>
+<div class="card mint" style="border:2px solid var(--forest)"><h3>خواب بهتر</h3><div class="xs">انتخاب شد</div></div>
+<div class="card"><h3>یادگیری مداوم</h3></div>
+<div class="card"><h3>آرامش ذهن</h3></div>
+<div class="card"><h3>پروژه‌های شخصی</h3></div></div>
+<span style="flex:1"></span>
+<a class="btn" href="#register">ادامه</a><a class="btn t" href="#register">بعداً انتخاب می‌کنم</a>
+</div></section>
+
+<!-- ========== بُرد ۵ · حساب ========== -->
+<section class="screen" id="register"><div class="body">
+<div class="top"><a class="ib bg back" href="#welcome" aria-label="بازگشت"><svg class="i"><use href="#chev"/></svg></a></div>
+<h1>ساخت حساب</h1><p class="s">چند ثانیه وقت می‌گیرد؛ بقیهٔ کارها را بعداً انجام می‌دهیم.</p>
+<label class="fld">نام<input class="in" value="مایا" autocomplete="name"></label>
+<label class="fld">ایمیل<input class="in e" value="maya@example" dir="ltr" style="text-align:right"><span class="err">ایمیل کامل نیست؛ مثلاً maya@example.com</span></label>
+<label class="fld">رمز عبور<input class="in" type="password" value="12345678"><span class="xs" style="font-weight:400">حداقل ۸ نویسه</span></label>
+<div class="row"><span class="tg"></span><span class="s grow">شرایط استفاده و حریم خصوصی را خوانده‌ام</span></div>
+<span style="flex:1"></span>
+<a class="btn" href="#setup">ساخت حساب</a><a class="btn t" href="#login">حساب دارم؛ ورود</a>
+</div></section>
+
+<section class="screen" id="login"><div class="body">
+<div class="top"><a class="ib bg back" href="#welcome" aria-label="بازگشت"><svg class="i"><use href="#chev"/></svg></a></div>
+<h1>خوش برگشتی</h1>
+<div class="card sand"><span class="s" style="color:#4A4030">ایمیل یا رمز عبور درست نبود. دوباره امتحان کن.</span></div>
+<label class="fld">ایمیل<input class="in" value="maya@example.com" dir="ltr" style="text-align:right"></label>
+<label class="fld">رمز عبور<input class="in" type="password" value="1234567"></label>
+<a class="btn t sm" style="justify-content:flex-start" href="#login">رمز عبورم را فراموش کرده‌ام</a>
+<span style="flex:1"></span>
+<a class="btn" href="#today">ورود</a><a class="btn t" href="#register">حساب ندارم؛ ساخت حساب</a>
+</div></section>
+
+<section class="screen" id="setup"><div class="body">
+<div class="top"><a class="ib bg back" href="#register" aria-label="بازگشت"><svg class="i"><use href="#chev"/></svg></a><span class="step">۲ از ۲</span></div>
+<h1>چند تنظیم کوچک</h1>
+<label class="fld">چطور صدایت کنیم؟<input class="in" value="مایا"></label>
+<div class="lbl">بهترین زمان برای یک یادآوری ملایم</div>
+<div class="chips"><span class="chip on">صبح</span><span class="chip out">ظهر</span><span class="chip out">عصر</span><span class="chip out">شب</span></div>
+<div class="card"><div class="row"><div class="grow"><h3>اعلان‌ها</h3><div class="xs">فقط یادآورهایی که خودت روشن می‌کنی</div></div><span class="tg"></span></div></div>
+<span style="flex:1"></span>
+<a class="btn" href="#perm">شروع کار با اِوالو</a>
+</div></section>
+
+<section class="screen" id="perm"><div class="body" style="opacity:.4"><h1>چند تنظیم کوچک</h1></div>
+<div class="dlgwrap"><div class="dlg"><div class="ib" style="background:var(--mint)"><svg class="i"><use href="#bell"/></svg></div><h2>اجازهٔ ارسال اعلان؟</h2><p class="s">فقط برای یادآورهایی که خودت تنظیم می‌کنی. هر وقت خواستی خاموش می‌شود.</p><a class="btn" href="#today">اجازه می‌دهم</a><a class="btn t" href="#today">الان نه</a></div></div></section>
+
+<!-- ========== بُرد ۶ · امروز ========== -->
+<section class="screen" id="today"><div class="body nav-pad">
+<div class="top"><a class="av" href="#profile" aria-label="پروفایل">م</a><div class="grow"><h3>سلام مایا</h3><div class="xs">سه‌شنبه ۲۸ مهر</div></div><a class="ib bg" href="#calendar" aria-label="تقویم"><svg class="i"><use href="#cal"/></svg></a><a class="ib bg" href="#notifs" aria-label="اعلان‌ها"><svg class="i"><use href="#bell"/></svg></a></div>
+<div class="card mint"><div class="lbl">نیت امروز</div><h3>یک کار مهم را آرام و کامل پیش می‌برم.</h3></div>
+<div class="card"><div class="row"><span class="lbl grow">اولویت‌های امروز</span><a class="xs" href="#plan">برنامه</a></div>
+<div class="row"><span class="ck d"></span><span class="grow">پاسخ به ایمیل دانا</span></div>
+<div class="row"><span class="ck p"></span><span class="grow">پیش‌نویس پیشنهاد پروژه</span><span class="chip sand">نیمه‌کاره</span></div>
+<div class="row"><span class="ck"></span><span class="grow">مرور یادداشت‌های جلسه</span><span class="xs">۱۶:۰۰</span></div></div>
+<div class="card"><div class="row"><span class="lbl grow">عادت‌ها</span><a class="xs" href="#habit-log">همه را ببین</a></div>
+<div class="g2"><div class="row"><span class="ck d"></span><span class="s">پیاده‌روی کوتاه</span></div><div class="row"><span class="ck u"></span><span class="s">مطالعه ۲۰ دقیقه</span></div><div class="row"><span class="ck k"></span><span class="s">کشش شبانه</span></div><div class="row"><span class="ck"></span><span class="s">نوشیدن آب</span></div></div></div>
+<div class="card teal"><div class="row"><div class="grow"><h3>تمرکز ۲۵ دقیقه‌ای</h3><div class="xs">پیش‌نویس پیشنهاد پروژه</div></div><a class="btn sm" href="#focus">شروع</a></div></div>
+<div class="card"><div class="row"><span class="lbl grow">این هفته</span><span class="xs">۵ از ۷ روز ثبت‌شده</span></div>
+<div class="bar"><i style="height:60%"></i><i style="height:80%"></i><i style="height:40%"></i><i style="height:90%"></i><i style="height:70%"></i><i class="n"></i><i class="n"></i></div><div class="xs">ستون‌های نقطه‌چین: هنوز ثبت نشده — نه شکست.</div></div>
+<div class="card"><div class="lbl">حالت الان چطور است؟</div><div class="chips"><a class="chip" href="#mood">آرام</a><a class="chip on" href="#mood">خوب</a><a class="chip" href="#mood">خسته</a><a class="chip" href="#mood">پرانرژی</a></div></div>
+<div class="card ai"><div class="row"><svg class="i" style="color:var(--ai)"><use href="#spark"/></svg><span class="lbl">پیشنهاد مربی · اعمال نشده</span></div><h3>به‌نظر عصرها برایت آسان‌تر است. مطالعه را به ۱۷:۰۰ منتقل کنیم؟</h3><div class="row"><a class="btn sm" href="#coach">بررسی</a><a class="btn t sm" href="#today">رد کردن</a></div></div>
+<a class="card sand" href="#review-day"><h3>آمادهٔ مرور امروز هستی؟</h3><span class="s" style="color:#4A4030">وقتی خواستی، چند دقیقه برای بازتاب بگذار.</span></a>
+</div>
+<a class="fab" href="#add" aria-label="افزودن سریع"><svg class="i"><use href="#plus"/></svg></a>
+<nav class="tab-bar" aria-label="ناوبری اصلی"><a class="on" href="#today" aria-current="page"><svg class="i"><use href="#home"/></svg>امروز</a><a href="#goals"><svg class="i"><use href="#goal"/></svg>اهداف</a><a href="#habits"><svg class="i"><use href="#check"/></svg>عادت‌ها</a><a href="#focus"><svg class="i"><use href="#timer"/></svg>تمرکز</a><a href="#reflect"><svg class="i"><use href="#book"/></svg>بازتاب</a></nav></section>
+
+<section class="screen" id="add"><div class="body nav-pad" style="opacity:.4"><h2>امروز</h2></div>
+<div class="sheetbg"><a class="back-area" href="#today" aria-label="بستن"></a><div class="sheet"><h2>چه چیزی اضافه کنیم؟</h2>
+<div class="g2">
+<a class="card mint row" href="#goal-new"><svg class="i"><use href="#goal"/></svg><h3>هدف جدید</h3></a>
+<a class="card mint row" href="#habit-new"><svg class="i"><use href="#check"/></svg><h3>عادت جدید</h3></a>
+<a class="card mint row" href="#task-new"><svg class="i"><use href="#cal"/></svg><h3>وظیفه</h3></a>
+<a class="card mint row" href="#note-new"><svg class="i"><use href="#book"/></svg><h3>یادداشت</h3></a>
+<a class="card mint row" href="#mood"><svg class="i"><use href="#user"/></svg><h3>ثبت حال</h3></a>
+<a class="card mint row" href="#focus"><svg class="i"><use href="#timer"/></svg><h3>جلسهٔ تمرکز</h3></a></div>
+<a class="btn t" href="#today">بستن</a></div></div></section>
+
+<!-- ========== بُرد ۷–۸ · اهداف ========== -->
+<section class="screen" id="goals"><div class="body nav-pad">
+<div class="top"><h2>اهداف من</h2><a class="ib bg" href="#goal-new" aria-label="هدف جدید"><svg class="i"><use href="#plus"/></svg></a></div>
+<div class="tabs"><a class="on" href="#goals">فعال ۳</a><a href="#goals-empty">تکمیل‌شده</a><a href="#goals-empty">بایگانی</a></div>
+<a class="card" href="#goal-detail"><div class="row"><h3 class="grow">خواندن ۲۰ دقیقه در روز</h3><span class="chip">روزانه</span></div><div class="pb"><i style="width:57%"></i></div><div class="row"><span class="s grow">۴ از ۷ روز این هفته</span><span class="xs">آخرین ثبت: دیروز</span></div></a>
+<a class="card" href="#goal-milestones"><div class="row"><h3 class="grow">دویدن ۱۰ کیلومتر تا آذر</h3><span class="chip teal">نقطه‌عطف‌ها</span></div><div class="pb"><i style="width:62%;background:var(--teal)"></i></div><div class="row"><span class="s grow">۳ از ۵ نقطهٔ عطف</span><span class="xs">۶۲٪</span></div></a>
+<a class="card" href="#goal-detail"><div class="row"><h3 class="grow">خواب پیش از ساعت ۲۳:۰۰</h3><span class="chip">هفتگی</span></div><div class="pb"><i style="width:43%"></i></div><div class="row"><span class="s grow">۳ از ۷ شب</span><span class="chip sand">۲ شب ثبت نشده</span></div></a>
+<div class="card mint"><span class="s">هدف‌ها قرار نیست کامل باشند؛ فقط مسیر را نشان می‌دهند.</span></div>
+</div><nav class="tab-bar" aria-label="ناوبری اصلی"><a href="#today"><svg class="i"><use href="#home"/></svg>امروز</a><a class="on" href="#goals" aria-current="page"><svg class="i"><use href="#goal"/></svg>اهداف</a><a href="#habits"><svg class="i"><use href="#check"/></svg>عادت‌ها</a><a href="#focus"><svg class="i"><use href="#timer"/></svg>تمرکز</a><a href="#reflect"><svg class="i"><use href="#book"/></svg>بازتاب</a></nav></section>
+
+<section class="screen" id="goals-empty"><div class="body nav-pad"><div class="top"><a class="ib bg back" href="#goals" aria-label="بازگشت"><svg class="i"><use href="#chev"/></svg></a><h2>اهداف من</h2></div>
+<div class="body empty"><div class="orb"><svg class="i" style="width:44px;height:44px"><use href="#goal"/></svg></div><h1>هنوز هدفی نداری</h1><p class="s">هدف یعنی جهتی که انتخاب می‌کنی. لازم نیست بزرگ باشد؛ یک جملهٔ ساده کافی است.</p><a class="btn" href="#goal-new">ساخت اولین هدف</a><a class="btn t" href="#goals">نمونه‌ها را ببین</a></div></div><nav class="tab-bar" aria-label="ناوبری اصلی"><a href="#today"><svg class="i"><use href="#home"/></svg>امروز</a><a class="on" href="#goals" aria-current="page"><svg class="i"><use href="#goal"/></svg>اهداف</a><a href="#habits"><svg class="i"><use href="#check"/></svg>عادت‌ها</a><a href="#focus"><svg class="i"><use href="#timer"/></svg>تمرکز</a><a href="#reflect"><svg class="i"><use href="#book"/></svg>بازتاب</a></nav></section>
+
+<section class="screen" id="goal-new"><div class="body">
+<div class="top"><a class="ib bg" href="#goals" aria-label="بستن"><svg class="i"><use href="#x"/></svg></a><h2>هدف جدید</h2></div>
+<label class="fld">عنوان هدف<input class="in" value="خواندن ۲۰ دقیقه در روز"></label>
+<label class="fld">چرا برایم مهم است؟ (اختیاری)<textarea class="in">تا ذهنم آرام‌تر شود و شب‌ها زودتر بخوابم.</textarea></label>
+<div class="col"><span class="lbl">نوع پیگیری</span><div class="tabs"><a class="on" href="#goal-new">روزانه</a><a href="#goal-new">هفتگی</a><a href="#goal-new">نقطه‌عطف‌ها</a></div></div>
+<div class="col"><span class="lbl">بازهٔ زمانی</span><div class="chips"><span class="chip out">بدون پایان</span><span class="chip on">تا پایان آذر</span><span class="chip out">تاریخ دلخواه</span></div></div>
+<div class="card lav row"><span class="grow"><b>افزودن نقطهٔ عطف</b></span><svg class="i"><use href="#plus"/></svg></div>
+<span style="flex:1"></span><a class="btn" href="#goal-detail">ذخیرهٔ هدف</a><a class="btn t" href="#goals">انصراف</a>
+</div></section>
+
+<section class="screen" id="goal-detail"><div class="body">
+<div class="top"><a class="ib bg back" href="#goals" aria-label="بازگشت"><svg class="i"><use href="#chev"/></svg></a><span class="grow"></span><a class="ib bg" href="#goal-menu" aria-label="منو"><svg class="i"><use href="#more"/></svg></a></div>
+<div class="card mint"><h2>خواندن ۲۰ دقیقه در روز</h2><span class="s">چرا؟ تا ذهنم آرام‌تر شود و شب‌ها زودتر بخوابم.</span></div>
+<div class="card"><div class="row"><span class="lbl grow">این هفته</span><span class="xs">۴ از ۷ روز</span></div>
+<div class="g7 xs"><span>ش</span><span>ی</span><span>د</span><span>س</span><span>چ</span><span>پ</span><span>ج</span></div>
+<div class="g7"><span class="ck d"></span><span class="ck d"></span><span class="ck u"></span><span class="ck p"></span><span class="ck" style="border-width:3px;border-color:var(--forest)"></span><span class="ck"></span><span class="ck"></span></div>
+<div class="xs">● انجام‌شده · ◐ نیمه‌کاره · ○ برنامه‌ریزی‌شده · ⋯ ثبت‌نشده</div></div>
+<div class="g2" style="grid-template-columns:repeat(3,1fr)"><div class="card"><h2>۴</h2><span class="xs">روز ثبت‌شده</span></div><div class="card"><h2>۱۸</h2><span class="xs">میانگین دقیقه</span></div><div class="card sand"><h2>۱</h2><span class="xs">ثبت‌نشده</span></div></div>
+<div class="card"><span class="lbl">ثبت‌های اخیر</span><div class="row"><span class="ck d"></span><b class="grow">دیروز · ۲۰ دقیقه</b><span class="xs">انجام‌شده</span></div><div class="row"><span class="ck p"></span><b class="grow">یکشنبه · ۱۰ دقیقه</b><span class="xs">نیمه‌کاره</span></div></div>
+<span style="flex:1"></span><a class="btn" href="#habit-log">ثبت امروز</a>
+</div></section>
+
+<section class="screen" id="goal-milestones"><div class="body">
+<div class="top"><a class="ib bg back" href="#goals" aria-label="بازگشت"><svg class="i"><use href="#chev"/></svg></a></div>
+<div class="card teal"><h2>دویدن ۱۰ کیلومتر تا آذر</h2><div class="pb" style="background:#fff"><i style="width:62%;background:var(--forest)"></i></div><div class="row"><span class="s grow">۳ از ۵ نقطهٔ عطف</span><b>۶۲٪</b></div></div>
+<span class="lbl">نقاط عطف</span>
+<div class="card"><div class="row"><span class="ck d"></span><b class="grow">دویدن ۲ کیلومتر</b><span class="xs">۱۲ مهر</span></div></div>
+<div class="card"><div class="row"><span class="ck d"></span><b class="grow">دویدن ۵ کیلومتر</b><span class="xs">۱۹ مهر</span></div></div>
+<div class="card"><div class="row"><span class="ck d"></span><b class="grow">دویدن ۷ کیلومتر</b><span class="xs">۲۶ مهر</span></div></div>
+<div class="card" style="border:2px solid var(--sage)"><div class="row"><span class="ck p"></span><div class="grow"><b>دویدن ۹ کیلومتر</b><div class="xs">در جریان · هدف: ۴ آبان</div></div></div></div>
+<div class="card"><div class="row"><span class="ck"></span><div class="grow"><b>دویدن ۱۰ کیلومتر</b><div class="xs">برنامه‌ریزی‌شده · ۲۰ آذر</div></div></div></div>
+<a class="btn s2" href="#goal-milestones"><svg class="i"><use href="#plus"/></svg>افزودن نقطهٔ عطف</a>
+<span style="flex:1"></span><a class="btn" href="#goal-detail">ثبت پیشرفت</a>
+</div></section>
+
+<section class="screen" id="goal-menu"><div class="body" style="opacity:.4"><h2>جزئیات هدف</h2></div>
+<div class="sheetbg"><a class="back-area" href="#goal-detail" aria-label="بستن"></a><div class="sheet"><a class="row" style="min-height:48px" href="#goal-new"><b>ویرایش هدف</b></a><div class="hr"></div><a class="row" style="min-height:48px" href="#goal-archive"><b>بایگانی هدف</b></a><div class="hr"></div><a class="row" style="min-height:48px;color:#9A3F33" href="#goal-archive"><b>حذف هدف</b></a><a class="btn t" href="#goal-detail">بستن</a></div></div></section>
+
+<section class="screen" id="goal-archive"><div class="body" style="opacity:.4"><h2>جزئیات هدف</h2></div>
+<div class="dlgwrap"><div class="dlg"><h2>هدف بایگانی شود؟</h2><p class="s">تاریخچهٔ این هدف حفظ می‌شود و هر زمان می‌توانی آن را از تب «بایگانی» برگردانی.</p><a class="btn" href="#goals">بایگانی</a><a class="btn t" href="#goal-detail">انصراف</a></div></div></section>
+
+<!-- ========== بُرد ۹–۱۰ · عادت‌ها ========== -->
+<section class="screen" id="habits"><div class="body nav-pad">
+<div class="top"><h2>عادت‌ها</h2><a class="ib bg" href="#habit-new" aria-label="عادت جدید"><svg class="i"><use href="#plus"/></svg></a></div>
+<div class="chips"><span class="chip on">همه</span><span class="chip out">صبح</span><span class="chip out">عصر</span><span class="chip out">شب</span></div>
+<a class="card" href="#habit-detail"><div class="row"><h3 class="grow">پیاده‌روی کوتاه</h3><span class="chip">روزانه</span></div><span class="xs">۱۰ دقیقه · ظهر</span><div class="row" style="gap:6px"><span class="ck d sm-ck"></span><span class="ck d sm-ck"></span><span class="ck u sm-ck"></span><span class="ck d sm-ck"></span><span class="ck p sm-ck"></span><span class="ck sm-ck"></span><span class="ck sm-ck"></span></div></a>
+<a class="card" href="#habit-detail"><div class="row"><h3 class="grow">مطالعه ۲۰ دقیقه</h3><span class="chip teal">هدف: خواندن</span></div><span class="xs">۲۰ دقیقه · عصر</span><div class="row" style="gap:6px"><span class="ck d sm-ck"></span><span class="ck d sm-ck"></span><span class="ck u sm-ck"></span><span class="ck p sm-ck"></span><span class="ck sm-ck"></span><span class="ck sm-ck"></span><span class="ck sm-ck"></span></div></a>
+<a class="card" href="#habit-detail"><div class="row"><h3 class="grow">کشش شبانه</h3><span class="chip">۴ روز در هفته</span></div><span class="xs">۵ دقیقه · شب</span></a>
+<div class="card sand"><div class="row"><h3 class="grow">نوشیدن آب</h3><span class="chip out">متوقف‌شده</span></div><span class="xs">برای مدتی کنار گذاشته شد؛ هر زمان خواستی ادامه بده.</span></div>
+<a class="btn s2" href="#habit-log">ثبت عادت‌های امروز</a>
+</div><nav class="tab-bar" aria-label="ناوبری اصلی"><a href="#today"><svg class="i"><use href="#home"/></svg>امروز</a><a href="#goals"><svg class="i"><use href="#goal"/></svg>اهداف</a><a class="on" href="#habits" aria-current="page"><svg class="i"><use href="#check"/></svg>عادت‌ها</a><a href="#focus"><svg class="i"><use href="#timer"/></svg>تمرکز</a><a href="#reflect"><svg class="i"><use href="#book"/></svg>بازتاب</a></nav></section>
+
+<section class="screen" id="habit-new"><div class="body">
+<div class="top"><a class="ib bg" href="#habits" aria-label="بستن"><svg class="i"><use href="#x"/></svg></a><h2>عادت جدید</h2></div>
+<label class="fld">نام عادت<input class="in" value="پیاده‌روی کوتاه"></label>
+<label class="fld">کوچک‌ترین نسخه (برای روزهای سخت)<input class="in" value="حتی ۳ دقیقه هم حساب است"></label>
+<div class="col"><span class="lbl">کدام روزها؟</span><div class="g7"><span class="chip on" style="justify-content:center;padding:0">ش</span><span class="chip on" style="justify-content:center;padding:0">ی</span><span class="chip on" style="justify-content:center;padding:0">د</span><span class="chip on" style="justify-content:center;padding:0">س</span><span class="chip on" style="justify-content:center;padding:0">چ</span><span class="chip out" style="justify-content:center;padding:0">پ</span><span class="chip out" style="justify-content:center;padding:0">ج</span></div></div>
+<div class="card"><div class="row"><div class="grow"><h3>یادآور</h3><div class="xs">ساعت ۱۳:۳۰</div></div><span class="tg"></span></div></div>
+<div class="card"><div class="row"><div class="grow"><h3>پیوند با هدف</h3><div class="xs">اختیاری · هیچ‌کدام</div></div><svg class="i"><use href="#chevl"/></svg></div></div>
+<span style="flex:1"></span><a class="btn" href="#habits">ذخیرهٔ عادت</a>
+</div></section>
+
+<section class="screen" id="habit-detail"><div class="body">
+<div class="top"><a class="ib bg back" href="#habits" aria-label="بازگشت"><svg class="i"><use href="#chev"/></svg></a></div>
+<div class="card mint"><h2>پیاده‌روی کوتاه</h2><span class="s">۱۰ دقیقه · شنبه تا چهارشنبه · ۱۳:۳۰</span><span class="xs">کوچک‌ترین نسخه: ۳ دقیقه</span></div>
+<div class="card"><span class="lbl">الگوی هفته (۸ هفتهٔ اخیر)</span><div class="bar" style="height:100px"><i style="height:70%"></i><i style="height:85%"></i><i style="height:50%"></i><i style="height:60%"></i><i style="height:90%"></i><i style="height:20%;background:#B8CBBE"></i><i style="height:30%;background:#B8CBBE"></i></div><div class="g7 xs"><span>ش</span><span>ی</span><span>د</span><span>س</span><span>چ</span><span>پ</span><span>ج</span></div><span class="xs">روزهای کم‌رنگ، خارج از برنامه‌اند.</span></div>
+<div class="card teal"><span class="lbl">از داده‌های تو</span><b>بیشترین ثبت‌ها چهارشنبه‌ها بوده است.</b></div>
+<span style="flex:1"></span><a class="btn s2" href="#habits">توقف موقت عادت</a><a class="btn t" href="#habit-new">ویرایش عادت</a>
+</div></section>
+
+<section class="screen" id="habit-log"><div class="body nav-pad">
+<div class="top"><a class="ib bg back" href="#habits" aria-label="بازگشت"><svg class="i"><use href="#chev"/></svg></a><h2>عادت‌های امروز</h2></div>
+<div class="card mint"><b>۱ انجام‌شده · ۱ نیمه‌کاره · ۱ ردشده</b><span class="s">۲ مورد هنوز ثبت نشده؛ هر زمان خواستی.</span></div>
+<div class="card"><div class="row"><span class="ck d"></span><div class="grow"><b>پیاده‌روی کوتاه</b><div class="xs">۱۰ دقیقه · ثبت ۱۳:۵۰</div></div><span class="chip">انجام‌شده</span></div></div>
+<a class="card" href="#log-sheet"><div class="row"><span class="ck p"></span><div class="grow"><b>مطالعه ۲۰ دقیقه</b><div class="xs">۱۰ از ۲۰ دقیقه</div></div><span class="chip sand">نیمه‌کاره</span></div></a>
+<div class="card"><div class="row"><span class="ck k"></span><div class="grow"><b>کشش شبانه</b><div class="xs">امروز عمداً رد شد</div></div><span class="chip sand">ردشده</span></div></div>
+<a class="card" href="#log-sheet"><div class="row"><span class="ck u"></span><div class="grow"><b>نوشیدن آب</b><div class="xs">هنوز ثبت نشده</div></div><span class="chip out">ثبت کن</span></div></a>
+<div class="card"><div class="row"><span class="ck"></span><div class="grow"><b>مرور واژه‌ها</b><div class="xs">برنامه‌ریزی‌شده · ۲۰:۰۰</div></div></div></div>
+<a class="card" href="#habit-yesterday" style="background:var(--ivory)"><b>دیروز را مرور کن</b><span class="xs">دو مورد ثبت‌نشده داری؛ اختیاری.</span></a>
+<div class="card" style="background:var(--ivory)"><span class="lbl">راهنمای نشان‌ها</span><div class="g2"><span class="row"><i class="ck d sm-ck"></i><span class="xs">انجام‌شده</span></span><span class="row"><i class="ck p sm-ck"></i><span class="xs">نیمه‌کاره</span></span><span class="row"><i class="ck k sm-ck"></i><span class="xs">ردشده</span></span><span class="row"><i class="ck u sm-ck"></i><span class="xs">ثبت‌نشده</span></span></div></div>
+</div><nav class="tab-bar" aria-label="ناوبری اصلی"><a href="#today"><svg class="i"><use href="#home"/></svg>امروز</a><a href="#goals"><svg class="i"><use href="#goal"/></svg>اهداف</a><a class="on" href="#habits" aria-current="page"><svg class="i"><use href="#check"/></svg>عادت‌ها</a><a href="#focus"><svg class="i"><use href="#timer"/></svg>تمرکز</a><a href="#reflect"><svg class="i"><use href="#book"/></svg>بازتاب</a></nav></section>
+
+<section class="screen" id="log-sheet"><div class="body nav-pad" style="opacity:.4"><h2>عادت‌های امروز</h2></div>
+<div class="sheetbg"><a class="back-area" href="#habit-log" aria-label="بستن"></a><div class="sheet"><h2>مطالعه ۲۰ دقیقه — امروز چطور بود؟</h2>
+<div class="card mint row"><span class="ck d"></span><b>انجام شد</b></div>
+<div class="card" style="border:2px solid var(--sage)"><div class="row"><span class="ck p"></span><b class="grow">بخشی انجام شد</b></div><div class="pb"><i style="width:50%"></i></div><span class="xs">۱۰ از ۲۰ دقیقه</span></div>
+<div class="card sand"><div class="row"><span class="ck k"></span><div class="grow"><b>امروز رد می‌کنم</b><div class="xs">دلیل اختیاری: خسته‌ام · وقت نداشتم</div></div></div></div>
+<div class="card row"><span class="ck u"></span><b>بعداً ثبت می‌کنم</b></div>
+<a class="btn" href="#toast-ok">ذخیره</a></div></div></section>
+
+<section class="screen" id="toast-ok"><div class="body nav-pad"><div class="top"><a class="ib bg back" href="#habit-log" aria-label="بازگشت"><svg class="i"><use href="#chev"/></svg></a><h2>عادت‌های امروز</h2></div>
+<div class="card"><div class="row"><span class="ck p"></span><div class="grow"><b>مطالعه ۲۰ دقیقه</b><div class="xs">۱۰ از ۲۰ دقیقه</div></div><span class="chip sand">نیمه‌کاره</span></div></div>
+<span style="flex:1"></span><div class="toast"><svg class="i"><use href="#check"/></svg>ثبت شد؛ ممنون که یادت بود.<a href="#log-sheet">بازگردانی</a></div></div><nav class="tab-bar" aria-label="ناوبری اصلی"><a href="#today"><svg class="i"><use href="#home"/></svg>امروز</a><a href="#goals"><svg class="i"><use href="#goal"/></svg>اهداف</a><a class="on" href="#habits" aria-current="page"><svg class="i"><use href="#check"/></svg>عادت‌ها</a><a href="#focus"><svg class="i"><use href="#timer"/></svg>تمرکز</a><a href="#reflect"><svg class="i"><use href="#book"/></svg>بازتاب</a></nav></section>
+
+<section class="screen" id="habit-yesterday"><div class="body">
+<div class="top"><a class="ib bg back" href="#habit-log" aria-label="بازگشت"><svg class="i"><use href="#chev"/></svg></a><h2>یکشنبه ۲۶ مهر</h2></div>
+<div class="card sand"><span class="s" style="color:#4A4030">«ثبت‌نشده» یعنی هنوز چیزی وارد نکرده‌ای؛ این یک قضاوت نیست. اگر یادت هست، می‌توانی الان کامل کنی.</span></div>
+<div class="card"><div class="row"><span class="ck d"></span><b class="grow">پیاده‌روی کوتاه</b><span class="xs">انجام‌شده</span></div></div>
+<div class="card"><div class="row"><span class="ck u"></span><div class="grow"><b>مطالعه ۲۰ دقیقه</b><div class="xs">ثبت‌نشده</div></div><a class="btn s2 sm" href="#log-sheet">ثبت کن</a></div></div>
+<div class="card"><div class="row"><span class="ck u"></span><div class="grow"><b>کشش شبانه</b><div class="xs">ثبت‌نشده</div></div><a class="btn s2 sm" href="#log-sheet">ثبت کن</a></div></div>
+</div></section>
+
+<!-- ========== بُرد ۱۱–۱۲ · تمرکز ========== -->
+<section class="screen" id="focus"><div class="body nav-pad">
+<h2>جلسهٔ تمرکز جدید</h2>
+<div class="col"><span class="lbl">روی چه کاری تمرکز می‌کنی؟</span><div class="card row"><span class="ck p"></span><b class="grow">پیش‌نویس پیشنهاد پروژه</b><span class="xs">تغییر</span></div></div>
+<div class="col"><span class="lbl">مدت</span><div class="chips"><span class="chip out">۱۵ دقیقه</span><span class="chip on">۲۵ دقیقه</span><span class="chip out">۴۵ دقیقه</span><span class="chip out">دلخواه</span></div></div>
+<label class="fld">نیت کوتاه (اختیاری)<input class="in" value="فقط بخش مقدمه را بنویسم"></label>
+<div class="card"><div class="row"><b class="grow">استراحت ۵ دقیقه‌ای بعد از جلسه</b><span class="tg"></span></div><div class="row"><div class="grow"><b>بی‌صدا کردن اعلان‌ها</b><div class="xs">فقط در طول جلسه</div></div><span class="tg"></span></div></div>
+<span style="flex:1"></span><a class="btn" href="#focus-run">شروع جلسه</a><a class="btn t" href="#focus-history">تاریخچه و آمار</a>
+</div><nav class="tab-bar" aria-label="ناوبری اصلی"><a href="#today"><svg class="i"><use href="#home"/></svg>امروز</a><a href="#goals"><svg class="i"><use href="#goal"/></svg>اهداف</a><a href="#habits"><svg class="i"><use href="#check"/></svg>عادت‌ها</a><a class="on" href="#focus" aria-current="page"><svg class="i"><use href="#timer"/></svg>تمرکز</a><a href="#reflect"><svg class="i"><use href="#book"/></svg>بازتاب</a></nav></section>
+
+<section class="screen" id="focus-run" style="background:var(--mint)"><div class="body" style="align-items:center;text-align:center">
+<div class="top" style="align-self:stretch"><a class="ib" href="#focus-quit" aria-label="خروج"><svg class="i"><use href="#x"/></svg></a></div>
+<span class="s">در حال تمرکز روی</span><h2>پیش‌نویس پیشنهاد پروژه</h2>
+<div class="timer"><div>۱۵:۴۲<small>از ۲۵ دقیقه</small></div></div>
+<p class="s">نیت: فقط بخش مقدمه را بنویسم</p><span style="flex:1"></span>
+<div class="row" style="align-self:stretch"><a class="btn s2" href="#focus-run">مکث</a><a class="btn" href="#focus-end">پایان جلسه</a></div>
+<span class="xs">پایان زودهنگام هم مشکلی ندارد.</span></div></section>
+
+<section class="screen" id="focus-quit"><div class="body" style="opacity:.4"><h2>در حال تمرکز</h2></div><div class="dlgwrap"><div class="dlg"><h2>جلسه را ببندیم؟</h2><p class="s">زمان انجام‌شده (۹ دقیقه) به‌صورت جلسهٔ ناتمام ذخیره می‌شود.</p><a class="btn" href="#focus-end">ذخیره و بستن</a><a class="btn t" href="#focus-run">ادامهٔ جلسه</a></div></div></section>
+
+<section class="screen" id="focus-end"><div class="body">
+<h1>جلسه تمام شد</h1>
+<div class="card mint"><h3>۲۵ دقیقه روی «پیشنهاد پروژه»</h3><span class="s">زمان ثبت‌شده: ۲۵ از ۲۵ دقیقه</span></div>
+<span class="lbl">کار چقدر پیش رفت؟</span>
+<div class="card" style="border:2px solid var(--sage)"><div class="row"><span class="ck p"></span><b>بخشی از آن</b></div></div>
+<div class="card"><div class="row"><span class="ck d"></span><b>کامل شد</b></div></div>
+<div class="card"><div class="row"><span class="ck u"></span><b>نمی‌خواهم ثبت کنم</b></div></div>
+<span class="lbl">انرژی‌ات چطور بود؟</span><div class="chips"><span class="chip out">کم</span><span class="chip on">متوسط</span><span class="chip out">زیاد</span></div>
+<textarea class="in" style="min-height:70px" placeholder="یادداشت کوتاه (اختیاری)"></textarea>
+<a class="btn" href="#focus-history">ذخیره و استراحت</a><a class="btn t" href="#today">ذخیره بدون استراحت</a>
+</div></section>
+
+<section class="screen" id="focus-history"><div class="body nav-pad">
+<div class="top"><a class="ib bg back" href="#focus" aria-label="بازگشت"><svg class="i"><use href="#chev"/></svg></a><h2>تاریخچهٔ تمرکز</h2></div>
+<div class="tabs"><a class="on" href="#focus-history">تاریخچه</a><a href="#focus-stats">آمار</a></div>
+<div class="card mint"><b>این هفته: ۳ ساعت و ۲۰ دقیقه</b><span class="xs">۹ جلسه ثبت‌شده</span></div>
+<span class="lbl">امروز</span>
+<div class="card"><div class="row"><span class="ck d"></span><div class="grow"><b>پیش‌نویس پیشنهاد پروژه</b><div class="xs">۲۵ دقیقه · ۱۰:۰۰</div></div><span class="chip">کامل</span></div></div>
+<span class="lbl">دیروز</span>
+<div class="card"><div class="row"><span class="ck p"></span><div class="grow"><b>مرور مقاله</b><div class="xs">۱۵ از ۲۵ دقیقه · ۱۶:۳۰</div></div><span class="chip sand">زودتر تمام شد</span></div></div>
+<div class="card"><div class="row"><span class="ck d"></span><div class="grow"><b>پاسخ به ایمیل‌ها</b><div class="xs">۲۵ دقیقه · ۱۱:۰۰</div></div><span class="chip">کامل</span></div><div class="open">یادداشت: بعد از پیاده‌روی راحت‌تر شروع کردم.</div></div>
+<a class="s" href="#focus-empty" style="text-align:center">نمایش حالت خالی ←</a>
+</div><nav class="tab-bar" aria-label="ناوبری اصلی"><a href="#today"><svg class="i"><use href="#home"/></svg>امروز</a><a href="#goals"><svg class="i"><use href="#goal"/></svg>اهداف</a><a href="#habits"><svg class="i"><use href="#check"/></svg>عادت‌ها</a><a class="on" href="#focus" aria-current="page"><svg class="i"><use href="#timer"/></svg>تمرکز</a><a href="#reflect"><svg class="i"><use href="#book"/></svg>بازتاب</a></nav></section>
+
+<section class="screen" id="focus-stats"><div class="body nav-pad">
+<div class="top"><a class="ib bg back" href="#focus" aria-label="بازگشت"><svg class="i"><use href="#chev"/></svg></a><h2>آمار تمرکز</h2></div>
+<div class="tabs"><a href="#focus-history">تاریخچه</a><a class="on" href="#focus-stats">آمار</a></div>
+<div class="card"><span class="lbl">دقیقه‌های تمرکز در روز</span><div class="bar" style="height:120px"><i style="height:45%"></i><i style="height:70%"></i><i style="height:30%"></i><i style="height:85%"></i><i style="height:55%"></i><i class="n"></i><i style="height:25%;background:var(--teal)"></i></div><div class="g7 xs"><span>ش</span><span>ی</span><span>د</span><span>س</span><span>چ</span><span>پ</span><span>ج</span></div></div>
+<div class="g2"><div class="card"><h2>۲۲ دقیقه</h2><span class="xs">میانگین هر جلسه</span></div><div class="card"><h2>۷۸٪</h2><span class="xs">جلسه‌های کامل‌شده</span></div></div>
+<div class="card teal"><span class="lbl">از داده‌های تو</span><b>بیشتر جلسه‌های کامل، بین ۹ تا ۱۱ صبح بوده است.</b><span class="xs">فقط توصیف داده؛ نه توصیه.</span></div>
+<div class="card"><span class="lbl">بیشترین کارها</span><div class="row"><span class="s grow">پیشنهاد پروژه</span><b>۱ ساعت</b></div><div class="row"><span class="s grow">ایمیل‌ها</span><b>۴۰ دقیقه</b></div></div>
+</div><nav class="tab-bar" aria-label="ناوبری اصلی"><a href="#today"><svg class="i"><use href="#home"/></svg>امروز</a><a href="#goals"><svg class="i"><use href="#goal"/></svg>اهداف</a><a href="#habits"><svg class="i"><use href="#check"/></svg>عادت‌ها</a><a class="on" href="#focus" aria-current="page"><svg class="i"><use href="#timer"/></svg>تمرکز</a><a href="#reflect"><svg class="i"><use href="#book"/></svg>بازتاب</a></nav></section>
+
+<section class="screen" id="focus-empty"><div class="body nav-pad"><div class="top"><a class="ib bg back" href="#focus-history" aria-label="بازگشت"><svg class="i"><use href="#chev"/></svg></a><h2>تاریخچهٔ تمرکز</h2></div>
+<div class="card empty"><div class="orb"><svg class="i" style="width:40px;height:40px"><use href="#timer"/></svg></div><h2>این هفته جلسه‌ای ثبت نشده</h2><p class="s">اشکالی ندارد. هر زمان آماده بودی، یک جلسهٔ کوتاه شروع کن.</p><a class="btn" href="#focus">شروع یک جلسه</a></div></div><nav class="tab-bar" aria-label="ناوبری اصلی"><a href="#today"><svg class="i"><use href="#home"/></svg>امروز</a><a href="#goals"><svg class="i"><use href="#goal"/></svg>اهداف</a><a href="#habits"><svg class="i"><use href="#check"/></svg>عادت‌ها</a><a class="on" href="#focus" aria-current="page"><svg class="i"><use href="#timer"/></svg>تمرکز</a><a href="#reflect"><svg class="i"><use href="#book"/></svg>بازتاب</a></nav></section>
+
+<!-- ========== بُرد ۱۳–۱۴ · برنامه و تقویم ========== -->
+<section class="screen" id="plan"><div class="body nav-pad">
+<div class="top"><a class="ib bg back" href="#today" aria-label="بازگشت"><svg class="i"><use href="#chev"/></svg></a><h2>برنامهٔ امروز</h2><a class="ib bg" href="#calendar" aria-label="تقویم"><svg class="i"><use href="#cal"/></svg></a></div>
+<span class="lbl">اولویت‌های اصلی (حداکثر ۳)</span>
+<div class="card" style="border-right:4px solid var(--forest)"><div class="row"><span class="ck d"></span><div class="grow"><b>پاسخ به ایمیل دانا</b><div class="xs">۱۰:۳۰ · ۱۵ دقیقه</div></div></div></div>
+<div class="card" style="border-right:4px solid var(--forest)"><div class="row"><span class="ck p"></span><div class="grow"><b>پیش‌نویس پیشنهاد پروژه</b><div class="xs">۱۱:۰۰ · ۲ جلسهٔ تمرکز</div></div><span class="chip sand">نیمه‌کاره</span></div></div>
+<div class="card" style="border-right:4px solid var(--forest)"><div class="row"><span class="ck"></span><div class="grow"><b>مرور یادداشت‌های جلسه</b><div class="xs">۱۶:۰۰ · ۲۰ دقیقه</div></div></div></div>
+<span class="lbl">کارهای دیگر</span>
+<div class="card"><div class="row"><span class="ck"></span><b class="grow">خرید هدیهٔ تولد</b><span class="xs">بدون زمان</span></div></div>
+<div class="card"><div class="row"><span class="ck"></span><b class="grow">رزرو نوبت دندان‌پزشک</b><span class="chip teal">سلامت</span></div></div>
+<a class="btn s2" href="#plan-review">بازبینی کارهای ناتمام</a>
+<div class="card mint"><span class="s">سه اولویت کافی است؛ بقیه می‌تواند منتظر بماند.</span></div>
+</div><a class="fab" href="#task-new" aria-label="وظیفهٔ جدید"><svg class="i"><use href="#plus"/></svg></a><nav class="tab-bar" aria-label="ناوبری اصلی"><a class="on" href="#today" aria-current="page"><svg class="i"><use href="#home"/></svg>امروز</a><a href="#goals"><svg class="i"><use href="#goal"/></svg>اهداف</a><a href="#habits"><svg class="i"><use href="#check"/></svg>عادت‌ها</a><a href="#focus"><svg class="i"><use href="#timer"/></svg>تمرکز</a><a href="#reflect"><svg class="i"><use href="#book"/></svg>بازتاب</a></nav></section>
+
+<section class="screen" id="task-new"><div class="body" style="opacity:.35"><h2>برنامهٔ امروز</h2></div>
+<div class="sheetbg"><a class="back-area" href="#plan" aria-label="بستن"></a><div class="sheet"><h2>وظیفهٔ جدید</h2>
+<label class="fld">چه کاری؟<input class="in" value="ارسال گزارش به رضا"></label>
+<div class="col"><span class="lbl">چه زمانی؟</span><div class="chips"><span class="chip on">امروز</span><span class="chip out">فردا</span><span class="chip out">این هفته</span><span class="chip out">بدون زمان</span></div></div>
+<div class="row"><input class="in" value="۱۵:۰۰"><input class="in" value="۳۰ دقیقه"></div>
+<div class="card"><div class="row"><div class="grow"><b>اولویت اصلی</b><div class="xs">۲ از ۳ جا پر است</div></div><span class="tg o"></span></div></div>
+<a class="btn" href="#plan">افزودن به برنامه</a></div></div></section>
+
+<section class="screen" id="plan-review"><div class="body">
+<div class="top"><h2>کارهای مانده</h2><a class="ib" href="#plan" aria-label="بستن"><svg class="i"><use href="#x"/></svg></a></div>
+<p class="s">امروز دو کار تمام نشد. با هر کدام چه کنیم؟</p>
+<div class="card"><b>مرور یادداشت‌های جلسه</b><div class="chips"><span class="chip on">فردا</span><span class="chip out">این هفته</span><span class="chip out">بدون زمان</span><span class="chip out">حذف</span></div></div>
+<div class="card"><b>پیش‌نویس پیشنهاد پروژه</b><span class="xs">نیمه‌کاره · ۱ جلسهٔ تمرکز انجام شد</span><div class="chips"><span class="chip out">فردا</span><span class="chip on">این هفته</span><span class="chip out">بدون زمان</span><span class="chip out">حذف</span></div></div>
+<div class="card ai"><div class="row"><svg class="i" style="color:var(--ai)"><use href="#spark"/></svg><span class="lbl">پیشنهاد مربی · اعمال نشده</span></div><b>فردا فقط یک اولویت سنگین بگذاریم؟</b><span class="xs">با تأیید تو اعمال می‌شود.</span><div class="row"><a class="btn sm" href="#coach">بررسی</a><a class="btn t sm" href="#plan-review">رد کردن</a></div></div>
+<span style="flex:1"></span><a class="btn" href="#plan">تأیید و برنامهٔ فردا</a><a class="btn t" href="#plan">بعداً</a>
+</div></section>
+
+<section class="screen" id="calendar"><div class="body nav-pad">
+<div class="top"><a class="ib bg back" href="#today" aria-label="بازگشت"><svg class="i"><use href="#chev"/></svg></a><h2 style="text-align:center">مهر ۱۴۰۵</h2><span class="ib"></span></div>
+<div class="tabs"><a href="#timeline">روز</a><a href="#week">هفته</a><a class="on" href="#calendar">ماه</a></div>
+<div class="g7 xs"><span>ش</span><span>ی</span><span>د</span><span>س</span><span>چ</span><span>پ</span><span>ج</span></div>
+<div class="g7 cal"><i></i><i></i><i></i><i></i><span>۱<b></b></span><span>۲<b></b></span><span>۳<b></b></span><span>۴</span><span>۵<b></b></span><span>۶<b></b></span><span>۷<b></b></span><span>۸</span><span>۹<b></b></span><span>۱۰<b></b></span><span>۱۱<b></b></span><span>۱۲<b></b></span><span>۱۳</span><span>۱۴<b></b></span><span>۱۵<b></b></span><span>۱۶<b></b></span><span>۱۷</span><span>۱۸<b></b></span><span>۱۹<b></b></span><span>۲۰<b></b></span><span>۲۱<b></b></span><span>۲۲</span><span>۲۳<b></b></span><span>۲۴<b></b></span><span>۲۵<b></b></span><span>۲۶<b></b></span><span>۲۷<b></b></span><a><span class="t">۲۸<b></b></span></a><span class="pl">۲۹<b></b></span><span class="pl">۳۰<b></b></span></div>
+<div class="row xs" style="flex-wrap:wrap"><span class="row"><i class="dot" style="width:8px;height:8px;border-radius:4px;background:var(--sage)"></i>ثبت‌شده</span><span class="row"><i style="width:8px;height:8px;border-radius:4px;border:1.5px solid var(--sage)"></i>برنامه‌ریزی‌شده</span><span>بدون نشان: چیزی ثبت نشده</span></div>
+<a class="card mint" href="#timeline"><h3>سه‌شنبه ۲۸ مهر</h3><span class="s">۱ کار انجام‌شده · ۱ نیمه‌کاره · ۲ برنامه‌ریزی‌شده</span></a>
+<div class="open"><b>پرسش باز:</b> اتصال به تقویم بیرونی در مشخصات ذکر نشده است.</div>
+</div><nav class="tab-bar" aria-label="ناوبری اصلی"><a class="on" href="#today" aria-current="page"><svg class="i"><use href="#home"/></svg>امروز</a><a href="#goals"><svg class="i"><use href="#goal"/></svg>اهداف</a><a href="#habits"><svg class="i"><use href="#check"/></svg>عادت‌ها</a><a href="#focus"><svg class="i"><use href="#timer"/></svg>تمرکز</a><a href="#reflect"><svg class="i"><use href="#book"/></svg>بازتاب</a></nav></section>
+
+<section class="screen" id="timeline"><div class="body nav-pad">
+<div class="top"><a class="ib bg back" href="#calendar" aria-label="بازگشت"><svg class="i"><use href="#chev"/></svg></a><h2 style="text-align:center">سه‌شنبه ۲۸ مهر</h2><span class="ib"></span></div>
+<div class="row xs" style="flex-wrap:wrap;gap:14px"><span class="row"><i style="width:14px;height:10px;border-radius:3px;background:#C9DACE"></i>ثبت‌شده</span><span class="row"><i style="width:14px;height:10px;border-radius:3px;border:1.5px dashed var(--sage)"></i>برنامه‌ریزی‌شده</span></div>
+<div class="tl"><time>۰۸:۰۰</time><div class="bl real">پیاده‌روی کوتاه · ثبت‌شده</div></div>
+<div class="tl"><time>۱۰:۰۰</time><div class="bl focus">تمرکز ۲۵ دقیقه · ثبت‌شده</div></div>
+<div class="tl" style="border-top:2px solid var(--forest)"><time><b style="color:var(--forest)">الان</b></time><div class="bl plan">پیش‌نویس پیشنهاد · ۱۱:۰۰ · برنامه‌ریزی‌شده</div></div>
+<div class="tl"><time>۱۳:۰۰</time><div class="bl plan">پیاده‌روی دوم · برنامه‌ریزی‌شده</div></div>
+<div class="tl"><time>۱۶:۰۰</time><div class="bl plan">مرور یادداشت‌ها</div></div>
+<a class="btn s2" href="#week">نمای هفته</a>
+</div><nav class="tab-bar" aria-label="ناوبری اصلی"><a class="on" href="#today" aria-current="page"><svg class="i"><use href="#home"/></svg>امروز</a><a href="#goals"><svg class="i"><use href="#goal"/></svg>اهداف</a><a href="#habits"><svg class="i"><use href="#check"/></svg>عادت‌ها</a><a href="#focus"><svg class="i"><use href="#timer"/></svg>تمرکز</a><a href="#reflect"><svg class="i"><use href="#book"/></svg>بازتاب</a></nav></section>
+
+<section class="screen" id="week"><div class="body nav-pad">
+<div class="top"><a class="ib bg back" href="#calendar" aria-label="بازگشت"><svg class="i"><use href="#chev"/></svg></a><h2 style="text-align:center">۲۵ تا ۳۱ مهر</h2><span class="ib"></span></div>
+<div class="tabs"><a href="#timeline">روز</a><a class="on" href="#week">هفته</a><a href="#calendar">ماه</a></div>
+<div class="card"><div class="row"><b style="width:60px">شنبه</b><div class="row grow" style="gap:4px"><i class="ck d sm-ck"></i><i class="ck d sm-ck"></i><i class="ck d sm-ck"></i></div><span class="xs">۳ ثبت</span></div></div>
+<div class="card"><div class="row"><b style="width:60px">یکشنبه</b><div class="row grow" style="gap:4px"><i class="ck d sm-ck"></i><i class="ck p sm-ck"></i></div><span class="xs">۲ ثبت</span></div></div>
+<div class="card"><div class="row"><b style="width:60px">دوشنبه</b><div class="row grow" style="gap:4px"><i class="ck u sm-ck"></i><i class="ck u sm-ck"></i></div><span class="xs">ثبت‌نشده</span></div></div>
+<div class="card mint" style="border:2px solid var(--forest)"><div class="row"><b style="width:60px">سه‌شنبه</b><div class="row grow" style="gap:4px"><i class="ck d sm-ck"></i><i class="ck p sm-ck"></i><i class="ck sm-ck"></i><i class="ck sm-ck"></i></div><span class="xs">امروز</span></div></div>
+<div class="card"><div class="row"><b style="width:60px">چهارشنبه</b><div class="row grow" style="gap:4px"><i class="ck sm-ck"></i><i class="ck sm-ck"></i></div><span class="xs">۲ برنامه</span></div></div>
+<div class="card"><div class="row"><b style="width:60px">پنجشنبه</b><span class="grow"></span><span class="xs">خالی</span></div></div>
+<div class="card"><div class="row"><b style="width:60px">جمعه</b><span class="grow"></span><span class="xs">خالی</span></div></div>
+</div><nav class="tab-bar" aria-label="ناوبری اصلی"><a class="on" href="#today" aria-current="page"><svg class="i"><use href="#home"/></svg>امروز</a><a href="#goals"><svg class="i"><use href="#goal"/></svg>اهداف</a><a href="#habits"><svg class="i"><use href="#check"/></svg>عادت‌ها</a><a href="#focus"><svg class="i"><use href="#timer"/></svg>تمرکز</a><a href="#reflect"><svg class="i"><use href="#book"/></svg>بازتاب</a></nav></section>
+
+<!-- ========== بُرد ۱۵–۱۶ · بازتاب ========== -->
+<section class="screen" id="reflect"><div class="body nav-pad">
+<div class="top"><h2>بازتاب</h2><a class="ib bg" href="#insights" aria-label="بینش‌ها"><svg class="i"><use href="#chart"/></svg></a></div>
+<div class="g2">
+<a class="card mint" href="#notes"><svg class="i"><use href="#book"/></svg><h3>یادداشت‌ها</h3><span class="xs">۱۲ مورد</span></a>
+<a class="card teal" href="#mood"><svg class="i"><use href="#user"/></svg><h3>حال و انرژی</h3><span class="xs">امروز ثبت نشده</span></a>
+<a class="card lav" href="#review-day"><svg class="i"><use href="#check"/></svg><h3>مرور روزانه</h3><span class="xs">۵ دقیقه</span></a>
+<a class="card sand" href="#review-week"><svg class="i"><use href="#spark"/></svg><h3>مرور هفتگی</h3><span class="xs">جمعه آماده می‌شود</span></a></div>
+<span class="lbl">یادداشت‌های اخیر</span>
+<a class="card" href="#notes"><div class="row"><b class="grow">بعد از پیاده‌روی ذهنم سبک‌تر بود</b><span class="xs">امروز</span></div><span class="s">وقتی ۱۰ دقیقه راه رفتم، شروع کار آسان‌تر شد…</span><div class="chips"><span class="chip">انرژی</span><span class="chip out">پیاده‌روی</span></div></a>
+<a class="card" href="#notes"><div class="row"><b class="grow">شب‌ها دیرتر می‌خوابم</b><span class="xs">دیروز</span></div><span class="s">وقتی تا دیروقت صفحه را می‌بینم…</span></a>
+</div><a class="fab" href="#note-new" aria-label="یادداشت جدید"><svg class="i"><use href="#plus"/></svg></a><nav class="tab-bar" aria-label="ناوبری اصلی"><a href="#today"><svg class="i"><use href="#home"/></svg>امروز</a><a href="#goals"><svg class="i"><use href="#goal"/></svg>اهداف</a><a href="#habits"><svg class="i"><use href="#check"/></svg>عادت‌ها</a><a href="#focus"><svg class="i"><use href="#timer"/></svg>تمرکز</a><a class="on" href="#reflect" aria-current="page"><svg class="i"><use href="#book"/></svg>بازتاب</a></nav></section>
+
+<section class="screen" id="notes"><div class="body nav-pad">
+<div class="top"><a class="ib bg back" href="#reflect" aria-label="بازگشت"><svg class="i"><use href="#chev"/></svg></a><h2>یادداشت‌ها</h2></div>
+<input class="in" placeholder="جستجو در یادداشت‌ها…" aria-label="جستجو">
+<div class="chips"><span class="chip on">همه</span><span class="chip out">انرژی</span><span class="chip out">خواب</span><span class="chip out">کار</span></div>
+<span class="lbl">این هفته</span>
+<div class="card"><div class="row"><b class="grow">بعد از پیاده‌روی ذهنم سبک‌تر بود</b><span class="xs">امروز</span></div><div class="chips"><span class="chip">انرژی</span><span class="chip out">پیاده‌روی</span></div></div>
+<div class="card"><div class="row"><b class="grow">شب‌ها دیرتر می‌خوابم</b><span class="xs">دیروز</span></div><div class="chips"><span class="chip">خواب</span></div></div>
+<div class="card"><div class="row"><b class="grow">جلسهٔ صبح بدون موبایل</b><span class="xs">یکشنبه</span></div><div class="chips"><span class="chip">کار</span></div></div>
+<span class="lbl">قبل‌تر</span>
+<div class="card"><div class="row"><b class="grow">از مطالعهٔ شبانه لذت بردم</b><span class="xs">۲۰ مهر</span></div></div>
+</div><a class="fab" href="#note-new" aria-label="یادداشت جدید"><svg class="i"><use href="#plus"/></svg></a><nav class="tab-bar" aria-label="ناوبری اصلی"><a href="#today"><svg class="i"><use href="#home"/></svg>امروز</a><a href="#goals"><svg class="i"><use href="#goal"/></svg>اهداف</a><a href="#habits"><svg class="i"><use href="#check"/></svg>عادت‌ها</a><a href="#focus"><svg class="i"><use href="#timer"/></svg>تمرکز</a><a class="on" href="#reflect" aria-current="page"><svg class="i"><use href="#book"/></svg>بازتاب</a></nav></section>
+
+<section class="screen" id="note-new"><div class="body">
+<div class="top"><a class="ib bg" href="#notes" aria-label="بستن"><svg class="i"><use href="#x"/></svg></a><h2>یادداشت جدید</h2><a class="btn sm" href="#notes">ذخیره</a></div>
+<div class="card lav"><span class="xs">راهنمای نوشتن (اختیاری)</span><b>امروز چه چیزی را متوجه شدم؟</b></div>
+<input class="in" style="font-weight:600" value="" placeholder="عنوان کوتاه" aria-label="عنوان">
+<textarea class="in" style="min-height:200px" aria-label="متن">وقتی ۱۰ دقیقه راه رفتم، شروع کار آسان‌تر شد. به‌نظرم بهتر است پیاده‌روی را قبل از کارهای سنگین بگذارم.</textarea>
+<div class="chips"><span class="chip">انرژی</span><span class="chip">پیاده‌روی</span><span class="chip out">+ برچسب</span></div>
+</div></section>
+
+<section class="screen" id="mood"><div class="body">
+<div class="top"><a class="ib bg" href="#reflect" aria-label="بستن"><svg class="i"><use href="#x"/></svg></a><span class="step">۱ از ۳</span></div>
+<h1>الان حالت چطور است؟</h1><p class="s">هر پاسخی درست است؛ فقط آنچه همین حالا حس می‌کنی.</p>
+<div class="moods" style="margin:14px 0"><a><b style="background:#C9DACE"></b>آرام</a><a class="on"><b style="background:#B8D3CF"></b>خوب</a><a><b style="background:#E3DFF0"></b>معمولی</a><a><b style="background:#EADFC7"></b>خسته</a><a><b style="background:#E7D3C6"></b>سخت</a></div>
+<label class="fld">یک کلمه یا جمله (اختیاری)<input class="in" value="کمی هیجان‌زده برای شروع پروژه"></label>
+<span style="flex:1"></span><a class="btn" href="#energy">ادامه</a><a class="btn t" href="#reflect">الان نه</a>
+</div></section>
+
+<section class="screen" id="energy"><div class="body">
+<div class="top"><a class="ib bg back" href="#mood" aria-label="بازگشت"><svg class="i"><use href="#chev"/></svg></a><span class="step">۲ از ۳</span></div>
+<h1>انرژی‌ات چقدر است؟</h1>
+<div class="card"><div class="row"><span class="xs">کم</span><input type="range" min="0" max="100" value="60" class="grow" aria-label="انرژی" style="accent-color:#344E41;height:36px"><span class="xs">زیاد</span></div><b style="text-align:center">متوسط تا زیاد</b></div>
+<span class="lbl">چه چیزی روی حالت اثر داشته؟ (اختیاری)</span>
+<div class="chips"><span class="chip on">خواب</span><span class="chip out">حرکت</span><span class="chip on">کار</span><span class="chip out">غذا</span><span class="chip out">ارتباط با دیگران</span><span class="chip out">هوا</span></div>
+<div class="card teal"><span class="s">این‌ها فقط برای دیدن الگوها در بینش‌ها ذخیره می‌شود.</span></div>
+<span style="flex:1"></span><a class="btn" href="#mood-trend">ذخیرهٔ حال امروز</a>
+</div></section>
+
+<section class="screen" id="mood-trend"><div class="body nav-pad">
+<div class="top"><a class="ib bg back" href="#reflect" aria-label="بازگشت"><svg class="i"><use href="#chev"/></svg></a><h2>حال و انرژی</h2></div>
+<div class="toast"><svg class="i"><use href="#check"/></svg>حال امروز ذخیره شد.</div>
+<div class="tabs"><a href="#mood-trend">۷ روز</a><a class="on" href="#mood-trend">۱۴ روز</a><a href="#mood-trend">ماه</a></div>
+<div class="card"><span class="lbl">انرژی در ۱۴ روز اخیر</span><div class="bar" style="height:110px;gap:4px"><i style="height:50%"></i><i style="height:60%"></i><i class="n"></i><i style="height:75%"></i><i style="height:70%"></i><i style="height:40%;background:#B8CBBE"></i><i style="height:55%"></i><i class="n"></i><i class="n"></i><i style="height:65%"></i><i style="height:80%"></i><i style="height:70%"></i><i style="height:60%"></i><i style="height:72%"></i></div><span class="xs">ستون‌های نقطه‌چین: روزهای ثبت‌نشده.</span></div>
+<div class="card"><span class="lbl">عامل‌های پرتکرار</span><div class="row"><span class="s grow">خواب</span><div class="pb" style="width:130px"><i style="width:80%"></i></div></div><div class="row"><span class="s grow">حرکت</span><div class="pb" style="width:130px"><i style="width:55%"></i></div></div><div class="row"><span class="s grow">کار</span><div class="pb" style="width:130px"><i style="width:40%"></i></div></div></div>
+<div class="card teal"><span class="lbl">از داده‌های تو</span><b>روزهایی که خواب را عامل ذکر کرده‌ای، انرژی‌ات معمولاً بالاتر بوده است.</b><span class="xs">این فقط یک همبستگی است، نه علت.</span></div>
+</div><nav class="tab-bar" aria-label="ناوبری اصلی"><a href="#today"><svg class="i"><use href="#home"/></svg>امروز</a><a href="#goals"><svg class="i"><use href="#goal"/></svg>اهداف</a><a href="#habits"><svg class="i"><use href="#check"/></svg>عادت‌ها</a><a href="#focus"><svg class="i"><use href="#timer"/></svg>تمرکز</a><a class="on" href="#reflect" aria-current="page"><svg class="i"><use href="#book"/></svg>بازتاب</a></nav></section>
+
+<!-- ========== بُرد ۱۷–۱۸ · مرورها ========== -->
+<section class="screen" id="review-day"><div class="body">
+<div class="top"><a class="ib bg" href="#today" aria-label="بستن"><svg class="i"><use href="#x"/></svg></a><span class="step">۱ از ۳</span></div>
+<h1>مرور امروز</h1><p class="s">سه‌شنبه ۲۸ مهر · فقط آنچه خودت ثبت کرده‌ای</p>
+<div class="g2"><div class="card mint"><h2>۴</h2><span class="xs">انجام‌شده</span></div><div class="card sand"><h2>۲</h2><span class="xs">نیمه‌کاره</span></div><div class="card"><h2>۱</h2><span class="xs">عمداً ردشده</span></div><div class="card" style="border-style:dashed"><h2>۲</h2><span class="xs">ثبت‌نشده</span></div></div>
+<div class="card"><span class="lbl">زمان تمرکز</span><b>۵۰ دقیقه در ۲ جلسه</b></div>
+<div class="card"><span class="lbl">حال امروز</span><b>خوب · انرژی متوسط تا زیاد</b></div>
+<div class="card" style="background:var(--ivory)"><span class="s">دو مورد هنوز ثبت نشده. اگر خواستی همین‌جا کامل کن؛ اگر نه، مشکلی نیست.</span><a class="btn s2 sm" href="#habit-log">تکمیل ثبت‌ها</a></div>
+<span style="flex:1"></span><a class="btn" href="#review-day2">ادامه</a>
+</div></section>
+
+<section class="screen" id="review-day2"><div class="body">
+<div class="top"><a class="ib bg back" href="#review-day" aria-label="بازگشت"><svg class="i"><use href="#chev"/></svg></a><span class="step">۲ از ۳</span></div>
+<h1>چطور بود؟</h1>
+<label class="fld">چه چیزی امروز خوب پیش رفت؟<textarea class="in">پیاده‌روی ظهر کمکم کرد با ذهن بازتر کار کنم.</textarea></label>
+<label class="fld">چه چیزی سخت بود؟<textarea class="in" placeholder="می‌توانی خالی بگذاری…"></textarea></label>
+<label class="fld">یک چیز کوچک که فردا آسان‌تر شود<input class="in" value="مطالعه را ساعت ۱۷ شروع کنم"></label>
+<div class="card ai"><div class="row"><svg class="i" style="color:var(--ai)"><use href="#spark"/></svg><span class="lbl">پیشنهاد مربی · اختیاری</span></div><span class="s">می‌خواهی سؤال‌ها را کوتاه‌تر کنیم؟ تا تأیید تو چیزی عوض نمی‌شود.</span></div>
+<span style="flex:1"></span><a class="btn" href="#review-day3">ادامه</a><a class="btn t" href="#review-day3">رد کردن این مرحله</a>
+</div></section>
+
+<section class="screen" id="review-day3"><div class="body hero">
+<div class="orb" style="width:140px;height:140px"><div class="orb" style="width:86px;height:86px;background:var(--forest);color:#fff"><svg class="i" style="width:40px;height:40px"><use href="#check"/></svg></div></div>
+<h1>مرور امروز ذخیره شد</h1><p class="s">ممنون که چند دقیقه برای خودت وقت گذاشتی.</p>
+<div class="card mint" style="width:100%;text-align:right"><span class="lbl">قدم کوچک فردا</span><b>مطالعه را ساعت ۱۷ شروع کنم</b><span class="xs">به برنامهٔ فردا افزوده شد؛ هر زمان خواستی تغییرش بده.</span></div>
+<span style="flex:1"></span><a class="btn" href="#today">بازگشت به امروز</a><a class="btn t" href="#review-week">دیدن مرور هفتگی</a>
+</div></section>
+
+<section class="screen" id="review-week"><div class="body">
+<div class="top"><a class="ib bg" href="#reflect" aria-label="بستن"><svg class="i"><use href="#x"/></svg></a><span class="step">۱ از ۳</span></div>
+<h1>هفتهٔ ۲۵ تا ۳۱ مهر</h1>
+<div class="card"><span class="lbl">روزهای دارای ثبت</span><div class="bar" style="height:80px"><i style="height:70%"></i><i style="height:55%"></i><i class="n"></i><i style="height:85%"></i><i style="height:60%"></i><i class="n"></i><i class="n"></i></div><div class="g7 xs"><span>ش</span><span>ی</span><span>د</span><span>س</span><span>چ</span><span>پ</span><span>ج</span></div></div>
+<div class="card"><span class="lbl">عادت‌ها</span><div class="row"><span class="s grow">پیاده‌روی کوتاه</span><b>۵ از ۵ روز برنامه</b></div><div class="row"><span class="s grow">مطالعه ۲۰ دقیقه</span><b>۲ کامل · ۲ نیمه</b></div><div class="row"><span class="s grow">کشش شبانه</span><b>۱ از ۴</b></div></div>
+<div class="card"><span class="lbl">اهداف</span><div class="row"><span class="s grow">دویدن ۱۰ کیلومتر</span><b>۶۲٪</b></div><div class="pb"><i style="width:62%;background:var(--teal)"></i></div></div>
+<div class="card mint"><span class="s">۳ روز هیچ ثبتی نشده؛ برای ما فقط «داده نیست».</span></div>
+<span style="flex:1"></span><a class="btn" href="#review-week2">ادامه</a>
+</div></section>
+
+<section class="screen" id="review-week2"><div class="body">
+<div class="top"><a class="ib bg back" href="#review-week" aria-label="بازگشت"><svg class="i"><use href="#chev"/></svg></a><span class="step">۲ از ۳</span></div>
+<h1>بازتاب هفته</h1>
+<span class="lbl">کدام عادت را راحت‌تر ادامه دادی؟</span><div class="chips"><span class="chip on">پیاده‌روی کوتاه</span><span class="chip out">مطالعه</span><span class="chip out">کشش شبانه</span></div>
+<label class="fld">چرا فکر می‌کنی راحت‌تر بود؟<textarea class="in">کوتاه بود و بعد از ناهار طبیعی جا می‌گرفت.</textarea></label>
+<label class="fld">چه چیزی سخت‌تر بود؟<textarea class="in" placeholder="اختیاری…"></textarea></label>
+<label class="fld">یک نیت برای هفتهٔ بعد<input class="in" value="کمتر برنامه، کامل‌تر اجرا"></label>
+<span style="flex:1"></span><a class="btn" href="#review-week3">ادامه</a>
+</div></section>
+
+<section class="screen" id="review-week3"><div class="body">
+<div class="top"><a class="ib bg back" href="#review-week2" aria-label="بازگشت"><svg class="i"><use href="#chev"/></svg></a><span class="step">۳ از ۳</span></div>
+<h1>برنامهٔ هفتهٔ بعد</h1>
+<div class="card mint"><span class="lbl">انتخاب‌شده توسط تو</span><b>نیت: کمتر برنامه، کامل‌تر اجرا</b></div>
+<span class="lbl" style="color:#4D4380">پیشنهادهای مربی · اعمال نشده</span>
+<div class="card ai"><b>مطالعه را ۱۰ دقیقه کنیم؟</b><div class="row"><a class="btn sm" href="#review-week3">می‌پذیرم</a><a class="btn t sm" href="#review-week3">رد</a></div></div>
+<div class="card ai" style="border-style:solid;border-color:var(--forest)"><b>کشش شبانه از ۴ به ۲ روز</b><span class="chip" style="align-self:flex-start">پذیرفته شد؛ با ذخیره اعمال می‌شود</span></div>
+<div class="card ai" style="opacity:.55"><b>جلسهٔ تمرکز عصرها</b><span class="xs">رد شد · پیشنهاد دیگر ارائه نمی‌شود</span></div>
+<span style="flex:1"></span><a class="btn" href="#insights">ذخیرهٔ مرور هفتگی</a><a class="btn t" href="#reflect">فعلاً پیش‌نویس</a>
+</div></section>
+
+<!-- ========== بُرد ۱۹ · بینش‌ها ========== -->
+<section class="screen" id="insights"><div class="body nav-pad">
+<div class="top"><a class="ib bg back" href="#reflect" aria-label="بازگشت"><svg class="i"><use href="#chev"/></svg></a><h2>پیشرفت و بینش‌ها</h2></div>
+<div class="tabs"><a href="#insights">هفته</a><a class="on" href="#insights">ماه</a><a href="#insights">سه‌ماهه</a></div>
+<div class="card"><div class="row"><span class="lbl grow">روزهای دارای ثبت · مهر</span><span class="xs">۲۱ از ۲۸ روز</span></div>
+<div class="hm"><i class="l3"></i><i class="l2"></i><i class="l4"></i><i class="l0"></i><i class="l3"></i><i class="l2"></i><i class="l1"></i><i class="l4"></i><i class="l3"></i><i class="l3"></i><i class="l2"></i><i class="l0"></i><i class="l2"></i><i class="l3"></i><i class="l2"></i><i class="l4"></i><i class="l3"></i><i class="l1"></i><i class="l3"></i><i class="l0"></i><i class="l2"></i><i class="l3"></i><i class="l4"></i><i class="l2"></i><i class="l3"></i></div>
+<span class="xs">روشن‌تر: ثبت کمتر · تیره‌تر: ثبت بیشتر · نقطه‌چین: ثبت‌نشده</span></div>
+<div class="g2"><div class="card"><h2>۲۴</h2><span class="xs">جلسهٔ تمرکز</span></div><div class="card"><h2>۱۸ ساعت</h2><span class="xs">زمان تمرکز</span></div></div>
+<div class="chips"><span class="chip on">همه</span><span class="chip out">از داده‌های تو</span><span class="chip out">پیشنهادها</span></div>
+<a class="card teal" href="#insight-detail"><span class="lbl" style="color:#2F6A64">از داده‌های تو</span><b>پیاده‌روی کوتاه در ۸۰٪ روزهای برنامه‌ریزی‌شده ثبت شده است.</b><span class="xs">منبع: ثبت‌های عادت · ۴ هفتهٔ اخیر</span></a>
+<a class="card teal" href="#insight-detail"><span class="lbl" style="color:#2F6A64">از داده‌های تو</span><b>جلسه‌های تمرکز صبح، بیشتر کامل شده‌اند تا عصر.</b><span class="xs">منبع: ۲۴ جلسه</span></a>
+<div class="card ai"><div class="row"><svg class="i" style="color:var(--ai)"><use href="#spark"/></svg><span class="lbl">پیشنهاد · اعمال نشده</span></div><b>مطالعه را بعد از پیاده‌روی بگذاریم؟</b><div class="row"><a class="btn sm" href="#coach">بررسی</a><a class="btn t sm" href="#insights">رد</a></div></div>
+<div class="card" style="border-style:dashed;background:var(--ivory)"><b>هنوز داده کافی نیست</b><span class="s">برای دیدن الگوی خواب، چند روز دیگر حال و انرژی را ثبت کن.</span></div>
+</div><nav class="tab-bar" aria-label="ناوبری اصلی"><a href="#today"><svg class="i"><use href="#home"/></svg>امروز</a><a href="#goals"><svg class="i"><use href="#goal"/></svg>اهداف</a><a href="#habits"><svg class="i"><use href="#check"/></svg>عادت‌ها</a><a href="#focus"><svg class="i"><use href="#timer"/></svg>تمرکز</a><a class="on" href="#reflect" aria-current="page"><svg class="i"><use href="#book"/></svg>بازتاب</a></nav></section>
+
+<section class="screen" id="insight-detail"><div class="body">
+<div class="top"><a class="ib bg back" href="#insights" aria-label="بازگشت"><svg class="i"><use href="#chev"/></svg></a></div>
+<div class="card teal"><span class="lbl" style="color:#2F6A64">از داده‌های تو</span><h2>جلسه‌های صبح بیشتر کامل شده‌اند</h2></div>
+<div class="card"><span class="lbl">شواهد</span><div class="row"><span class="s grow">جلسه‌های صبح (۹–۱۲)</span><b>۱۱ از ۱۲ کامل</b></div><div class="pb"><i style="width:92%"></i></div><div class="row"><span class="s grow">جلسه‌های عصر</span><b>۶ از ۱۲ کامل</b></div><div class="pb"><i style="width:50%;background:#B8CBBE"></i></div></div>
+<div class="card sand"><span class="s">این فقط توصیف داده‌هاست؛ شاید دلیل‌های دیگری هم داشته باشد (مثلاً کارهای عصر سنگین‌ترند).</span></div>
+<span style="flex:1"></span><a class="btn s2" href="#coach">از مربی بپرس</a><a class="btn t" href="#insights">دیگر این نوع بینش را نشان نده</a>
+</div></section>
+
+<!-- ========== بُرد ۲۰ · مربی ========== -->
+<section class="screen" id="coach"><div class="body">
+<div class="top"><a class="ib bg back" href="#insights" aria-label="بازگشت"><svg class="i"><use href="#chev"/></svg></a><h2>مربی اِوالو</h2><a class="ib bg" href="#coach-data" aria-label="داده‌ها"><svg class="i"><use href="#lock"/></svg></a></div>
+<div class="um">چرا این هفته کمتر مطالعه کردم؟</div>
+<div class="cm"><span class="lbl" style="color:#4D4380;display:block">بر پایهٔ ثبت‌های تو</span>این هفته مطالعه ۲ بار کامل و ۲ بار نیمه‌کاره ثبت شده، و ۳ روز ثبتی نبوده. بیشتر ثبت‌ها عصر بوده و انرژی‌ات در ۲ شب «خسته» بوده است.</div>
+<div class="cm"><span class="lbl" style="color:#4D4380;display:block">تفسیر مربی · قطعی نیست</span>شاید ۲۰ دقیقه در شب برایت زیاد است. دلیل دیگری هم ممکن است باشد؛ تو بهتر می‌دانی.</div>
+<div class="card ai"><div class="row"><svg class="i" style="color:var(--ai)"><use href="#spark"/></svg><span class="lbl">پیشنهاد · اعمال نشده</span></div><b>مطالعه را از ۲۰ به ۱۰ دقیقه کم کنیم و ساعتش را ۱۷:۰۰ بگذاریم؟</b><div class="row"><a class="btn sm" href="#coach-confirm">بررسی تغییر</a><a class="btn t sm" href="#coach">فعلاً نه</a></div></div>
+<div class="chips"><span class="chip lav">برنامهٔ فردا را سبک کن</span><span class="chip lav">الگوی این هفته</span></div>
+<span style="flex:1"></span>
+<div class="row"><input class="in" placeholder="سؤالت را بنویس…" aria-label="پیام"><a class="ib" style="background:var(--forest);color:#fff" href="#coach-error" aria-label="ارسال"><svg class="i" style="transform:scaleX(-1)"><use href="#chev"/></svg></a></div>
+</div></section>
+
+<section class="screen" id="coach-data"><div class="body">
+<div class="top"><a class="ib bg back" href="#coach" aria-label="بازگشت"><svg class="i"><use href="#chev"/></svg></a><h2>داده‌هایی که مربی می‌بیند</h2></div>
+<div class="card lav" style="align-items:center;text-align:center"><div class="orb" style="width:64px;height:64px;background:#fff;color:var(--ai)"><svg class="i"><use href="#spark"/></svg></div><h3>سلام مایا؛ چطور کمکت کنم؟</h3><span class="s">می‌توانم الگوها را توضیح بدهم یا پیشنهاد بدهم؛ تصمیم همیشه با خودت است.</span></div>
+<div class="card"><div class="row"><b class="grow">عادت‌ها و اهداف</b><span class="tg"></span></div><div class="row"><b class="grow">جلسه‌های تمرکز</b><span class="tg"></span></div><div class="row"><b class="grow">حال و انرژی</b><span class="tg"></span></div><div class="row"><div class="grow"><b>متن یادداشت‌ها</b><div class="xs">پیش‌فرض: خاموش</div></div><span class="tg o"></span></div></div>
+<div class="open"><b>پرسش باز:</b> محل پردازش مربی (روی دستگاه یا سرور) در مشخصات مشخص نیست.</div>
+</div></section>
+
+<section class="screen" id="coach-confirm"><div class="body" style="opacity:.35"><h2>مربی اِوالو</h2></div>
+<div class="sheetbg"><a class="back-area" href="#coach" aria-label="بستن"></a><div class="sheet"><h2>این تغییر چه چیزی را عوض می‌کند؟</h2>
+<div class="card"><span class="lbl">قبل</span><b>مطالعه ۲۰ دقیقه · ۲۱:۰۰</b></div>
+<div class="card ai"><span class="lbl">بعد (پیشنهادی)</span><b>مطالعه ۱۰ دقیقه · ۱۷:۰۰</b></div>
+<span class="xs">فقط عادت «مطالعه» عوض می‌شود. تاریخچهٔ ثبت‌ها دست‌نخورده می‌ماند و هر زمان می‌توانی برگردانی.</span>
+<a class="btn" href="#habits">تأیید و اعمال</a><a class="btn t" href="#coach">انصراف</a></div></div></section>
+
+<section class="screen" id="coach-error"><div class="body">
+<div class="top"><a class="ib bg back" href="#coach" aria-label="بازگشت"><svg class="i"><use href="#chev"/></svg></a><h2>مربی اِوالو</h2></div>
+<div class="um">برنامهٔ فردا را سبک کن</div>
+<div class="card sand"><span class="s" style="color:#4A4030">اتصال برقرار نشد؛ پیام ذخیره شد و بعداً ارسال می‌شود.</span><a class="btn s2 sm" href="#coach">تلاش دوباره</a></div>
+</div></section>
+
+<!-- ========== بُرد ۲۱ · اعلان‌ها ========== -->
+<section class="screen" id="notifs"><div class="body">
+<div class="top"><a class="ib bg back" href="#today" aria-label="بازگشت"><svg class="i"><use href="#chev"/></svg></a><h2>اعلان‌ها</h2><a class="ib bg" href="#notif-settings" aria-label="تنظیم اعلان‌ها"><svg class="i"><use href="#sliders"/></svg></a></div>
+<span class="lbl">امروز</span>
+<a class="card row" href="#habit-log" style="border-right:4px solid var(--sage)"><span class="ib" style="background:var(--mint)"><svg class="i"><use href="#check"/></svg></span><div class="grow"><b>وقت یک پیاده‌روی کوتاه است؟</b><div class="xs">یادآور عادت · ۱۳:۳۰</div></div></a>
+<a class="card row" href="#focus"><span class="ib" style="background:var(--mint)"><svg class="i"><use href="#timer"/></svg></span><div class="grow"><b>جلسهٔ تمرکز ساعت ۱۱ آماده است</b><div class="xs">یادآور برنامه · ۱۰:۵۵</div></div></a>
+<span class="lbl">دیروز</span>
+<a class="card ai row" href="#coach"><span class="ib" style="background:#fff;color:var(--ai)"><svg class="i"><use href="#spark"/></svg></span><div class="grow"><b>پیشنهاد مربی در انتظار بررسی تو</b><div class="xs">اعمال نشده · ۲۰:۱۰</div></div></a>
+<a class="card row" href="#review-week"><span class="ib" style="background:var(--mint)"><svg class="i"><use href="#book"/></svg></span><div class="grow"><b>مرور هفتگی‌ات آماده است</b><div class="xs">یادآور بازتاب · ۱۸:۰۰</div></div></a>
+<div class="card mint"><span class="s">اعلان‌های تو فقط از چیزهایی است که خودت روشن کرده‌ای.</span></div>
+<a class="s" style="text-align:center" href="#notif-off">نمونه: اعلان‌ها خاموش است ←</a>
+</div></section>
+
+<section class="screen" id="notif-settings"><div class="body">
+<div class="top"><a class="ib bg back" href="#notifs" aria-label="بازگشت"><svg class="i"><use href="#chev"/></svg></a><h2>یادآورها</h2></div>
+<div class="card"><div class="row"><div class="grow"><b>یادآور عادت‌ها</b><div class="xs">هر عادت زمان خودش را دارد</div></div><span class="tg"></span></div></div>
+<div class="card"><div class="row"><div class="grow"><b>یادآور جلسهٔ تمرکز</b><div class="xs">۵ دقیقه قبل از شروع</div></div><span class="tg"></span></div></div>
+<div class="card"><div class="row"><div class="grow"><b>مرور روزانه</b><div class="xs">ساعت ۲۱:۳۰</div></div><span class="tg"></span></div></div>
+<div class="card"><div class="row"><div class="grow"><b>مرور هفتگی</b><div class="xs">جمعه‌ها · ۱۸:۰۰</div></div><span class="tg o"></span></div></div>
+<div class="card"><div class="row"><div class="grow"><b>پیشنهادهای مربی</b><div class="xs">فقط وقتی داده کافی باشد</div></div><span class="tg o"></span></div></div>
+<div class="card lav"><span class="lbl">ساعت سکوت</span><div class="row"><input class="in" value="۲۲:۳۰" aria-label="از"><span class="xs">تا</span><input class="in" value="۰۷:۰۰" aria-label="تا"></div></div>
+<div class="card"><div class="row"><b class="grow">حداکثر اعلان در روز</b><span class="chip">۳</span></div></div>
+</div></section>
+
+<section class="screen" id="notif-off"><div class="body">
+<div class="top"><a class="ib bg back" href="#notifs" aria-label="بازگشت"><svg class="i"><use href="#chev"/></svg></a><h2>اعلان‌ها</h2></div>
+<div class="card sand"><b>اعلان‌ها خاموش است</b><span class="s" style="color:#4A4030">مشکلی نیست. اگر خواستی، از تنظیمات سیستم می‌توانی روشن کنی؛ اِوالو بدون آن هم کار می‌کند.</span><a class="btn s2 sm" href="#notif-settings">باز کردن تنظیمات</a></div>
+</div></section>
+
+<!-- ========== بُرد ۲۲ · پروفایل ========== -->
+<section class="screen" id="profile"><div class="body">
+<div class="top"><a class="ib bg back" href="#today" aria-label="بازگشت"><svg class="i"><use href="#chev"/></svg></a><h2>من</h2></div>
+<div class="card mint row" style="padding:18px"><span class="av" style="width:64px;height:64px;border-radius:32px;font-size:24px">م</span><div class="grow"><h2>مایا</h2><div class="xs" dir="ltr" style="text-align:right">maya@example.com</div><div class="xs">همراه اِوالو از مهر ۱۴۰۵</div></div><a class="btn s2 sm" href="#profile-edit">ویرایش</a></div>
+<span class="lbl">برای من مهم است</span><div class="chips"><span class="chip">عادت‌های سالم</span><span class="chip">خواب بهتر</span><span class="chip out">+ تغییر</span></div>
+<div class="card list">
+<a class="row" href="#prefs"><svg class="i"><use href="#sliders"/></svg><b class="grow">ترجیحات</b><svg class="i"><use href="#chevl"/></svg></a>
+<a class="row" href="#notif-settings"><svg class="i"><use href="#bell"/></svg><b class="grow">اعلان‌ها و یادآورها</b><svg class="i"><use href="#chevl"/></svg></a>
+<a class="row" href="#privacy"><svg class="i"><use href="#lock"/></svg><b class="grow">حریم خصوصی و داده‌ها</b><svg class="i"><use href="#chevl"/></svg></a>
+<a class="row" href="#profile-edit"><svg class="i"><use href="#user"/></svg><b class="grow">حساب کاربری</b><svg class="i"><use href="#chevl"/></svg></a>
+<a class="row" href="#states"><svg class="i"><use href="#spark"/></svg><b class="grow">حالت‌های خاص (نمونه)</b><svg class="i"><use href="#chevl"/></svg></a>
+<a class="row" href="#map"><svg class="i"><use href="#goal"/></svg><b class="grow">نقشهٔ صفحه‌ها</b><svg class="i"><use href="#chevl"/></svg></a></div>
+<span style="flex:1"></span><a class="btn t" style="color:#9A3F33" href="#welcome">خروج از حساب</a>
+</div></section>
+
+<section class="screen" id="prefs"><div class="body">
+<div class="top"><a class="ib bg back" href="#profile" aria-label="بازگشت"><svg class="i"><use href="#chev"/></svg></a><h2>ترجیحات</h2></div>
+<div class="card"><span class="lbl">زبان و تقویم</span><div class="row"><b class="grow">زبان</b><span class="chip">فارسی</span></div><div class="row"><b class="grow">تقویم</b><div class="tabs" style="width:170px"><a class="on" href="#prefs">شمسی</a><a href="#prefs">میلادی</a></div></div><div class="row"><b class="grow">شروع هفته</b><span class="chip">شنبه</span></div></div>
+<div class="card"><span class="lbl">لحن مربی</span><div class="tabs"><a class="on" href="#prefs">ملایم</a><a href="#prefs">متعادل</a><a href="#prefs">مستقیم</a></div><span class="s">«ملایم»: تشویق و پرسش به‌جای توصیهٔ صریح.</span></div>
+<div class="card"><span class="lbl">ظاهر</span><div class="tabs"><a class="on" href="#prefs">روشن</a><a href="#prefs">تیره</a><a href="#prefs">خودکار</a></div><div class="row"><b class="grow">اندازهٔ متن</b><span class="chip out">متوسط</span></div><div class="row"><b class="grow">کاهش حرکت و انیمیشن</b><span class="tg o"></span></div></div>
+<span style="flex:1"></span><a class="btn" href="#profile">ذخیره</a>
+</div></section>
+
+<section class="screen" id="profile-edit"><div class="body">
+<div class="top"><a class="ib bg back" href="#profile" aria-label="بازگشت"><svg class="i"><use href="#chev"/></svg></a><h2>ویرایش پروفایل</h2></div>
+<span class="av" style="width:88px;height:88px;border-radius:44px;font-size:32px;align-self:center">م</span><a class="btn t sm" style="align-self:center" href="#profile-edit">تغییر تصویر</a>
+<label class="fld">نام نمایشی<input class="in" value="مایا"></label>
+<label class="fld">ایمیل<input class="in" value="maya@example.com" readonly dir="ltr" style="text-align:right;color:var(--text2)"></label>
+<span class="lbl">برای من مهم است</span><div class="chips"><span class="chip on">عادت‌های سالم</span><span class="chip on">خواب بهتر</span><span class="chip out">تمرکز عمیق</span><span class="chip out">یادگیری مداوم</span></div>
+<span style="flex:1"></span><a class="btn" href="#profile">ذخیرهٔ تغییرات</a><a class="btn t" href="#profile">انصراف</a>
+</div></section>
+
+<!-- ========== بُرد ۲۳ · حریم خصوصی ========== -->
+<section class="screen" id="privacy"><div class="body">
+<div class="top"><a class="ib bg back" href="#profile" aria-label="بازگشت"><svg class="i"><use href="#chev"/></svg></a><h2>حریم خصوصی و داده‌ها</h2></div>
+<div class="card mint"><div class="row"><svg class="i"><use href="#lock"/></svg><h3>داده‌های تو، تحت کنترل تو</h3></div><span class="s">اِوالو فقط چیزی را ذخیره می‌کند که خودت ثبت کرده‌ای.</span></div>
+<div class="card"><span class="lbl">استفاده از داده‌ها</span>
+<div class="row"><div class="grow"><b>مربی از ثبت‌های من استفاده کند</b><div class="xs">عادت‌ها، تمرکز، حال</div></div><span class="tg"></span></div>
+<div class="row"><div class="grow"><b>مربی متن یادداشت‌ها را بخواند</b><div class="xs">پیش‌فرض: خاموش</div></div><span class="tg o"></span></div>
+<div class="row"><b class="grow">آمار ناشناس برای بهبود برنامه</b><span class="tg o"></span></div></div>
+<div class="card"><div class="row"><b class="grow">قفل برنامه (اثر انگشت یا رمز)</b><span class="tg o"></span></div></div>
+<div class="card list"><a class="row" href="#export"><b class="grow">گرفتن خروجی از داده‌ها</b><svg class="i"><use href="#chevl"/></svg></a><a class="row" href="#delete" style="color:#9A3F33"><b class="grow">حذف حساب و داده‌ها</b><svg class="i"><use href="#chevl"/></svg></a></div>
+<div class="open"><b>پرسش باز:</b> مدت نگه‌داری پس از حذف و رمزگذاری سرتاسری در مشخصات نیامده است.</div>
+</div></section>
+
+<section class="screen" id="export"><div class="body">
+<div class="top"><a class="ib bg back" href="#privacy" aria-label="بازگشت"><svg class="i"><use href="#chev"/></svg></a><h2>خروجی داده‌ها</h2></div>
+<span class="lbl">چه چیزی شامل شود؟</span>
+<div class="card"><div class="row"><span class="ck d"></span><b>اهداف و عادت‌ها</b></div><div class="row"><span class="ck d"></span><b>ثبت‌های روزانه</b></div><div class="row"><span class="ck d"></span><b>جلسه‌های تمرکز</b></div><div class="row"><span class="ck"></span><b>یادداشت‌ها</b></div></div>
+<span class="lbl">قالب فایل</span><div class="chips"><span class="chip on">CSV</span><span class="chip out">JSON</span><span class="chip out">PDF</span></div>
+<div class="card teal"><span class="s">فایل فقط روی دستگاه خودت ذخیره می‌شود و برای کسی ارسال نمی‌شود.</span></div>
+<span style="flex:1"></span>
+<div class="card"><div class="row"><b class="grow">در حال آماده‌سازی…</b><span class="xs">۶۰٪</span></div><div class="pb"><i style="width:60%"></i></div></div>
+<span class="btn dis">دانلود فایل</span>
+</div></section>
+
+<section class="screen" id="delete"><div class="body">
+<div class="top"><a class="ib bg back" href="#privacy" aria-label="بازگشت"><svg class="i"><use href="#chev"/></svg></a><h2>حذف حساب</h2></div>
+<div class="card sand"><h3>این کار برگشت‌پذیر نیست</h3><span class="s" style="color:#4A4030">همهٔ اهداف، عادت‌ها، ثبت‌ها و یادداشت‌هایت برای همیشه پاک می‌شود.</span></div>
+<div class="card"><b>قبل از حذف، شاید بخواهی…</b><a class="btn s2 sm" href="#export">اول خروجی بگیر</a></div>
+<label class="fld">برای تأیید، کلمهٔ «حذف» را بنویس<input class="in e" value="حذ"><span class="err">کلمه هنوز کامل نیست.</span></label>
+<span style="flex:1"></span><span class="btn dis">حذف دائمی حساب</span><a class="btn t" href="#privacy">منصرف شدم</a>
+</div></section>
+
+<!-- ========== بُرد ۲۴ · حالت‌ها ========== -->
+<section class="screen" id="states"><div class="body">
+<div class="top"><a class="ib bg back" href="#today" aria-label="بازگشت"><svg class="i"><use href="#chev"/></svg></a><h2>حالت‌های خاص</h2></div>
+<p class="s">نمونهٔ حالت‌هایی که در سراسر برنامه تکرار می‌شوند.</p>
+<div class="card list">
+<a class="row" href="#st-offline"><b class="grow">آفلاین</b><svg class="i"><use href="#chevl"/></svg></a>
+<a class="row" href="#st-loading"><b class="grow">بارگذاری و خطا</b><svg class="i"><use href="#chevl"/></svg></a>
+<a class="row" href="#st-success"><b class="grow">موفقیت و تکمیل هدف</b><svg class="i"><use href="#chevl"/></svg></a>
+<a class="row" href="#st-delete"><b class="grow">تأیید حذف عادت</b><svg class="i"><use href="#chevl"/></svg></a>
+<a class="row" href="#goals-empty"><b class="grow">حالت خالی اهداف</b><svg class="i"><use href="#chevl"/></svg></a>
+<a class="row" href="#focus-empty"><b class="grow">حالت خالی تمرکز</b><svg class="i"><use href="#chevl"/></svg></a></div>
+</div></section>
+
+<section class="screen" id="st-offline"><div class="offline"><b>آفلاین هستی.</b> ثبت‌ها ذخیره می‌شوند و بعداً همگام می‌شوند.</div><div class="body">
+<div class="top"><a class="ib bg back" href="#states" aria-label="بازگشت"><svg class="i"><use href="#chev"/></svg></a><h2>امروز</h2></div>
+<div class="card"><div class="row"><span class="ck d"></span><b class="grow">پیاده‌روی کوتاه</b><span class="chip sand">در انتظار همگام‌سازی</span></div></div>
+<div class="card"><div class="row"><span class="ck"></span><b class="grow">مطالعه ۲۰ دقیقه</b></div></div>
+<div class="card ai" style="opacity:.65"><div class="row"><svg class="i"><use href="#spark"/></svg><span class="lbl">مربی</span></div><span class="s">مربی به اینترنت نیاز دارد. هر وقت وصل شدی دوباره امتحان کن.</span><span class="btn dis sm">پرسیدن (غیرفعال)</span></div>
+</div></section>
+
+<section class="screen" id="st-loading"><div class="body">
+<div class="top"><a class="ib bg back" href="#states" aria-label="بازگشت"><svg class="i"><use href="#chev"/></svg></a><h2>بارگذاری</h2></div>
+<div class="card"><div class="sk" style="width:40%"></div><div class="sk" style="width:80%"></div></div>
+<div class="card"><div class="sk" style="width:30%"></div><div class="sk" style="width:70%"></div><div class="sk" style="width:60%"></div></div>
+<div class="card empty" style="background:var(--ivory);border-style:dashed"><b>نتوانستیم همه‌چیز را بارگذاری کنیم</b><span class="s">مشکل از طرف ماست، نه تو. داده‌هایت سالم است.</span><a class="btn s2 sm" href="#st-loading">تلاش دوباره</a></div>
+</div></section>
+
+<section class="screen" id="st-success"><div class="body">
+<div class="top"><a class="ib bg back" href="#states" aria-label="بازگشت"><svg class="i"><use href="#chev"/></svg></a><h2>اهداف من</h2></div>
+<div class="card mint empty"><div class="orb" style="width:70px;height:70px;background:var(--forest);color:#fff"><svg class="i" style="width:32px;height:32px"><use href="#check"/></svg></div><h2>هدف تکمیل شد</h2><b>دویدن ۵ کیلومتر</b><span class="s">۴ هفته ثبت‌های واقعی؛ مسیرت را ببین.</span><a class="btn s2 sm" href="#goal-milestones">دیدن مسیر</a></div>
+<span style="flex:1"></span><div class="toast"><svg class="i"><use href="#check"/></svg>هدف جدید ذخیره شد.<a href="#st-success">بازگردانی</a></div>
+</div></section>
+
+<section class="screen" id="st-delete"><div class="body" style="opacity:.4"><h2>عادت‌ها</h2></div>
+<div class="dlgwrap"><div class="dlg"><h2>این عادت حذف شود؟</h2><p class="s">«کشش شبانه» و ثبت‌های آن حذف می‌شود. اگر فقط می‌خواهی استراحت کنی، «توقف موقت» بهتر است.</p><a class="btn s2" href="#habits">توقف موقت</a><a class="btn danger" href="#habits">حذف عادت</a><a class="btn t" href="#states">انصراف</a></div></div></section>
+
+<!-- ========== بُرد ۲۵ · نقشهٔ مسیرها ========== -->
+<section class="screen" id="map"><div class="body">
+<div class="top"><a class="ib bg back" href="#today" aria-label="بازگشت"><svg class="i"><use href="#chev"/></svg></a><h2>نقشهٔ صفحه‌ها</h2></div>
+<p class="s">همهٔ صفحه‌های این نمونه از اینجا قابل‌دسترسی‌اند.</p>
+<div class="card"><span class="lbl">مسیر ۱ · از هدف تا بینش</span><div class="chips"><a class="chip" href="#today">امروز</a><a class="chip" href="#goal-new">ساخت هدف</a><a class="chip" href="#goal-detail">جزئیات</a><a class="chip" href="#habit-log">ثبت روزانه</a><a class="chip" href="#review-week">مرور هفتگی</a><a class="chip" href="#insights">بینش‌ها</a><a class="chip" href="#coach">مربی</a></div></div>
+<div class="card"><span class="lbl">مسیر ۲ · از تمرکز تا بازتاب</span><div class="chips"><a class="chip" href="#today">امروز</a><a class="chip" href="#focus">آماده‌سازی</a><a class="chip" href="#focus-run">تایمر</a><a class="chip" href="#focus-end">پایان</a><a class="chip" href="#focus-history">تاریخچه</a><a class="chip" href="#review-day">مرور روزانه</a></div></div>
+<div class="card"><span class="lbl">سایر</span><div class="chips"><a class="chip out" href="#welcome">آشنایی</a><a class="chip out" href="#register">ثبت‌نام</a><a class="chip out" href="#calendar">تقویم</a><a class="chip out" href="#notes">یادداشت‌ها</a><a class="chip out" href="#mood">حال</a><a class="chip out" href="#notifs">اعلان‌ها</a><a class="chip out" href="#profile">پروفایل</a><a class="chip out" href="#privacy">حریم خصوصی</a><a class="chip out" href="#states">حالت‌های خاص</a></div></div>
+<div class="card sand"><span class="lbl" style="color:#6B5B3A">پرسش‌های باز</span><span class="s" style="color:#4A4030">مشخصات تفصیلی محصول پیوست نبود؛ روش‌های ورود جایگزین، اتصال به تقویم بیرونی، محل پردازش مربی و مدت نگه‌داری داده تعریف نشده است.</span></div>
+</div></section>
+
+</main>
+</body>
+</html>
