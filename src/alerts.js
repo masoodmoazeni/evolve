@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { db, getKV } from './db.js';
 import { DEFAULT_NOTIF, buildSchedule, isNative } from './notify.js';
 import { playSound } from './sound.js';
+import { remainingMs } from './focusLogic.js';
 import { dateKey, nowTime, timeToMin, weekdayIdx } from './util.js';
 
 export const BANNER_EVENT = 'evolve:banner';
@@ -29,11 +30,11 @@ export async function requestWebPermission() {
 }
 
 // هشدار فوری: صدا + لرزش + بنر داخل اپ + اعلان وب
-export async function alertNow({ title = 'اِوالو', body = '' }) {
+export async function alertNow({ title = 'اِوالو', body = '', sticky = false, to = null }) {
   const cfg = await settings();
   playSound(cfg.sound, cfg.volume);
   if (cfg.vibrate) navigator.vibrate?.([200, 100, 200]);
-  window.dispatchEvent(new CustomEvent(BANNER_EVENT, { detail: { title, body } }));
+  window.dispatchEvent(new CustomEvent(BANNER_EVENT, { detail: { title, body, sticky, to } }));
   if (cfg.enabled) webNotify(title, body);
 }
 
@@ -90,4 +91,47 @@ export function useReminderWatcher() {
       document.removeEventListener('visibilitychange', run);
     };
   }, []);
+}
+
+// پایان جلسهٔ تمرکز از هر صفحه‌ای: بنر ماندگار + صدا + لرزش (فقط یک بار برای هر جلسه)
+export async function checkFocusEnd(now = Date.now()) {
+  const row = await db.kv.get('focusRun');
+  const run = row?.value;
+  if (!run || run.pausedAt || run.endedAt || remainingMs(run, now) > 0) return false;
+  const k = `evolve-focus-alert:${run.startedAt}`;
+  if (seen(k)) return false;
+  mark(k);
+  await alertNow({ title: 'جلسهٔ تمرکز تمام شد', body: 'کارت عالی بود. هر وقت خواستی ثبتش کن.', sticky: true, to: '/focus/run' });
+  return true;
+}
+
+export function useFocusWatcher() {
+  useEffect(() => {
+    const run = () => checkFocusEnd().catch(() => {});
+    run();
+    const id = setInterval(run, 1000);
+    document.addEventListener('visibilitychange', run);
+    return () => {
+      clearInterval(id);
+      document.removeEventListener('visibilitychange', run);
+    };
+  }, []);
+}
+
+// صفحه را در طول تمرکز روشن نگه می‌دارد (در صورت پشتیبانی مرورگر/وب‌ویو)
+export function useKeepAwake(active) {
+  useEffect(() => {
+    if (!active || !navigator.wakeLock) return undefined;
+    let lock;
+    let off = false;
+    const take = async () => {
+      if (off || document.visibilityState !== 'visible') return;
+      const cfg = await settings();
+      if (!cfg.keepAwake) return;
+      try { lock = await navigator.wakeLock.request('screen'); } catch { /* اختیاری */ }
+    };
+    take();
+    document.addEventListener('visibilitychange', take);
+    return () => { off = true; document.removeEventListener('visibilitychange', take); lock?.release?.().catch(() => {}); };
+  }, [active]);
 }

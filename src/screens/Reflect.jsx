@@ -17,6 +17,8 @@ const HUB = [
   { to: '/insights', label: 'بینش‌ها', text: 'توصیف داده‌های خودت', icon: 'chart' },
   { to: '/coach', label: 'مربی', text: 'پیشنهادهای قانون‌محور', icon: 'spark' },
   { to: '/calendar', label: 'تقویم', text: 'ماه، هفته و روز', icon: 'cal' },
+  { to: '/game', label: 'امتیاز و نشان‌ها', text: 'سطح، ماموریت و چالش هفته', icon: 'spark' },
+  { to: '/howto', label: 'نحوهٔ کار با اِوالو', text: 'راهنمای کامل و امتیازها', icon: 'book' },
   { to: '/notifications', label: 'اعلان‌ها', text: 'یادآورهای ملایم', icon: 'bell' },
   { to: '/profile', label: 'پروفایل و حریم', text: 'ترجیحات و داده‌ها', icon: 'user' },
 ];

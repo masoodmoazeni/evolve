@@ -13,6 +13,7 @@ import { recoveryState } from '../coachRules.js';
 import { computeMilestones } from '../milestoneLogic.js';
 import { DaySummary, HardDay, MilestoneCard, NextAction, RecoveryCard, nextAction, remainingMinutes } from './TodayCards.jsx';
 import { setHabitLog } from '../data.js';
+import { GameCard } from './Game.jsx';
 import './Today.css';
 
 function TaskRow({ task }) {
@@ -78,7 +79,7 @@ export function Today() {
 
   const name = profile?.name;
   const head = (
-    <Top title={`${greeting(new Date().getHours())}${name ? `، ${name}` : ''}`} right={<Link className="ib bg" to="/profile" aria-label="پروفایل"><Icon name="user" /></Link>} />
+    <Top title={`${greeting(new Date().getHours())}${name ? `، ${name}` : ''}`} right={<><Link className="ib bg" to="/notifications" aria-label="اعلان‌ها"><Icon name="bell" /></Link><Link className="ib bg" to="/profile" aria-label="پروفایل"><Icon name="user" /></Link></>} />
   );
   if (!habits || !tasks || !logs14 || !moods || !focusRows || !history || seen === undefined || recovDismissed === undefined || pending === undefined) return <Page>{head}<Skeleton rows={4} /></Page>;
 
@@ -123,6 +124,7 @@ export function Today() {
       )}
       <MilestoneCard items={milestones} seen={seen} />
       {recov && <RecoveryCard state={recov} suggestion={recovSuggestion} nextHabit={nextHabit} today={today} onMinimum={logMinimum} onResume={(h) => setSheet({ habit: h, date: today })} />}
+      <GameCard />
       <Intent today={today} />
       <NextAction next={next} remaining={remainingMinutes(todays, logged)} onHabit={(h) => setSheet({ habit: h, date: today })} />
       {hardDay && <HardDay todays={todays} logged={logged} today={today} />}
