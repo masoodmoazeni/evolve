@@ -1,9 +1,9 @@
 import { dateKey, nowTime, faNum } from './util.js';
 
 // جلسهٔ تمرکز: زمان همیشه از اختلاف Date.now() و startedAt محاسبه می‌شود
-export function startRun({ title = '', taskId = null, intent = '', planned = 25 }, now = Date.now()) {
+export function startRun({ title = '', taskId = null, goalId = null, intent = '', planned = 25 }, now = Date.now()) {
   const d = new Date(now);
-  return { startedAt: now, planned, pausedAt: null, pausedTotal: 0, endedAt: null, title, taskId, intent, date: dateKey(d), start: nowTime(d) };
+  return { startedAt: now, planned, pausedAt: null, pausedTotal: 0, endedAt: null, title, taskId, goalId, intent, date: dateKey(d), start: nowTime(d) };
 }
 
 export const elapsedMs = (run, now = Date.now()) =>

@@ -49,6 +49,7 @@ export function Privacy() {
       <div className="col">
         <Link className="btn s2" to="/privacy/export">خروجی گرفتن از داده‌ها</Link>
         <Link className="btn s2" to="/privacy/import">وارد کردن پشتیبان</Link>
+        <Link className="btn s2" to="/privacy/coach">خروجی برای مربی هوشمند (AI)</Link>
         <Link className="btn s2" to="/privacy/report">گزارش و تحلیل داده‌ها</Link>
         <Link className="btn t" to="/privacy/delete">حذف همهٔ داده‌ها</Link>
       </div>
@@ -90,6 +91,7 @@ export function PrivacyExport() {
       </Card>
       {msg && <p className="s" role="status">{msg}</p>}
       <div className="col">
+        <Link className="btn s2" to="/privacy/coach">خروجی برای مربی هوشمند (AI)</Link>
         <Link className="btn t" to="/privacy/report">گزارش و تحلیل داده‌ها</Link>
         <Link className="btn t" to="/privacy/import">وارد کردن پشتیبان</Link>
       </div>

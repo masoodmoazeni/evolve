@@ -2,7 +2,8 @@ import TimeField from '../TimeField.jsx';
 import { useState } from 'react';
 import { db } from '../db.js';
 import { MAX_PRIORITIES } from '../data.js';
-import { Card, Chip, Ck, Dialog, Field, Icon, Sheet, Toggle, useToast } from '../ui.jsx';
+import { useLiveQuery } from 'dexie-react-hooks';
+import { Card, Chip, Ck, Dialog, Field, Icon, Select, Sheet, Toggle, useToast } from '../ui.jsx';
 import { addDays, dateKey, faNum, fmtDate } from '../util.js';
 import './Plan.css';
 
@@ -52,7 +53,9 @@ export function TaskSheet({ task, date, onClose }) {
     minutes: task?.minutes ?? '',
     priority: !!task?.priority,
     date: task?.date ?? date ?? today,
+    goalId: task?.goalId == null ? '' : String(task.goalId),
   });
+  const goals = useLiveQuery(() => db.goals.where('status').equals('active').toArray(), [], []);
   const [err, setErr] = useState('');
   const [confirmDel, setConfirmDel] = useState(false);
   const set = (k, v) => setF((s) => ({ ...s, [k]: v }));
@@ -64,7 +67,7 @@ export function TaskSheet({ task, date, onClose }) {
     if (!f.title.trim()) return setErr('یک عنوان کوتاه بنویس.');
     let priority = f.priority && f.date !== 'someday';
     if (priority && (await countPriority(f.date)) >= MAX_PRIORITIES) priority = false;
-    const rec = { title: f.title.trim(), date: f.date, time: f.time || '', minutes: f.minutes ? Number(f.minutes) : null, priority, goalId: task?.goalId ?? null };
+    const rec = { title: f.title.trim(), date: f.date, time: f.time || '', minutes: f.minutes ? Number(f.minutes) : null, priority, goalId: f.goalId === '' ? null : Number(f.goalId) };
     if (task) await db.tasks.update(task.id, rec);
     else await db.tasks.add({ ...rec, done: false });
     if (f.priority && !priority) toast('سه اولویت پر است؛ این کار به «کارهای دیگر» رفت.');
@@ -92,6 +95,9 @@ export function TaskSheet({ task, date, onClose }) {
           <input className="in" type="number" inputMode="numeric" min="0" value={f.minutes} onChange={(e) => set('minutes', e.target.value)} />
         </Field>
       </div>
+      <Field label="مرتبط با هدف (اختیاری)">
+        <Select label="هدف این کار" value={f.goalId} onChange={(v) => set('goalId', String(v))} options={[{ value: '', label: 'بدون هدف' }, ...goals.map((g) => ({ value: String(g.id), label: g.title }))]} />
+      </Field>
       <div className="col">
         <span className="lbl">زمان</span>
         <div className="chips">

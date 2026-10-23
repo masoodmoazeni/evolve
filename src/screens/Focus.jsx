@@ -4,7 +4,7 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { db, useKV } from '../db.js';
 import { useKeepAwake } from '../alerts.js';
 import { actualMinutes, elapsedMs, finishRun, fmtClock, pauseRun, progressRatio, remainingMs, resumeRun, startRun, OUTCOME_LABEL } from '../focusLogic.js';
-import { Card, Chip, Dialog, Field, Icon, Page, Skeleton, Top, useToast } from '../ui.jsx';
+import { Card, Chip, Dialog, Field, Icon, Page, Select, Skeleton, Top, useToast } from '../ui.jsx';
 import { dateKey, faNum } from '../util.js';
 import './Focus.css';
 
@@ -19,13 +19,18 @@ export function FocusHome() {
   const tasks = useLiveQuery(() => db.tasks.where('date').equals(today).filter((t) => !t.done).toArray(), [today]);
   const [title, setTitle] = useState('');
   const [taskId, setTaskId] = useState(null);
+  const [goalId, setGoalId] = useState('');
+  const goals = useLiveQuery(() => db.goals.where('status').equals('active').toArray(), [], []);
   const [intent, setIntent] = useState('');
   const [planned, setPlanned] = useState(25);
 
   if (run === undefined || !tasks) return <Page><Top title="تمرکز" /><Skeleton /></Page>;
+  const taskGoalRaw = tasks.find((t) => t.id === taskId)?.goalId;
+  const taskGoal = taskGoalRaw == null || taskGoalRaw === '' ? '' : String(taskGoalRaw);
 
   const start = async () => {
-    const r = startRun({ title: title.trim() || 'تمرکز آزاد', taskId, intent: intent.trim(), planned });
+    const gid = taskGoal !== '' ? Number(taskGoal) : goalId === '' ? null : Number(goalId);
+    const r = startRun({ title: title.trim() || 'تمرکز آزاد', taskId, goalId: gid, intent: intent.trim(), planned });
     await db.kv.put({ key: 'focusRun', value: r });
     nav('/focus/run');
   };
@@ -60,6 +65,9 @@ export function FocusHome() {
         )}
         <Field label="روی چه چیزی تمرکز می‌کنی؟">
           <input className="in" value={title} onChange={(e) => { setTitle(e.target.value); setTaskId(null); }} placeholder="مثلاً: خواندن فصل دوم" />
+        </Field>
+        <Field label="مرتبط با هدف (اختیاری)">
+          <Select label="هدف این جلسه" value={taskGoal === '' ? goalId : taskGoal} onChange={(v) => setGoalId(String(v))} options={[{ value: '', label: 'بدون هدف' }, ...goals.map((g) => ({ value: String(g.id), label: g.title }))]} />
         </Field>
         <Field label="نیت این جلسه (اختیاری)">
           <input className="in" value={intent} onChange={(e) => setIntent(e.target.value)} placeholder="مثلاً: فقط شروع کنم" />
@@ -159,7 +167,7 @@ export function FocusEnd() {
   const actual = actualMinutes(run);
 
   const save = async () => {
-    await db.focus.add({ date: run.date, start: run.start, planned: run.planned, actual, taskId: run.taskId, title: run.title, intent: run.intent, outcome, energy, note: note.trim() });
+    await db.focus.add({ date: run.date, start: run.start, planned: run.planned, actual, taskId: run.taskId, goalId: run.goalId ?? null, title: run.title, intent: run.intent, outcome, energy, note: note.trim() });
     if (outcome === 'done' && run.taskId) await db.tasks.update(run.taskId, { done: true });
     await clear();
     toast('جلسه ثبت شد.');
