@@ -4,132 +4,26 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db, setKV, useKV } from '../db.js';
 import { Page, Top, Card, Chip, Field, Icon, Skeleton, Toggle, useToast } from '../ui.jsx';
-import { DEFAULT_NOTIF, buildSchedule, exactAlarmState, isNative, openExactAlarmSettings, pendingCount, permissionState, requestPermission, rescheduleAll, sendTestNotification } from '../notify.js';
+import { DEFAULT_NOTIF } from '../notify.js';
 import { WEEKDAYS, faNum } from '../util.js';
 import { SOUNDS, playSound } from '../sound.js';
-import { alertNow, requestWebPermission } from '../alerts.js';
+import { alertNow } from '../alerts.js';
 import { LocalBadge, RetentionPolicy } from './PrivacyNotes.jsx';
 import './Settings.css';
 
 export { Privacy, PrivacyExport, PrivacyDelete } from './PrivacyScreens.jsx';
 
-const rs = () => rescheduleAll().catch(() => {});
-
-export function Notifications() {
-  const [perm, setPerm] = useState(null);
-  const [profile] = useKV('profile', null);
-  const [stored] = useKV('notif', {});
-  const habits = useLiveQuery(() => db.habits.toArray(), []);
-  const [web, setWeb] = useState(typeof Notification === 'undefined' ? 'unsupported' : Notification.permission);
-  const [exact, setExact] = useState('granted');
-  const [pending, setPending] = useState(null);
-  const [testMsg, setTestMsg] = useState('');
-  useEffect(() => { permissionState().then(setPerm).catch(() => setPerm('unknown')); exactAlarmState().then(setExact).catch(() => {}); pendingCount().then(setPending); }, []);
-
-  if (stored === undefined || !habits) return <Page><Top title="اعلان‌ها" back /><Skeleton /></Page>;
-  const cfg = { ...DEFAULT_NOTIF, ...stored };
-  const items = buildSchedule(profile, habits, cfg);
-  const ask = async () => { setPerm(await requestPermission()); await rescheduleAll().catch(() => {}); setPending(await pendingCount()); };
-  const test = async () => { setTestMsg((await sendTestNotification()) ? 'تا ۵ ثانیه‌ی دیگر یک اعلان می‌آید. اگر نیامد، اپ را ببند و صبر کن.' : 'مجوز اعلان داده نشده است.'); };
-  return (
-    <Page>
-      <Top title="اعلان‌ها" back />
-      {perm === 'web' && (
-        <Card kind={web === 'granted' ? 'mint' : 'sand'}>
-          <h3>اعلان مرورگر</h3>
-          {web === 'granted' && <p className="s">اعلان‌ها روشن است. تا وقتی اِوالو باز یا نصب‌شده (PWA) باشد، یادآورها و پایان تمرکز روی صفحه و بالای گوشی نمایش داده می‌شود.</p>}
-          {web === 'default' && <p className="s">برای دیدن یادآورها بیرون از اپ، اجازهٔ اعلان بده. حتی بدون آن، بنر داخل اپ و صدا کار می‌کند.</p>}
-          {web === 'denied' && <p className="s">مرورگر اعلان را مسدود کرده است. از تنظیمات سایت در مرورگر (قفل کنار آدرس) اعلان را «اجازه» کن. تا آن موقع بنر و صدای داخل اپ کار می‌کند.</p>}
-          {web === 'unsupported' && <p className="s">این مرورگر اعلان سیستمی را پشتیبانی نمی‌کند؛ بنر و صدای داخل اپ فعال است.</p>}
-          {web === 'default' && <button className="btn sm" onClick={async () => setWeb(await requestWebPermission())}>اجازهٔ اعلان</button>}
-          <p className="xs">برای اعلان با بسته‌بودن کامل اپ، نسخهٔ اندروید لازم است.</p>
-        </Card>
-      )}
-      {perm === 'granted' && exact === 'denied' && (
-        <Card kind="sand">
-          <h3>زمان‌بندی دقیق خاموش است</h3>
-          <p className="s">بدون این اجازه ممکن است اعلان پایان تمرکز با تأخیر برسد.</p>
-          <button className="btn sm s2" onClick={openExactAlarmSettings}>باز کردن تنظیم</button>
-        </Card>
-      )}
-      {perm === null && <p className="xs">در حال بررسی مجوز اعلان…</p>}
-      {perm === 'unknown' && (
-        <Card kind="sand">
-          <h3>وضعیت اعلان معلوم نشد</h3>
-          <p className="s">برای روشن‌کردن اعلان‌ها دکمه‌ی زیر را بزن تا اجازه را بخواهیم.</p>
-          <button className="btn sm" onClick={ask}>روشن کردن اعلان‌ها</button>
-        </Card>
-      )}
-      {perm === 'denied' && (
-        <Card kind="sand">
-          <h3>اعلان‌ها فعلاً خاموش است</h3>
-          <p className="s">اشکالی ندارد؛ اپ بدون اعلان هم کامل کار می‌کند. هر وقت خواستی، از تنظیمات گوشی برای اِوالو اعلان را روشن کن.</p>
-          <p className="xs">اگر اعلان‌ها دیر می‌رسند، در تنظیمات باتری گوشی اِوالو را از «صرفه‌جویی» مستثنا کن.</p>
-          <button className="btn sm s2" onClick={ask}>دوباره امتحان کن</button>
-        </Card>
-      )}
-      {perm === 'granted' && <Card kind="mint"><p className="s">اعلان‌ها فعال است. لحن یادآورها دعوت‌کننده است و ساعت سکوت رعایت می‌شود.</p></Card>}
-      {isNative() && perm !== 'granted' && perm !== 'denied' && <button className="btn" onClick={ask}>روشن کردن اعلان‌ها</button>}
-      <h2>یادآورهای برنامه‌ریزی‌شده</h2>
-      {!items.length && <Card><p className="s">فعلاً یادآوری تنظیم نشده است.</p></Card>}
-      {items.length > 0 && (
-        <Card>
-          {items.slice(0, 12).map((n) => (
-            <div className="row" key={n.key}>
-              <Icon name="bell" />
-              <span className="grow s">{n.title}</span>
-              <span className="xs">{n.weekday ? `${WEEKDAYS[n.weekday === 7 ? 0 : n.weekday]} · ` : 'هر روز · '}{faNum(n.time)}</span>
-            </div>
-          ))}
-        </Card>
-      )}
-      <Link className="btn s2" to="/notifications/settings">تنظیم یادآورها</Link>
-      {isNative() && (
-        <Card>
-          <h3>بررسی اعلان‌ها</h3>
-          <p className="s">{pending == null ? 'تعداد اعلان‌های زمان‌بندی‌شده خوانده نشد.' : `${faNum(pending)} اعلان زمان‌بندی شده است.`}</p>
-          <button className="btn sm s2" onClick={test}>ارسال اعلان آزمایشی</button>
-          {testMsg && <p className="xs">{testMsg}</p>}
-          <p className="xs">اگر اعلان با بسته‌بودن اپ نمی‌رسد: در تنظیمات گوشی برای اِوالو «شروع خودکار» (Autostart) را روشن و مصرف باتری را «بدون محدودیت» کن. در بعضی گوشی‌ها مثل شیائومی، سیستم اپ‌های بسته‌شده را متوقف می‌کند.</p>
-        </Card>
-      )}
-    </Page>
-  );
-}
-
-export function NotifSettings() {
+export function AlertSettings() {
   const [stored, setStored] = useKV('notif', {});
-  if (stored === undefined) return <Page tabs={false}><Top title="تنظیم یادآورها" back /><Skeleton /></Page>;
+  if (stored === undefined) return <Page tabs={false}><Top title="صدا و هشدار" back /><Skeleton /></Page>;
   const cfg = { ...DEFAULT_NOTIF, ...stored };
-  const save = async (patch) => { await setStored({ ...cfg, ...patch }); rs(); };
-  const rowsT = [['enabled', 'اعلان‌ها'], ['daily', 'یادآور روزانه'], ['habits', 'یادآور عادت‌ها'], ['review', 'دعوت به مرور شبانه']];
+  const save = async (patch) => { await setStored({ ...cfg, ...patch }); };
   return (
     <Page tabs={false}>
-      <Top title="تنظیم یادآورها" back />
-      <Card>
-        {rowsT.map(([k, l]) => (
-          <div className="row" key={k}><span className="grow">{l}</span><Toggle on={cfg[k]} label={l} onChange={(v) => save({ [k]: v })} /></div>
-        ))}
-      </Card>
-      <Card>
-        <span className="lbl">ساعت سکوت</span>
-        <div className="g2">
-          <Field label="از"><TimeField value={cfg.quietFrom} onChange={(v) => save({ quietFrom: v || '22:00' })} label="شروع ساعت سکوت" title="شروع سکوت" clearable={false} /></Field>
-          <Field label="تا"><TimeField value={cfg.quietTo} onChange={(v) => save({ quietTo: v || '07:00' })} label="پایان ساعت سکوت" title="پایان سکوت" clearable={false} /></Field>
-        </div>
-      </Card>
-      <Card>
-        <span className="lbl">سقف اعلان در روز</span>
-        <div className="row">
-          <button className="ib bg" aria-label="کمتر" onClick={() => save({ cap: Math.max(1, cfg.cap - 1) })}>−</button>
-          <strong className="grow" style={{ textAlign: 'center' }}>{faNum(cfg.cap)}</strong>
-          <button className="ib bg" aria-label="بیشتر" onClick={() => save({ cap: Math.min(10, cfg.cap + 1) })}>+</button>
-        </div>
-      </Card>
+      <Top title="صدا و هشدار" back />
       <Card>
         <span className="lbl">تایمر تمرکز</span>
         <div className="row"><span className="grow">روشن ماندن صفحه هنگام تمرکز</span><Toggle on={cfg.keepAwake} label="روشن ماندن صفحه" onChange={(v) => save({ keepAwake: v })} /></div>
-        {isNative() && <div className="row"><span className="grow">اعلان پایدار تایمر (روی صفحهٔ قفل)</span><Toggle on={cfg.ongoing} label="اعلان پایدار تایمر" onChange={(v) => save({ ongoing: v })} /></div>}
       </Card>
       <Card>
         <span className="lbl">صدا</span>
@@ -142,10 +36,9 @@ export function NotifSettings() {
           <input type="range" min="0.1" max="1" step="0.1" value={cfg.volume} onChange={(e) => save({ volume: Number(e.target.value) })} aria-label="بلندی صدا" />
         </Field>
         <div className="row"><span className="grow">لرزش</span><Toggle on={cfg.vibrate} label="لرزش" onChange={(v) => save({ vibrate: v })} /></div>
-        <button className="btn s2 sm" onClick={async () => { await requestWebPermission(); alertNow({ title: 'آزمایش اعلان', body: 'اگر این را می‌بینی و می‌شنوی، یادآورها درست کار می‌کنند.' }); }}>آزمایش صدا و اعلان</button>
-        <p className="xs">صدای پایان تمرکز و یادآورها وقتی اپ باز است در خود اپ پخش می‌شود. در اندروید اعلان‌ها با صدای پیش‌فرض گوشی نمایش داده می‌شوند.</p>
+        <button className="btn s2 sm" onClick={async () => { alertNow({ title: 'آزمایش هشدار', body: 'اگر این را می‌بینی و می‌شنوی، هشدار درون اپ درست کار می‌کند.' }); }}>آزمایش صدا و هشدار</button>
+        <p className="xs">صدا و بنر پایان تمرکز وقتی اپ باز است در خود اپ نشان داده می‌شود. اِوالو اعلان سیستمی نمی‌فرستد.</p>
       </Card>
-      {!isNative() && <p className="xs">در مرورگر، اعلان وقتی اپ باز است یا به‌صورت PWA نصب شده کار می‌کند. در اپ اندروید حتی با بسته‌بودن اپ هم می‌آید.</p>}
     </Page>
   );
 }
@@ -154,7 +47,7 @@ export function Profile() {
   const [profile] = useKV('profile', null);
   if (profile === undefined) return <Page><Top title="پروفایل" /><Skeleton /></Page>;
   const name = profile?.name || 'دوست من';
-  const links = [['/profile/edit', 'ویرایش پروفایل', 'user'], ['/prefs', 'ترجیحات', 'spark'], ['/notifications', 'اعلان‌ها', 'bell'], ['/game', 'امتیاز و نشان‌ها', 'spark'], ['/howto', 'نحوهٔ کار با اِوالو', 'book'], ['/insights', 'بینش‌ها', 'chart'], ['/coach', 'مربی', 'spark'], ['/calendar', 'تقویم', 'cal'], ['/privacy', 'حریم خصوصی و داده‌ها', 'lock'], ['/about', 'دربارهٔ اِوالو', 'spark']];
+  const links = [['/profile/edit', 'ویرایش پروفایل', 'user'], ['/prefs', 'ترجیحات', 'spark'], ['/notifications', 'صدا و هشدار', 'bell'], ['/game', 'امتیاز و نشان‌ها', 'spark'], ['/howto', 'نحوهٔ کار با اِوالو', 'book'], ['/insights', 'بینش‌ها', 'chart'], ['/coach', 'مربی', 'spark'], ['/calendar', 'تقویم', 'cal'], ['/privacy', 'حریم خصوصی و داده‌ها', 'lock'], ['/about', 'دربارهٔ اِوالو', 'spark']];
   return (
     <Page tabs={false}>
       <Top title="پروفایل" back="/today" />
@@ -177,13 +70,10 @@ export function ProfileEdit() {
   const toast = useToast();
   const [profile] = useKV('profile', null);
   const [name, setName] = useState(null);
-  const [at, setAt] = useState(null);
   if (profile === undefined) return <Page tabs={false}><Top title="ویرایش پروفایل" close /><Skeleton /></Page>;
   const n = name ?? profile?.name ?? '';
-  const t = at ?? profile?.remindAt ?? '20:00';
   const save = async () => {
-    await setKV('profile', { ...profile, name: n.trim(), remindAt: t });
-    rs();
+    await setKV('profile', { ...profile, name: n.trim() });
     toast('پروفایل ذخیره شد.');
     nav(-1);
   };
@@ -191,7 +81,6 @@ export function ProfileEdit() {
     <Page tabs={false}>
       <Top title="ویرایش پروفایل" close />
       <Field label="نام (اختیاری)"><input className="in" value={n} maxLength={30} onChange={(e) => setName(e.target.value)} /></Field>
-      <Field label="ساعت یادآور روزانه"><TimeField value={t} onChange={setAt} label="ساعت یادآور روزانه" title="ساعت یادآور" clearable={false} /></Field>
       <button className="btn" onClick={save}>ذخیره</button>
     </Page>
   );

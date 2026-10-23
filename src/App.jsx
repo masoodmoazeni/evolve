@@ -12,12 +12,11 @@ import { ReflectHome, Notes, NoteEdit, Mood, MoodTrend } from './screens/Reflect
 import { ReviewDay, ReviewWeek } from './screens/Reviews.jsx';
 import { Insights } from './screens/Insights.jsx';
 import { Coach } from './screens/Coach.jsx';
-import { Notifications, NotifSettings, Profile, ProfileEdit, Prefs, Privacy, PrivacyExport, PrivacyDelete } from './screens/Settings.jsx';
+import { AlertSettings, Profile, ProfileEdit, Prefs, Privacy, PrivacyExport, PrivacyDelete } from './screens/Settings.jsx';
 
 import AlertBanner from './AlertBanner.jsx';
-import { useFocusWatcher, useReminderWatcher } from './alerts.js';
+import { useFocusWatcher } from './alerts.js';
 import { foldBank } from './game.js';
-import { isNative, rescheduleAll } from './notify.js';
 import { GamePage, Howto } from './screens/Game.jsx';
 import { About } from './screens/About.jsx';
 import { PrivacyImport, PrivacyReport } from './screens/DataScreens.jsx';
@@ -28,7 +27,6 @@ const TAB_ROOTS = ['/today', '/goals', '/habits', '/focus', '/reflect'];
 export default function App() {
   const { pathname } = useLocation();
   const nav = useNavigate();
-  useReminderWatcher();
   useFocusWatcher();
   const [profile] = useKV('profile', null);
   const [prefs] = useKV('prefs', {});
@@ -38,15 +36,6 @@ export default function App() {
     run();
     document.addEventListener('visibilitychange', run);
     navigator.storage?.persist?.();
-    return () => document.removeEventListener('visibilitychange', run);
-  }, []);
-
-  // یادآورها هر بار که اپ باز یا از پس‌زمینه برمی‌گردد دوباره زمان‌بندی می‌شوند
-  useEffect(() => {
-    if (!isNative()) return undefined;
-    const run = () => { if (!document.hidden) rescheduleAll(); };
-    run();
-    document.addEventListener('visibilitychange', run);
     return () => document.removeEventListener('visibilitychange', run);
   }, []);
 
@@ -103,8 +92,8 @@ export default function App() {
           <Route path="/review/week" element={<ReviewWeek />} />
           <Route path="/insights" element={<Insights />} />
           <Route path="/coach" element={<Coach />} />
-          <Route path="/notifications" element={<Notifications />} />
-          <Route path="/notifications/settings" element={<NotifSettings />} />
+          <Route path="/notifications" element={<AlertSettings />} />
+          <Route path="/notifications/settings" element={<Navigate to="/notifications" replace />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/profile/edit" element={<ProfileEdit />} />
           <Route path="/prefs" element={<Prefs />} />

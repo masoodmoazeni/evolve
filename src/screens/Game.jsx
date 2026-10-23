@@ -138,7 +138,7 @@ export function Howto() {
       <Card>
         <h3>تایمر و اعلان‌ها</h3>
         <p className="s">پایان جلسه نوار بالای صفحه را نشان می‌دهد تا بسته شود، و در اندروید اعلان هم می‌آید. همهٔ این‌ها در «اعلان‌ها ← تنظیم یادآورها» قابل خاموش و روشن است.</p>
-        <Link className="btn s2 sm" to="/notifications">اعلان‌ها</Link>
+        <Link className="btn s2 sm" to="/notifications">صدا و هشدار</Link>
       </Card>
       <Card>
         <h3>برنامه‌ریزی و بازتاب</h3>

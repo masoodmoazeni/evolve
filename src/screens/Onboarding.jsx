@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Icon, Page, Top, Card, Chip, Field } from '../ui.jsx';
 import { setKV } from '../db.js';
-import { requestPermission, rescheduleAll } from '../notify.js';
 
 export function Welcome() {
   const nav = useNavigate();
@@ -162,28 +161,16 @@ export function Personalize() {
 export function Setup() {
   const nav = useNavigate();
   const [name, setName] = useState('');
-  const [remindAt, setRemindAt] = useState('20:00');
-  const [perm, setPerm] = useState(null);
   const [saving, setSaving] = useState(false);
   const [err, setErr] = useState('');
-
-  const ask = async () => {
-    try {
-      setPerm(await requestPermission());
-    } catch {
-      setPerm('denied');
-    }
-  };
 
   const finish = async (skip) => {
     setSaving(true);
     try {
       await setKV('profile', {
         name: skip ? '' : name.trim(),
-        remindAt: skip ? '20:00' : remindAt,
         createdAt: Date.now(),
       });
-      rescheduleAll().catch(() => {});
       nav('/today', { replace: true });
     } catch {
       setSaving(false);
@@ -202,23 +189,6 @@ export function Setup() {
       <Field label="نام (اختیاری)">
         <input className="in" value={name} maxLength={40} onChange={(e) => setName(e.target.value)} autoComplete="off" />
       </Field>
-      <Field label="ساعت یادآور روزانه">
-        <TimeField value={remindAt} onChange={setRemindAt} label="ساعت یادآور" title="ساعت یادآور" clearable={false} />
-      </Field>
-      <Card kind="sand">
-        <h3>اعلان‌ها</h3>
-        <p className="s">یادآورها همیشه ملایم‌اند و هر وقت خواستی خاموش می‌شوند.</p>
-        {perm === 'granted' && <p className="s">اعلان‌ها روشن شد.</p>}
-        {perm === 'web' && <p className="s">در اپ موبایل فعال می‌شود.</p>}
-        {perm === 'denied' && (
-          <p className="s">اشکالی ندارد؛ اپ بدون اعلان هم کار می‌کند. بعداً از «اعلان‌ها» در پروفایل می‌توانی روشنش کنی.</p>
-        )}
-        {perm == null && (
-          <button className="btn s2 sm" onClick={ask}>
-            اجازهٔ اعلان
-          </button>
-        )}
-      </Card>
       {err && <p className="err" role="alert">{err}</p>}
       <div style={{ flex: 1 }} />
       <button className={`btn${saving ? ' dis' : ''}`} onClick={() => finish(false)} disabled={saving}>
