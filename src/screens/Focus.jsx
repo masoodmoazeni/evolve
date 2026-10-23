@@ -3,7 +3,7 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db, useKV } from '../db.js';
 import { useKeepAwake } from '../alerts.js';
-import { cancelFocusEnd, scheduleFocusEnd, showFocusOngoing } from '../notify.js';
+import { cancelFocusEnd, exactAlarmState, isNative, openExactAlarmSettings, scheduleFocusEnd, showFocusOngoing } from '../notify.js';
 import { actualMinutes, elapsedMs, finishRun, fmtClock, pauseRun, progressRatio, remainingMs, resumeRun, startRun, OUTCOME_LABEL } from '../focusLogic.js';
 import { Card, Chip, Dialog, Field, Icon, Page, Skeleton, Top, useToast } from '../ui.jsx';
 import { dateKey, faNum } from '../util.js';
@@ -22,6 +22,8 @@ export function FocusHome() {
   const [taskId, setTaskId] = useState(null);
   const [intent, setIntent] = useState('');
   const [planned, setPlanned] = useState(25);
+  const [exact, setExact] = useState('granted');
+  useEffect(() => { if (isNative()) exactAlarmState().then(setExact).catch(() => {}); }, []);
 
   if (run === undefined || !tasks) return <Page><Top title="تمرکز" /><Skeleton /></Page>;
 
@@ -36,6 +38,12 @@ export function FocusHome() {
   return (
     <Page>
       <Top title="تمرکز" right={<Link className="ib bg" to="/focus/stats" aria-label="آمار تمرکز"><Icon name="chart" /></Link>} />
+      {exact === 'denied' && (
+        <Card kind="sand">
+          <p className="s">برای این‌که اعلان پایان جلسه با بسته‌بودن اپ سر وقت برسد، «زمان‌بندی دقیق» را برای اِوالو روشن کن.</p>
+          <button className="btn sm s2" onClick={openExactAlarmSettings}>باز کردن تنظیم</button>
+        </Card>
+      )}
       {run && (
         <Card kind="teal">
           <span className="lbl">جلسهٔ در جریان</span>

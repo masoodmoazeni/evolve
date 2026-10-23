@@ -50,3 +50,10 @@ export function summarize(rows) {
 }
 
 export const OUTCOME_LABEL = { done: 'انجام شد', partial: 'نیمه‌کاره', skip: 'کنار گذاشتم' };
+
+// جلسهٔ رهاشده: بیش از ۶ ساعت از پایان زمانش گذشته یا بیش از ۳ ساعت در مکث مانده است
+export function staleRun(run, now = Date.now()) {
+  if (!run || run.endedAt) return false;
+  if (run.pausedAt) return now - run.pausedAt > 3 * 3600000;
+  return -remainingMs(run, now) > 6 * 3600000;
+}
