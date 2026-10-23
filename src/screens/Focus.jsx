@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db, useKV } from '../db.js';
-import { alertNow } from '../alerts.js';
-import { cancelFocusEnd, scheduleFocusEnd } from '../notify.js';
+import { useKeepAwake } from '../alerts.js';
+import { cancelFocusEnd, scheduleFocusEnd, showFocusOngoing } from '../notify.js';
 import { actualMinutes, elapsedMs, finishRun, fmtClock, pauseRun, progressRatio, remainingMs, resumeRun, startRun, OUTCOME_LABEL } from '../focusLogic.js';
 import { Card, Chip, Dialog, Field, Icon, Page, Skeleton, Top, useToast } from '../ui.jsx';
 import { dateKey, faNum } from '../util.js';
@@ -28,7 +28,8 @@ export function FocusHome() {
   const start = async () => {
     const r = startRun({ title: title.trim() || 'تمرکز آزاد', taskId, intent: intent.trim(), planned });
     await db.kv.put({ key: 'focusRun', value: r });
-    scheduleFocusEnd(r.startedAt + planned * 60000).catch(() => {});
+    const end = r.startedAt + planned * 60000;
+    scheduleFocusEnd(end).then(() => showFocusOngoing(r.title, end)).catch(() => {});
     nav('/focus/run');
   };
 
@@ -94,18 +95,7 @@ export function FocusRun() {
   const nav = useNavigate();
   const now = useNow();
   const [run] = useKV('focusRun', null);
-  const finished = !!run && !run.pausedAt && !run.endedAt && remainingMs(run, now) <= 0;
-  useEffect(() => {
-    if (!finished) return;
-    const k = `evolve-focus-alert:${run.startedAt}`;
-    try {
-      if (localStorage.getItem(k)) return;
-      localStorage.setItem(k, '1');
-    } catch {
-      // اگر ذخیره نشد، فقط یک بار در این رندر هشدار می‌دهیم
-    }
-    alertNow({ title: 'جلسهٔ تمرکز تمام شد', body: 'کارت عالی بود. هر وقت خواستی ثبتش کن.' });
-  }, [finished]); // eslint-disable-line react-hooks/exhaustive-deps
+  useKeepAwake(!!run && !run.pausedAt && !run.endedAt);
   if (run === undefined) return <Page tabs={false}><Skeleton /></Page>;
   if (!run) return <Navigate to="/focus" replace />;
   if (run.endedAt) return <Navigate to="/focus/end" replace />;
@@ -119,7 +109,8 @@ export function FocusRun() {
     if (paused) {
       const r = resumeRun(run);
       await save(r);
-      scheduleFocusEnd(Date.now() + Math.max(1000, remainingMs(r))).catch(() => {});
+      const end = Date.now() + Math.max(1000, remainingMs(r));
+      scheduleFocusEnd(end).then(() => showFocusOngoing(run.title, end)).catch(() => {});
     } else {
       await save(pauseRun(run));
       cancelFocusEnd().catch(() => {});

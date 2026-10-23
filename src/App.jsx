@@ -15,7 +15,10 @@ import { Coach } from './screens/Coach.jsx';
 import { Notifications, NotifSettings, Profile, ProfileEdit, Prefs, Privacy, PrivacyExport, PrivacyDelete } from './screens/Settings.jsx';
 
 import AlertBanner from './AlertBanner.jsx';
-import { useReminderWatcher } from './alerts.js';
+import { useFocusWatcher, useReminderWatcher } from './alerts.js';
+import FocusMini from './FocusMini.jsx';
+import { foldBank } from './game.js';
+import { GamePage, Howto } from './screens/Game.jsx';
 import { About } from './screens/About.jsx';
 import { PrivacyImport, PrivacyReport } from './screens/DataScreens.jsx';
 
@@ -26,11 +29,12 @@ export default function App() {
   const { pathname } = useLocation();
   const nav = useNavigate();
   useReminderWatcher();
+  useFocusWatcher();
   const [profile] = useKV('profile', null);
   const [prefs] = useKV('prefs', {});
 
   useEffect(() => {
-    const run = () => prune().catch(() => {});
+    const run = () => foldBank().catch(() => {}).then(() => prune()).catch(() => {});
     run();
     document.addEventListener('visibilitychange', run);
     navigator.storage?.persist?.();
@@ -54,6 +58,7 @@ export default function App() {
     <ToastProvider>
       <main className="app">
         <AlertBanner />
+        <FocusMini />
         <Routes>
           <Route path="/" element={<Navigate to="/today" replace />} />
           <Route path="/welcome" element={<Welcome />} />
@@ -99,6 +104,8 @@ export default function App() {
           <Route path="/privacy/export" element={<PrivacyExport />} />
           <Route path="/privacy/import" element={<PrivacyImport />} />
           <Route path="/privacy/report" element={<PrivacyReport />} />
+          <Route path="/game" element={<GamePage />} />
+          <Route path="/howto" element={<Howto />} />
           <Route path="/about" element={<About />} />
           <Route path="/privacy/delete" element={<PrivacyDelete />} />
           <Route path="*" element={<Navigate to="/today" replace />} />

@@ -141,9 +141,9 @@ body.modal-open{overflow:hidden}
 .alert-banner{position:fixed;top:12px;left:50%;transform:translateX(-50%);width:calc(100% - 24px);max-width:406px;z-index:40;background:var(--forest);color:#fff;border-radius:18px;padding:12px 14px;display:flex;align-items:center;gap:10px;box-shadow:0 10px 26px rgba(41,53,47,.3)}
 .alert-banner .grow{flex:1;min-width:0}
 /* اعلان کوتاه: بالای صفحه، نرم ظاهر و محو می‌شود */
-.toast-wrap{bottom:auto;top:calc(12px + env(safe-area-inset-top,0px));pointer-events:none}
-.toast-wrap .toast{pointer-events:auto;box-shadow:0 8px 24px rgba(41,53,47,.3);animation:toastlife 4.6s ease forwards}
-@keyframes toastlife{0%{opacity:0;transform:translateY(-14px)}8%{opacity:1;transform:none}82%{opacity:1;transform:none}100%{opacity:0;transform:translateY(-8px)}}
-@media (prefers-reduced-motion:reduce){.toast-wrap .toast{animation:toastlife 4.6s steps(1,end) forwards}}
+.toast-wrap{bottom:92px;top:auto;pointer-events:none}
+.toast-wrap .toast{pointer-events:auto;box-shadow:0 8px 24px rgba(41,53,47,.3);animation:toastlife 3s ease forwards}
+@keyframes toastlife{0%{opacity:0;transform:translateY(14px)}8%{opacity:1;transform:none}80%{opacity:1;transform:none}100%{opacity:0;transform:translateY(8px)}}
+@media (prefers-reduced-motion:reduce){.toast-wrap .toast{animation:toastlife 3s steps(1,end) forwards}}
 /* فهرست بازشوی انتخاب هم راست‌چین */
 select,select.in,select option{direction:rtl;text-align:right;text-align-last:right}

@@ -206,7 +206,7 @@ export function ToastProvider({ children }) {
   const show = useCallback((msg, onUndo) => {
     clearTimeout(timer.current);
     setT({ msg, onUndo });
-    timer.current = setTimeout(() => setT(null), 6000);
+    timer.current = setTimeout(() => setT(null), 3000);
   }, []);
   useEffect(() => () => clearTimeout(timer.current), []);
   return (

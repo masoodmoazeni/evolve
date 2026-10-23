@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db, setKV, useKV } from '../db.js';
 import { Page, Top, Card, Chip, Field, Icon, Skeleton, Toggle, useToast } from '../ui.jsx';
-import { DEFAULT_NOTIF, buildSchedule, isNative, permissionState, requestPermission, rescheduleAll } from '../notify.js';
+import { DEFAULT_NOTIF, buildSchedule, exactAlarmState, isNative, openExactAlarmSettings, permissionState, requestPermission, rescheduleAll } from '../notify.js';
 import { WEEKDAYS, faNum } from '../util.js';
 import { SOUNDS, playSound } from '../sound.js';
 import { alertNow, requestWebPermission } from '../alerts.js';
@@ -20,7 +20,10 @@ export function Notifications() {
   const [profile] = useKV('profile', null);
   const [stored] = useKV('notif', {});
   const habits = useLiveQuery(() => db.habits.toArray(), []);
-  useEffect(() => { permissionState().then(setPerm).catch(() => setPerm('web')); }, []);
+  const [web, setWeb] = useState(typeof Notification === 'undefined' ? 'unsupported' : Notification.permission);
+  const [exact, setExact] = useState('granted');
+  useEffect(() => { permissionState().then(setPerm).catch(() => setPerm('web')); exactAlarmState().then(setExact).catch(() => {}); }, []);
+
   if (perm === null || stored === undefined || !habits) return <Page><Top title="اعلان‌ها" back /><Skeleton /></Page>;
   const cfg = { ...DEFAULT_NOTIF, ...stored };
   const items = buildSchedule(profile, habits, cfg);
@@ -28,7 +31,24 @@ export function Notifications() {
   return (
     <Page>
       <Top title="اعلان‌ها" back />
-      {perm === 'web' && <Card kind="sand"><p className="s">یادآورها در اپ موبایل فعال می‌شود. اینجا می‌توانی از حالا تنظیمشان کنی.</p></Card>}
+      {perm === 'web' && (
+        <Card kind={web === 'granted' ? 'mint' : 'sand'}>
+          <h3>اعلان مرورگر</h3>
+          {web === 'granted' && <p className="s">اعلان‌ها روشن است. تا وقتی اِوالو باز یا نصب‌شده (PWA) باشد، یادآورها و پایان تمرکز روی صفحه و بالای گوشی نمایش داده می‌شود.</p>}
+          {web === 'default' && <p className="s">برای دیدن یادآورها بیرون از اپ، اجازهٔ اعلان بده. حتی بدون آن، بنر داخل اپ و صدا کار می‌کند.</p>}
+          {web === 'denied' && <p className="s">مرورگر اعلان را مسدود کرده است. از تنظیمات سایت در مرورگر (قفل کنار آدرس) اعلان را «اجازه» کن. تا آن موقع بنر و صدای داخل اپ کار می‌کند.</p>}
+          {web === 'unsupported' && <p className="s">این مرورگر اعلان سیستمی را پشتیبانی نمی‌کند؛ بنر و صدای داخل اپ فعال است.</p>}
+          {web === 'default' && <button className="btn sm" onClick={async () => setWeb(await requestWebPermission())}>اجازهٔ اعلان</button>}
+          <p className="xs">برای اعلان با بسته‌بودن کامل اپ، نسخهٔ اندروید لازم است.</p>
+        </Card>
+      )}
+      {perm === 'granted' && exact === 'denied' && (
+        <Card kind="sand">
+          <h3>زمان‌بندی دقیق خاموش است</h3>
+          <p className="s">بدون این اجازه ممکن است اعلان پایان تمرکز با تأخیر برسد.</p>
+          <button className="btn sm s2" onClick={openExactAlarmSettings}>باز کردن تنظیم</button>
+        </Card>
+      )}
       {perm === 'denied' && (
         <Card kind="sand">
           <h3>اعلان‌ها فعلاً خاموش است</h3>
@@ -87,6 +107,12 @@ export function NotifSettings() {
         </div>
       </Card>
       <Card>
+        <span className="lbl">تایمر تمرکز</span>
+        <div className="row"><span className="grow">نوار تایمر روی همهٔ صفحه‌ها</span><Toggle on={cfg.timerOnScreen} label="نوار تایمر" onChange={(v) => save({ timerOnScreen: v })} /></div>
+        <div className="row"><span className="grow">روشن ماندن صفحه هنگام تمرکز</span><Toggle on={cfg.keepAwake} label="روشن ماندن صفحه" onChange={(v) => save({ keepAwake: v })} /></div>
+        {isNative() && <div className="row"><span className="grow">اعلان پایدار تایمر (روی صفحهٔ قفل)</span><Toggle on={cfg.ongoing} label="اعلان پایدار تایمر" onChange={(v) => save({ ongoing: v })} /></div>}
+      </Card>
+      <Card>
         <span className="lbl">صدا</span>
         <div className="chips">
           {Object.entries(SOUNDS).map(([k, l]) => (
@@ -109,7 +135,7 @@ export function Profile() {
   const [profile] = useKV('profile', null);
   if (profile === undefined) return <Page><Top title="پروفایل" /><Skeleton /></Page>;
   const name = profile?.name || 'دوست من';
-  const links = [['/profile/edit', 'ویرایش پروفایل', 'user'], ['/prefs', 'ترجیحات', 'spark'], ['/notifications', 'اعلان‌ها', 'bell'], ['/insights', 'بینش‌ها', 'chart'], ['/coach', 'مربی', 'spark'], ['/calendar', 'تقویم', 'cal'], ['/privacy', 'حریم خصوصی و داده‌ها', 'lock'], ['/about', 'دربارهٔ اِوالو', 'spark']];
+  const links = [['/profile/edit', 'ویرایش پروفایل', 'user'], ['/prefs', 'ترجیحات', 'spark'], ['/notifications', 'اعلان‌ها', 'bell'], ['/game', 'امتیاز و نشان‌ها', 'spark'], ['/howto', 'نحوهٔ کار با اِوالو', 'book'], ['/insights', 'بینش‌ها', 'chart'], ['/coach', 'مربی', 'spark'], ['/calendar', 'تقویم', 'cal'], ['/privacy', 'حریم خصوصی و داده‌ها', 'lock'], ['/about', 'دربارهٔ اِوالو', 'spark']];
   return (
     <Page tabs={false}>
       <Top title="پروفایل" back="/today" />
