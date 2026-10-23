@@ -38,12 +38,6 @@ export function FocusHome() {
   return (
     <Page>
       <Top title="تمرکز" right={<Link className="ib bg" to="/focus/stats" aria-label="آمار تمرکز"><Icon name="chart" /></Link>} />
-      {exact === 'denied' && (
-        <Card kind="sand">
-          <p className="s">برای این‌که اعلان پایان جلسه با بسته‌بودن اپ سر وقت برسد، «زمان‌بندی دقیق» را برای اِوالو روشن کن.</p>
-          <button className="btn sm s2" onClick={openExactAlarmSettings}>باز کردن تنظیم</button>
-        </Card>
-      )}
       {run && (
         <Card kind="teal">
           <span className="lbl">جلسهٔ در جریان</span>
