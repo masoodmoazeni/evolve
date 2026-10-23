@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { db, getKV } from './db.js';
-import { DEFAULT_NOTIF, buildSchedule, isNative } from './notify.js';
+import { DEFAULT_NOTIF, buildSchedule, cancelFocusEnd, isNative, scheduleFocusEnd, showFocusOngoing } from './notify.js';
 import { playSound } from './sound.js';
-import { remainingMs } from './focusLogic.js';
+import { remainingMs, staleRun } from './focusLogic.js';
 import { dateKey, nowTime, timeToMin, weekdayIdx } from './util.js';
 
 export const BANNER_EVENT = 'evolve:banner';
@@ -97,6 +97,11 @@ export function useReminderWatcher() {
 export async function checkFocusEnd(now = Date.now()) {
   const row = await db.kv.get('focusRun');
   const run = row?.value;
+  if (staleRun(run, now)) {
+    await db.kv.delete('focusRun');
+    cancelFocusEnd().catch(() => {});
+    return false;
+  }
   if (!run || run.pausedAt || run.endedAt || remainingMs(run, now) > 0) return false;
   const k = `evolve-focus-alert:${run.startedAt}`;
   if (seen(k)) return false;
@@ -108,12 +113,22 @@ export async function checkFocusEnd(now = Date.now()) {
 export function useFocusWatcher() {
   useEffect(() => {
     const run = () => checkFocusEnd().catch(() => {});
+    // هنگام رفتن به پس‌زمینه اعلان پایان جلسه دوباره زمان‌بندی می‌شود تا حتماً با بسته‌بودن اپ برسد
+    const hidden = async () => {
+      if (!document.hidden || !isNative()) return;
+      const run = (await db.kv.get('focusRun'))?.value;
+      if (!run || run.endedAt || run.pausedAt || remainingMs(run) <= 0) return;
+      const end = Date.now() + remainingMs(run);
+      await scheduleFocusEnd(end);
+      await showFocusOngoing(run.title, end);
+    };
+    const onVis = () => { run(); hidden().catch(() => {}); };
     run();
     const id = setInterval(run, 1000);
-    document.addEventListener('visibilitychange', run);
+    document.addEventListener('visibilitychange', onVis);
     return () => {
       clearInterval(id);
-      document.removeEventListener('visibilitychange', run);
+      document.removeEventListener('visibilitychange', onVis);
     };
   }, []);
 }

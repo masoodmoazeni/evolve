@@ -1,3 +1,5 @@
-.focus-mini{position:fixed;bottom:156px;left:50%;transform:translateX(-50%);width:calc(100% - 24px);max-width:406px;z-index:30;background:var(--forest);color:#fff;border-radius:24px;padding:10px 16px;display:flex;align-items:center;gap:10px;box-shadow:0 8px 22px rgba(41,53,47,.3);font-size:14px}
+.focus-mini{position:fixed;bottom:156px;left:50%;transform:translateX(-50%);width:calc(100% - 24px);max-width:406px;z-index:30;background:var(--forest);color:#fff;border-radius:22px;padding:2px 6px 2px 4px;display:flex;align-items:center;gap:4px;box-shadow:0 8px 22px rgba(41,53,47,.3);font-size:14px}
+.focus-mini-link{flex:1;min-width:0;min-height:44px;display:flex;align-items:center;gap:10px;padding:0 12px;color:#fff}
 .focus-mini .grow{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .focus-mini .i{stroke:#fff}
+.focus-mini .ib{width:44px;height:44px;color:#fff;background:none;border:0}

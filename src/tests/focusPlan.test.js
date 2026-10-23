@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { actualMinutes, dailyMinutes, elapsedMs, finishRun, fmtClock, pauseRun, remainingMs, resumeRun, startRun, summarize } from '../focusLogic.js';
+import { actualMinutes, dailyMinutes, elapsedMs, finishRun, fmtClock, pauseRun, remainingMs, resumeRun, staleRun, startRun, summarize } from '../focusLogic.js';
 import { buildMonth, dayBlocks, monthLength, monthStart, shiftMonth } from '../calendarLogic.js';
 import { jalali, weekdayIdx } from '../util.js';
 
@@ -75,5 +75,19 @@ describe('calendarLogic', () => {
     );
     expect(b.timed.map((x) => x.kind)).toEqual(['focus', 'real']);
     expect(b.untimed).toHaveLength(1);
+  });
+});
+
+describe('staleRun', () => {
+  it('only flags abandoned sessions', () => {
+    const r = startRun({ planned: 25 }, T0);
+    expect(staleRun(r, T0 + 60 * 60000)).toBe(false);
+    expect(staleRun(r, T0 + (25 + 60) * 60000)).toBe(false);
+    expect(staleRun(r, T0 + (25 + 6 * 60 + 1) * 60000)).toBe(true);
+    const p = pauseRun(r, T0 + 10 * 60000);
+    expect(staleRun(p, T0 + 2 * 3600000)).toBe(false);
+    expect(staleRun(p, T0 + 4 * 3600000)).toBe(true);
+    expect(staleRun(finishRun(r, T0 + 1000), T0 + 99 * 3600000)).toBe(false);
+    expect(staleRun(null)).toBe(false);
   });
 });
