@@ -16,8 +16,8 @@ import { Notifications, NotifSettings, Profile, ProfileEdit, Prefs, Privacy, Pri
 
 import AlertBanner from './AlertBanner.jsx';
 import { useFocusWatcher, useReminderWatcher } from './alerts.js';
-import FocusMini from './FocusMini.jsx';
 import { foldBank } from './game.js';
+import { isNative, rescheduleAll } from './notify.js';
 import { GamePage, Howto } from './screens/Game.jsx';
 import { About } from './screens/About.jsx';
 import { PrivacyImport, PrivacyReport } from './screens/DataScreens.jsx';
@@ -41,6 +41,15 @@ export default function App() {
     return () => document.removeEventListener('visibilitychange', run);
   }, []);
 
+  // یادآورها هر بار که اپ باز یا از پس‌زمینه برمی‌گردد دوباره زمان‌بندی می‌شوند
+  useEffect(() => {
+    if (!isNative()) return undefined;
+    const run = () => { if (!document.hidden) rescheduleAll(); };
+    run();
+    document.addEventListener('visibilitychange', run);
+    return () => document.removeEventListener('visibilitychange', run);
+  }, []);
+
   useEffect(() => {
     document.documentElement.classList.toggle('fs-lg', !!prefs?.big);
     document.documentElement.classList.toggle('reduce', !!prefs?.reduce);
@@ -58,7 +67,6 @@ export default function App() {
     <ToastProvider>
       <main className="app">
         <AlertBanner />
-        <FocusMini />
         <Routes>
           <Route path="/" element={<Navigate to="/today" replace />} />
           <Route path="/welcome" element={<Welcome />} />

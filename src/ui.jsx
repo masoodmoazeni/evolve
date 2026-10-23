@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 
 const ICONS = {
@@ -200,36 +200,41 @@ export function Fab({ label, onClick }) {
 const ToastCtx = createContext(() => {});
 export const useToast = () => useContext(ToastCtx);
 
+// پیام‌های کوتاه (اعلان موفقیت و بازگردانی) حذف شده‌اند؛ API برای سازگاری با بقیهٔ کد نگه داشته شده است
+const noToast = () => {};
 export function ToastProvider({ children }) {
-  const [t, setT] = useState(null);
-  const timer = useRef();
-  const show = useCallback((msg, onUndo) => {
-    clearTimeout(timer.current);
-    setT({ msg, onUndo });
-    timer.current = setTimeout(() => setT(null), 3000);
-  }, []);
-  useEffect(() => () => clearTimeout(timer.current), []);
+  return <ToastCtx.Provider value={noToast}>{children}</ToastCtx.Provider>;
+}
+
+// انتخاب‌گر راست‌به‌چپ با فونت اپ؛ جایگزین select بومی (که در اندروید چپ‌چین و با فونت سیستم باز می‌شود)
+export function Select({ value, options, onChange, label }) {
+  const [open, setOpen] = useState(false);
+  const cur = options.find((o) => String(o.value) === String(value)) ?? options[0];
   return (
-    <ToastCtx.Provider value={show}>
-      {children}
-      {t && (
-        <div className="toast-wrap" role="status">
-          <div className="toast">
-            {t.msg}
-            {t.onUndo && (
+    <>
+      <button type="button" className="in sel" aria-haspopup="listbox" aria-label={label} onClick={() => setOpen(true)}>
+        <span className="grow">{cur?.label}</span>
+        <Icon name="chev" />
+      </button>
+      {open && (
+        <Sheet title={label} onClose={() => setOpen(false)}>
+          <div className="col" role="listbox" aria-label={label}>
+            {options.map((o) => (
               <button
-                className="undo"
-                onClick={() => {
-                  t.onUndo();
-                  setT(null);
-                }}
+                key={String(o.value)}
+                type="button"
+                role="option"
+                aria-selected={String(o.value) === String(value)}
+                className={`sel-opt${String(o.value) === String(value) ? ' on' : ''}`}
+                onClick={() => { onChange(o.value); setOpen(false); }}
               >
-                بازگردانی
+                <span className="grow">{o.label}</span>
+                {String(o.value) === String(value) && <Icon name="check" />}
               </button>
-            )}
+            ))}
           </div>
-        </div>
+        </Sheet>
       )}
-    </ToastCtx.Provider>
+    </>
   );
 }

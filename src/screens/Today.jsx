@@ -4,7 +4,7 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { db, useKV } from '../db.js';
 import { habitsForDate, MOODS, weekDates } from '../logic.js';
 import { addDays, dateKey, faNum, fmtDate, WEEKDAYS_SHORT } from '../util.js';
-import { Bars, Card, Ck, Empty, Fab, Field, Icon, Page, Skeleton, STATUS_LABEL, Top, useToast } from '../ui.jsx';
+import { Bars, Card, Ck, Empty, Fab, Field, Icon, Page, Skeleton, STATUS_LABEL, Top } from '../ui.jsx';
 import { HabitLogSheet } from './Habits.jsx';
 import AddSheet from './AddSheet.jsx';
 import { greeting, splitTasks, weekBarValues } from './habitLogic.js';
@@ -14,23 +14,8 @@ import { computeMilestones } from '../milestoneLogic.js';
 import { DaySummary, HardDay, MilestoneCard, NextAction, RecoveryCard, nextAction, remainingMinutes } from './TodayCards.jsx';
 import { setHabitLog } from '../data.js';
 import { GameCard } from './Game.jsx';
+import { TaskRow } from './TaskUI.jsx';
 import './Today.css';
-
-function TaskRow({ task }) {
-  const toast = useToast();
-  const toggle = async () => {
-    const was = !!task.done;
-    await db.tasks.update(task.id, { done: !was });
-    toast(was ? 'برگشت به برنامه' : 'انجام شد', () => db.tasks.update(task.id, { done: was }));
-  };
-  return (
-    <button className="rowbtn" onClick={toggle} aria-label={`${task.title}، ${task.done ? 'انجام‌شده' : 'برنامه‌ریزی‌شده'}`}>
-      <Ck status={task.done ? 'done' : 'planned'} />
-      <span className="grow">{task.title}</span>
-      {task.time && <span className="xs">{faNum(task.time)}</span>}
-    </button>
-  );
-}
 
 function Intent({ today }) {
   const [saved, setSaved] = useKV(`intent:${today}`, '');
