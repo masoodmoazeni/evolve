@@ -1,0 +1,7 @@
+.td-date{font-size:13px;color:var(--text2)}
+.td-wk{margin-top:2px}
+.td-wk span{font-size:11px;color:var(--text2)}
+.explain{display:flex;flex-direction:column;gap:6px;margin:0}
+.explain dd{margin:0}
+.explain dt{font-weight:700;color:#4D4380}
+.recov-chips{display:flex;flex-wrap:wrap;gap:8px}

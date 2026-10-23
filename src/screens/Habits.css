@@ -1,0 +1,13 @@
+.dayrow button{padding:0;justify-content:center;min-width:0}
+.hb-sub{font-size:12.5px;color:var(--text2)}
+.hb-counts{display:flex;gap:14px;flex-wrap:wrap}
+.hb-counts span{display:flex;align-items:center;gap:6px;font-size:13px}
+.hb-days{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center;font-size:11px;color:var(--text2)}
+.hb-more{border-top:1px solid var(--line);padding-top:10px}
+.hb-versions{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.hb-versions span{display:flex;flex-direction:column;gap:2px;font-size:13px;background:#fff;border-radius:12px;padding:8px 10px}
+.hb-versions b{font-size:12px;color:#4F6B58}
+.hb-prep{min-height:44px;gap:10px}
+.hb-prep input{width:22px;height:22px;accent-color:var(--forest)}
+.hb-rev{padding:8px 0;border-top:1px solid var(--line);gap:2px}
+input[type=range]{width:100%;accent-color:var(--forest)}

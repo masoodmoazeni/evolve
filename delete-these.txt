@@ -1,0 +1,10 @@
+src/german
+src/screens/German.jsx
+src/screens/GermanBits.jsx
+src/screens/GermanExam.jsx
+src/screens/GermanLesson.jsx
+src/screens/GermanSections.jsx
+src/screens/GermanSections2.jsx
+src/screens/German.css
+src/screens/Placeholder.jsx
+src/tests/german.test.js

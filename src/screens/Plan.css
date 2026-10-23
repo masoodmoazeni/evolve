@@ -1,0 +1,20 @@
+.task-row{display:flex;align-items:center;gap:12px;min-height:56px;border-top:1px solid var(--line)}
+.task-row:first-child{border-top:0}
+.task-row .tk{background:none;border:0;min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
+.task-row .txt{flex:1;min-width:0;background:none;border:0;text-align:right;min-height:44px;cursor:pointer;display:flex;flex-direction:column;justify-content:center;gap:2px}
+.task-row .done-t{text-decoration:line-through;color:var(--text2)}
+.cal-head{display:flex;align-items:center;gap:8px}
+.cal-head h2{flex:1;text-align:center}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center}
+.cal-grid .wd{font-size:12px;font-weight:700;color:var(--text2);padding:4px 0}
+.cal-day{height:46px;border-radius:12px;border:0;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:14px;font-weight:600;gap:3px;cursor:pointer;color:var(--text)}
+.cal-day b{width:6px;height:6px;border-radius:3px;background:var(--sage);display:block}
+.cal-day.pl b{background:#fff;border:1.5px solid var(--sage)}
+.cal-day.t{background:var(--forest);color:#fff}
+.cal-day.t b{background:#fff}
+.cal-day.sel{outline:2px solid var(--forest)}
+.cal-day.gap{visibility:hidden}
+.wk-row{display:flex;align-items:center;gap:12px;min-height:56px;padding:10px 0;border-top:1px solid var(--line);color:inherit;text-decoration:none}
+.wk-row:first-child{border-top:0}
+.wk-day{width:64px;font-weight:700;font-size:13px;color:var(--forest)}
+.tl{flex-direction:row}

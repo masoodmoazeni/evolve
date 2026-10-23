@@ -86,7 +86,7 @@ kv:          'key'                                 // profile, notif, retention,
 
 ## ۴. سیستم طراحی (باید عیناً حفظ شود)
 
-مرجع بصری: فایل‌های **`reference/index.html` و `reference/style.css`** (نمونهٔ HTML/CSS قبلی) و بوم طراحی ۲۵ بُردی. کلاس‌ها و توکن‌ها را **به همان نام** به React ببر.
+مرجع بصری: فایل‌های **`prototype/index.html` و `prototype/style.css`** (نمونهٔ HTML/CSS قبلی) و بوم طراحی ۲۵ بُردی. کلاس‌ها و توکن‌ها را **به همان نام** به React ببر.
 
 ### رنگ‌ها (CSS variables در `:root`)
 | توکن | مقدار | کاربرد |
@@ -119,7 +119,7 @@ kv:          'key'                                 // profile, notif, retention,
 ```
 evolve/
 ├─ CLAUDE.md
-├─ reference/            # index.html و style.css (مرجع دیزاین) + docs/boards.md
+├─ prototype/            # مرجع دیزاین (index.html, style.css, REPORT.md)؛ صفحات ثبت‌نام/ورود آن منسوخ‌اند
 ├─ public/fonts/         # Vazirmatn woff2
 ├─ src/
 │  ├─ main.jsx  App.jsx
@@ -262,7 +262,7 @@ evolve/
 - اعمال خودکار پیشنهاد بدون تأیید.
 - ایموجی در UI، رنگ‌های خارج از پالت، گرادیان‌های تزئینی.
 - ساخت ویژگی بزرگ جدید که در بُردها نیست (به‌جایش در «پرسش‌های باز» بنویس).
-- ویرایش `reference/`.
+- ویرایش `prototype/`.
 
 ---
 
@@ -280,7 +280,7 @@ evolve/
 
 ## ۱۳. دستور شروع (برای کاربر)
 
-پس از قرار دادن این فایل و پوشهٔ `reference/` در ریشهٔ پروژه، در Claude Code بگو:
+پس از قرار دادن این فایل و پوشهٔ `prototype/` در ریشهٔ پروژه، در Claude Code بگو:
 
 > «CLAUDE.md را کامل بخوان. فقط **M1** را اجرا کن و پایان هر مرحله گزارش بده. سؤالی داشتی قبل از شروع بپرس.»
 

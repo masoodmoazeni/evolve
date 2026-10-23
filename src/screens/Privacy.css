@@ -1,0 +1,6 @@
+.local-badge{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;min-height:30px;padding:0 12px;border-radius:15px;background:var(--mint);color:var(--forest);font-size:12.5px;font-weight:700}
+.policy{display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:13px;line-height:1.7}
+.policy b{display:block;color:var(--forest);margin-bottom:2px}
+.policy ul{list-style:none;padding:0;margin:0;color:var(--text2)}
+.policy li:before{content:"· "}
+.lnk-inline{color:var(--forest);font-weight:700;text-decoration:underline}

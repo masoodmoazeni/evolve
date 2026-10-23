@@ -1,0 +1,11 @@
+.mood-pick{display:flex;gap:4px}
+.mood-pick button{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12px;font-weight:600;background:none;border:0;min-height:76px;cursor:pointer;color:var(--text)}
+.mood-pick b{width:48px;height:48px;border-radius:50%;border:2px solid transparent;display:block}
+.mood-pick button[aria-pressed=true] b{border-color:var(--forest);box-shadow:0 0 0 3px var(--mint)}
+.mood-pick button[aria-pressed=true]{color:var(--forest)}
+.range{width:100%;min-height:44px;accent-color:var(--forest)}
+.bar-labels{display:flex;gap:6px;font-size:11px;color:var(--text2);text-align:center}
+.bar-labels span{flex:1}
+.hubrow{display:flex;align-items:center;gap:12px;min-height:56px}
+.hubrow .grow{flex:1;min-width:0}
+.note-ex{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}

@@ -1,0 +1,7 @@
+{
+  "appId": "app.evolve.mobile",
+  "appName": "اِوالو",
+  "webDir": "dist",
+  "android": { "allowMixedContent": false },
+  "plugins": { "LocalNotifications": { "smallIcon": "ic_stat_icon_config_sample" } }
+}

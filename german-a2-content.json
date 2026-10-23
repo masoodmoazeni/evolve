@@ -1,0 +1,1778 @@
+{
+  "_about": "محتوای آموزش آلمانی (Menschen A2) که از اپ حذف شد. ساختار: course, lessons[], lessonContent{n:{...}}, exams{n:{...}}. متن‌ها اصیل و نوشتهٔ خودمان هستند.",
+  "course": {
+    "book": "Menschen A2",
+    "whyMenschen": [
+      "ساختار هر درس روشن و تکرارشونده است: واژگان، گرامر، مکالمه، شنیدار، خواندن و نوشتن. برای مرور منظم عالی است.",
+      "موضوع‌ها روزمره‌اند (کار، خانه، سلامت، سفر، خرید). همین موضوع‌ها در آزمون‌های Goethe و در زندگی پس از مهاجرت هم می‌آیند.",
+      "کتاب با چارچوب مشترک اروپایی (CEFR) هم‌راستاست و برای آمادگی آزمون سطح A2 گزینهٔ رایجی است."
+    ],
+    "note": "متن‌های این بخش را خودمان و از نو نوشته‌ایم و از خود کتاب کپی نشده‌اند. در چاپ اصلی، Menschen A2 با شمارهٔ درس ۱۳ تا ۲۴ (A2.1 و A2.2) منتشر شده؛ ما اینجا برای ساده‌شدن، درس‌ها را از ۱ تا ۱۲ شماره‌گذاری کرده‌ایم و عنوان‌ها طرح پیشنهادی همسو با موضوع‌های A2 است، نه فهرست رسمی کتاب. اگر کتاب را داری، پیش از تکیه بر عنوان‌ها آن را با فهرست مطالب کتاب مقایسه کن."
+  },
+  "lessons": [
+    {
+      "n": 1,
+      "title": "آخر هفته و اوقات فراغت",
+      "grammar": "گذشتهٔ نقلی با haben (Perfekt)",
+      "ready": true
+    },
+    {
+      "n": 2,
+      "title": "سفر و جابه‌جایی",
+      "grammar": "Perfekt با sein",
+      "ready": false
+    },
+    {
+      "n": 3,
+      "title": "خانه و محله",
+      "grammar": "حرف اضافهٔ دوحالته (Wechselpräpositionen)",
+      "ready": false
+    },
+    {
+      "n": 4,
+      "title": "سلامت و بدن",
+      "grammar": "فعل‌های کمکی و امری",
+      "ready": false
+    },
+    {
+      "n": 5,
+      "title": "کار و شغل",
+      "grammar": "جملهٔ پیرو با weil",
+      "ready": false
+    },
+    {
+      "n": 6,
+      "title": "خرید و لباس",
+      "grammar": "صرف صفت",
+      "ready": false
+    },
+    {
+      "n": 7,
+      "title": "جشن‌ها و دعوت‌ها",
+      "grammar": "حالت دَتیو و دعوت‌نامه",
+      "ready": false
+    },
+    {
+      "n": 8,
+      "title": "شهر و مسیریابی",
+      "grammar": "حرف اضافه با دَتیو",
+      "ready": false
+    },
+    {
+      "n": 9,
+      "title": "غذا و رستوران",
+      "grammar": "مقایسه (Komparativ / Superlativ)",
+      "ready": false
+    },
+    {
+      "n": 10,
+      "title": "خاطره‌ها و گذشته",
+      "grammar": "Präteritum (war, hatte، فعل‌های کمکی)",
+      "ready": false
+    },
+    {
+      "n": 11,
+      "title": "برنامه و آینده",
+      "grammar": "wenn و بیان برنامه",
+      "ready": false
+    },
+    {
+      "n": 12,
+      "title": "مرور نهایی و آمادگی Goethe A2",
+      "grammar": "مرور و شبیه‌ساز آزمون",
+      "ready": false
+    }
+  ],
+  "skills": {
+    "vocab": "واژگان",
+    "grammar": "گرامر",
+    "speak": "مکالمه",
+    "listen": "شنیداری",
+    "write": "نوشتار",
+    "read": "خواندن",
+    "review": "مرور",
+    "exam": "آزمون"
+  },
+  "weekPlan": [
+    {
+      "day": "شنبه",
+      "blocks": [
+        [
+          "vocab",
+          40,
+          "واژگان جدید درس"
+        ],
+        [
+          "grammar",
+          50,
+          "خواندن توضیح گرامر و جدول‌ها"
+        ],
+        [
+          "speak",
+          30,
+          "دیالوگ را بلند بخوان"
+        ],
+        [
+          "write",
+          30,
+          "تمرین نوشتاری ۱ و ۲"
+        ],
+        [
+          "review",
+          30,
+          "مرور کارت‌های واژگان"
+        ]
+      ]
+    },
+    {
+      "day": "یکشنبه",
+      "blocks": [
+        [
+          "vocab",
+          30,
+          "تکرار واژگان با جمله"
+        ],
+        [
+          "grammar",
+          40,
+          "مثال‌ها و اشتباهات رایج"
+        ],
+        [
+          "listen",
+          40,
+          "متن شنیداری، چندبار"
+        ],
+        [
+          "speak",
+          30,
+          "جمله‌های پرکاربرد"
+        ],
+        [
+          "write",
+          40,
+          "تمرین نوشتاری ۳ و ۴"
+        ]
+      ]
+    },
+    {
+      "day": "دوشنبه",
+      "blocks": [
+        [
+          "read",
+          40,
+          "متن خواندن و پنج پرسش"
+        ],
+        [
+          "vocab",
+          30,
+          "واژه‌های متن"
+        ],
+        [
+          "grammar",
+          40,
+          "تمرین ساختار روی خودت"
+        ],
+        [
+          "speak",
+          40,
+          "گفت‌وگوی تک‌نفره دربارهٔ روزت"
+        ],
+        [
+          "review",
+          30,
+          "مرور شنبه و یکشنبه"
+        ]
+      ]
+    },
+    {
+      "day": "سه‌شنبه",
+      "blocks": [
+        [
+          "listen",
+          50,
+          "شنیدار بدون متن، بعد با متن"
+        ],
+        [
+          "write",
+          40,
+          "تمرین ۵: متن آزاد"
+        ],
+        [
+          "grammar",
+          40,
+          "بستهٔ حفظی: ساختارها"
+        ],
+        [
+          "speak",
+          30,
+          "جمله‌ها را از حفظ بگو"
+        ],
+        [
+          "vocab",
+          20,
+          "واژه‌های سخت"
+        ]
+      ]
+    },
+    {
+      "day": "چهارشنبه",
+      "blocks": [
+        [
+          "review",
+          60,
+          "مرور کل هفته"
+        ],
+        [
+          "speak",
+          40,
+          "ضبط صدای خودت و گوش‌دادن"
+        ],
+        [
+          "vocab",
+          40,
+          "بستهٔ حفظی: واژه در جمله"
+        ],
+        [
+          "write",
+          40,
+          "یادداشت کوتاه به آلمانی"
+        ]
+      ]
+    },
+    {
+      "day": "پنجشنبه",
+      "blocks": [
+        [
+          "exam",
+          60,
+          "آزمون درس"
+        ],
+        [
+          "review",
+          40,
+          "مرور پاسخ‌ها و بخش‌های کم‌تر مسلط"
+        ],
+        [
+          "grammar",
+          50,
+          "تمرین جبرانی"
+        ],
+        [
+          "vocab",
+          30,
+          "واژه‌هایی که جا ماندند"
+        ]
+      ]
+    },
+    {
+      "day": "جمعه",
+      "blocks": [
+        [
+          "review",
+          40,
+          "مرور سبک"
+        ],
+        [
+          "listen",
+          60,
+          "پادکست یا ویدیوی آسان به‌دلخواه"
+        ],
+        [
+          "speak",
+          40,
+          "گفت‌وگوی آزاد"
+        ],
+        [
+          "read",
+          20,
+          "خواندن آزاد"
+        ],
+        [
+          "review",
+          20,
+          "برنامهٔ هفتهٔ بعد"
+        ]
+      ]
+    }
+  ],
+  "sections": [
+    {
+      "key": "goals",
+      "title": "اهداف درس"
+    },
+    {
+      "key": "vocab",
+      "title": "واژگان کلیدی"
+    },
+    {
+      "key": "grammar",
+      "title": "گرامر درس"
+    },
+    {
+      "key": "speak",
+      "title": "مکالمه و جمله‌های کاربردی"
+    },
+    {
+      "key": "write",
+      "title": "تمرین نوشتاری"
+    },
+    {
+      "key": "listen",
+      "title": "تمرین شنیداری"
+    },
+    {
+      "key": "read",
+      "title": "تمرین خواندن"
+    },
+    {
+      "key": "pack",
+      "title": "بستهٔ حفظی"
+    },
+    {
+      "key": "culture",
+      "title": "نکات فرهنگی و اشتباهات رایج"
+    },
+    {
+      "key": "summary",
+      "title": "خلاصهٔ یک‌خطی درس"
+    }
+  ],
+  "lessonContent": {
+    "1": {
+      "goals": [
+        "بتوانی دربارهٔ آخر هفته و اوقات فراغتت در گذشته حرف بزنی: «آخر هفته چه کار کردی؟»",
+        "گذشتهٔ نقلی (Perfekt) را با haben در جمله‌های ساده و پرسش‌ها درست بسازی.",
+        "ساختن Partizip II را برای فعل‌های باقاعده، بی‌قاعده و فعل‌های -ieren یاد بگیری.",
+        "جای فعل در جمله را بدانی: haben در جایگاه دوم و Partizip II در آخر جمله.",
+        "حدود ۳۸ واژهٔ تازه دربارهٔ اوقات فراغت، همراه با جمله، بشناسی."
+      ],
+      "grammar": {
+        "title": "Perfekt با haben",
+        "intro": [
+          "در آلمانیِ محاوره‌ای، برای گفتن کارهایی که قبلاً انجام شده، بیشتر از Perfekt (گذشتهٔ نقلی) استفاده می‌کنیم. مثل «کار کرده‌ام / کار کردم».",
+          "Perfekt دو تکه دارد: فعل کمکی (haben یا sein) که در جایگاه دوم جمله می‌نشیند، و Partizip II (صفت مفعولی فعل اصلی) که به آخر جمله می‌رود. این «قاب» اصل کار است.",
+          "در این درس فقط فعل‌هایی را می‌بینیم که با haben ساخته می‌شوند؛ این گروه بزرگ‌ترین گروه است. فعل‌های دارای sein (مثل gehen و fahren) موضوع Lektion 2 است."
+        ],
+        "steps": [
+          "گام ۱: فاعل را بنویس: Ich",
+          "گام ۲: haben را برای فاعل صرف کن و بعد از فاعل بگذار: Ich habe",
+          "گام ۳: بقیهٔ جمله (مفعول، زمان، مکان) را بیاور: Ich habe gestern einen Film",
+          "گام ۴: Partizip II را در آخر جمله بگذار: Ich habe gestern einen Film gesehen.",
+          "برای ساخت Partizip II: باقاعده ge + ریشه + t (gemacht)، بی‌قاعده ge + ... + en (gesehen). حتماً بی‌قاعده‌ها را همراه فعل حفظ کن."
+        ],
+        "tables": [
+          {
+            "title": "صرف haben در زمان حال",
+            "head": [
+              "فاعل",
+              "haben"
+            ],
+            "rows": [
+              [
+                "ich",
+                "habe"
+              ],
+              [
+                "du",
+                "hast"
+              ],
+              [
+                "er / sie / es",
+                "hat"
+              ],
+              [
+                "wir",
+                "haben"
+              ],
+              [
+                "ihr",
+                "habt"
+              ],
+              [
+                "sie / Sie",
+                "haben"
+              ]
+            ],
+            "deCols": [
+              0,
+              1
+            ]
+          },
+          {
+            "title": "ساختار جملهٔ خبری",
+            "head": [
+              "جایگاه ۱",
+              "جایگاه ۲ (haben)",
+              "میانه",
+              "پایان (Partizip II)"
+            ],
+            "rows": [
+              [
+                "Ich",
+                "habe",
+                "Pizza",
+                "gegessen."
+              ],
+              [
+                "Gestern",
+                "habe",
+                "ich Fußball",
+                "gespielt."
+              ],
+              [
+                "Wir",
+                "haben",
+                "viel",
+                "gelacht."
+              ]
+            ],
+            "deCols": [
+              0,
+              1,
+              2,
+              3
+            ]
+          },
+          {
+            "title": "پرسش‌ها",
+            "head": [
+              "نوع",
+              "ساختار",
+              "مثال"
+            ],
+            "rows": [
+              [
+                "پرسش بله/خیر",
+                "haben + فاعل + ... + Partizip II?",
+                "Hast du Musik gehört?"
+              ],
+              [
+                "پرسش با W",
+                "W-Wort + haben + فاعل + ... + Partizip II?",
+                "Was hast du gemacht?"
+              ]
+            ],
+            "deCols": [
+              1,
+              2
+            ]
+          },
+          {
+            "title": "ساخت Partizip II",
+            "head": [
+              "گروه",
+              "قاعده",
+              "مصدر",
+              "Partizip II"
+            ],
+            "rows": [
+              [
+                "باقاعده",
+                "ge + ریشه + t",
+                "machen",
+                "gemacht"
+              ],
+              [
+                "باقاعده",
+                "ge + ریشه + t",
+                "kaufen",
+                "gekauft"
+              ],
+              [
+                "ریشه با t/d",
+                "ge + ریشه + et",
+                "arbeiten",
+                "gearbeitet"
+              ],
+              [
+                "بی‌قاعده",
+                "ge + ... + en",
+                "sehen",
+                "gesehen"
+              ],
+              [
+                "بی‌قاعده",
+                "ge + ... + en",
+                "trinken",
+                "getrunken"
+              ],
+              [
+                "بی‌قاعده",
+                "ge + ... + en",
+                "schlafen",
+                "geschlafen"
+              ],
+              [
+                "پایان -ieren",
+                "بدون ge، فقط t",
+                "telefonieren",
+                "telefoniert"
+              ],
+              [
+                "پیشوند be-, ver-, er-, ent-",
+                "بدون ge",
+                "besuchen",
+                "besucht"
+              ],
+              [
+                "پیشوند be-",
+                "بدون ge",
+                "bestellen",
+                "bestellt"
+              ],
+              [
+                "جداشدنی",
+                "پیشوند + ge + ریشه + t",
+                "einkaufen",
+                "eingekauft"
+              ]
+            ],
+            "deCols": [
+              2,
+              3
+            ]
+          }
+        ],
+        "examples": [
+          {
+            "de": "Ich habe am Samstag lange geschlafen.",
+            "fa": "شنبه مدت زیادی خوابیدم."
+          },
+          {
+            "de": "Wir haben zusammen Pizza gemacht.",
+            "fa": "ما با هم پیتزا درست کردیم."
+          },
+          {
+            "de": "Hast du gestern Musik gehört?",
+            "fa": "دیروز موسیقی گوش دادی؟"
+          },
+          {
+            "de": "Sie hat eine E-Mail geschrieben.",
+            "fa": "او یک ایمیل نوشت."
+          },
+          {
+            "de": "Was habt ihr am Wochenende gemacht?",
+            "fa": "شما آخر هفته چه کار کردید؟"
+          },
+          {
+            "de": "Er hat nicht gearbeitet.",
+            "fa": "او کار نکرد."
+          },
+          {
+            "de": "Ich habe keinen Kaffee getrunken.",
+            "fa": "قهوه ننوشیدم."
+          },
+          {
+            "de": "Wir haben einen Film gesehen und viel gelacht.",
+            "fa": "فیلمی دیدیم و خیلی خندیدیم."
+          }
+        ],
+        "mistakes": [
+          {
+            "bad": "Ich habe gemacht Hausaufgaben.",
+            "good": "Ich habe Hausaufgaben gemacht.",
+            "why": "Partizip II همیشه آخر جمله می‌آید، نه بلافاصله بعد از haben. در فارسی فعل آخر جمله است؛ همین عادت را به آلمانی بیاور، ولی فقط برای Partizip."
+          },
+          {
+            "bad": "Ich lernte gestern Deutsch.",
+            "good": "Ich habe gestern Deutsch gelernt.",
+            "why": "فارسی گذشتهٔ ساده دارد و ما وسوسه می‌شویم Präteritum بسازیم. در گفتار روزمره Perfekt را انتخاب کن."
+          },
+          {
+            "bad": "Ich habe getelefoniert.",
+            "good": "Ich habe telefoniert.",
+            "why": "فعل‌های -ieren و فعل‌های با پیشوند be-/ver-/er-/ent- ge نمی‌گیرند."
+          },
+          {
+            "bad": "Gestern ich habe Fußball gespielt.",
+            "good": "Gestern habe ich Fußball gespielt.",
+            "why": "وقتی جمله با قید زمان شروع شود، haben همچنان در جایگاه دوم می‌ماند و فاعل بعد از آن می‌آید."
+          },
+          {
+            "bad": "Ich habe nicht Kaffee getrunken.",
+            "good": "Ich habe keinen Kaffee getrunken.",
+            "why": "برای اسم بدون artikel از kein استفاده می‌کنیم؛ nicht معمولاً قبل از Partizip می‌آید (Er hat nicht gearbeitet)."
+          },
+          {
+            "bad": "Ich habe gegessen Pizza gestern.",
+            "good": "Ich habe gestern Pizza gegessen.",
+            "why": "ترتیب معمول میانه: زمان، سپس مفعول (اغلب)، و در پایان Partizip II."
+          }
+        ]
+      },
+      "vocab": [
+        {
+          "de": "die Freizeit",
+          "pr": "frai-tsait",
+          "fa": "اوقات فراغت",
+          "ex": "Ich habe am Sonntag viel Freizeit.",
+          "exFa": "یکشنبه وقت آزاد زیادی دارم."
+        },
+        {
+          "de": "das Wochenende",
+          "pr": "vo-khen-en-de",
+          "fa": "آخر هفته",
+          "ex": "Am Wochenende schlafe ich lange.",
+          "exFa": "آخر هفته‌ها دیر می‌خوابم."
+        },
+        {
+          "de": "der Ausflug",
+          "pr": "aus-flook",
+          "fa": "گردش یک‌روزه",
+          "ex": "Wir haben einen Ausflug gemacht.",
+          "exFa": "ما یک گردش یک‌روزه رفتیم."
+        },
+        {
+          "de": "der Spaziergang",
+          "pr": "shpa-tsir-gang",
+          "fa": "پیاده‌روی تفریحی",
+          "ex": "Ich habe einen Spaziergang gemacht.",
+          "exFa": "یک قدم‌زدن رفتم."
+        },
+        {
+          "de": "das Hobby",
+          "pr": "ho-bi",
+          "fa": "سرگرمی",
+          "ex": "Mein Hobby ist Fotografieren.",
+          "exFa": "سرگرمی من عکاسی است."
+        },
+        {
+          "de": "das Konzert",
+          "pr": "kon-tsert",
+          "fa": "کنسرت",
+          "ex": "Am Freitag haben wir ein Konzert besucht.",
+          "exFa": "جمعه به یک کنسرت رفتیم."
+        },
+        {
+          "de": "gestern",
+          "pr": "ges-tern",
+          "fa": "دیروز",
+          "ex": "Gestern habe ich Deutsch gelernt.",
+          "exFa": "دیروز آلمانی یاد گرفتم."
+        },
+        {
+          "de": "vorgestern",
+          "pr": "for-ges-tern",
+          "fa": "پریروز",
+          "ex": "Vorgestern habe ich gearbeitet.",
+          "exFa": "پریروز کار کردم."
+        },
+        {
+          "de": "letzte Woche",
+          "pr": "lets-te vo-khe",
+          "fa": "هفتهٔ گذشته",
+          "ex": "Letzte Woche habe ich viel gelernt.",
+          "exFa": "هفتهٔ گذشته زیاد یاد گرفتم."
+        },
+        {
+          "de": "schon",
+          "pr": "shon",
+          "fa": "قبلاً، از پیش",
+          "ex": "Ich habe schon gegessen.",
+          "exFa": "من قبلاً غذا خورده‌ام."
+        },
+        {
+          "de": "noch nie",
+          "pr": "nokh ni",
+          "fa": "هیچ‌وقت (تا حالا)",
+          "ex": "Ich habe noch nie getanzt.",
+          "exFa": "تا حالا نرقصیده‌ام."
+        },
+        {
+          "de": "lange",
+          "pr": "lang-e",
+          "fa": "مدت طولانی",
+          "ex": "Ich habe lange geschlafen.",
+          "exFa": "مدت زیادی خوابیدم."
+        },
+        {
+          "de": "besuchen",
+          "pr": "be-zoo-khen",
+          "fa": "دیدن، سر زدن",
+          "ex": "Ich habe meine Oma besucht.",
+          "exFa": "به دیدن مادربزرگم رفتم."
+        },
+        {
+          "de": "kochen",
+          "pr": "ko-khen",
+          "fa": "آشپزی کردن",
+          "ex": "Wir haben Suppe gekocht.",
+          "exFa": "ما سوپ پختیم."
+        },
+        {
+          "de": "spielen",
+          "pr": "shpi-len",
+          "fa": "بازی کردن",
+          "ex": "Er hat Fußball gespielt.",
+          "exFa": "او فوتبال بازی کرد."
+        },
+        {
+          "de": "lernen",
+          "pr": "ler-nen",
+          "fa": "یاد گرفتن",
+          "ex": "Ich habe Wörter gelernt.",
+          "exFa": "واژه یاد گرفتم."
+        },
+        {
+          "de": "arbeiten",
+          "pr": "ar-bai-ten",
+          "fa": "کار کردن",
+          "ex": "Sie hat am Samstag gearbeitet.",
+          "exFa": "او شنبه کار کرد."
+        },
+        {
+          "de": "machen",
+          "pr": "ma-khen",
+          "fa": "انجام دادن، ساختن",
+          "ex": "Was hast du gemacht?",
+          "exFa": "چه کار کردی؟"
+        },
+        {
+          "de": "kaufen",
+          "pr": "kau-fen",
+          "fa": "خریدن",
+          "ex": "Ich habe Brot gekauft.",
+          "exFa": "نان خریدم."
+        },
+        {
+          "de": "hören",
+          "pr": "hoe-ren",
+          "fa": "شنیدن، گوش دادن",
+          "ex": "Wir haben Musik gehört.",
+          "exFa": "ما موسیقی گوش دادیم."
+        },
+        {
+          "de": "sagen",
+          "pr": "za-gen",
+          "fa": "گفتن",
+          "ex": "Sie hat nichts gesagt.",
+          "exFa": "او چیزی نگفت."
+        },
+        {
+          "de": "wohnen",
+          "pr": "vo-nen",
+          "fa": "زندگی کردن، ساکن بودن",
+          "ex": "Ich habe in Teheran gewohnt.",
+          "exFa": "در تهران زندگی می‌کردم."
+        },
+        {
+          "de": "tanzen",
+          "pr": "tan-tsen",
+          "fa": "رقصیدن",
+          "ex": "Wir haben auf der Party getanzt.",
+          "exFa": "در مهمانی رقصیدیم."
+        },
+        {
+          "de": "putzen",
+          "pr": "pu-tsen",
+          "fa": "تمیز کردن",
+          "ex": "Ich habe die Wohnung geputzt.",
+          "exFa": "خانه را تمیز کردم."
+        },
+        {
+          "de": "warten (auf + Akk.)",
+          "pr": "var-ten",
+          "fa": "منتظر ماندن",
+          "ex": "Ich habe lange auf den Bus gewartet.",
+          "exFa": "مدت زیادی منتظر اتوبوس ماندم."
+        },
+        {
+          "de": "brauchen",
+          "pr": "brau-khen",
+          "fa": "نیاز داشتن",
+          "ex": "Ich habe viel Zeit gebraucht.",
+          "exFa": "زمان زیادی لازم داشتم."
+        },
+        {
+          "de": "fragen",
+          "pr": "fra-gen",
+          "fa": "پرسیدن",
+          "ex": "Er hat den Lehrer gefragt.",
+          "exFa": "او از معلم پرسید."
+        },
+        {
+          "de": "lachen",
+          "pr": "la-khen",
+          "fa": "خندیدن",
+          "ex": "Wir haben viel gelacht.",
+          "exFa": "خیلی خندیدیم."
+        },
+        {
+          "de": "telefonieren",
+          "pr": "te-le-fo-ni-ren",
+          "fa": "تلفنی صحبت کردن",
+          "ex": "Ich habe mit meiner Mutter telefoniert.",
+          "exFa": "با مادرم تلفنی حرف زدم."
+        },
+        {
+          "de": "studieren",
+          "pr": "shtu-di-ren",
+          "fa": "در دانشگاه خواندن",
+          "ex": "Er hat Medizin studiert.",
+          "exFa": "او پزشکی خوانده است."
+        },
+        {
+          "de": "fotografieren",
+          "pr": "fo-to-gra-fi-ren",
+          "fa": "عکس گرفتن",
+          "ex": "Ich habe die Berge fotografiert.",
+          "exFa": "از کوه‌ها عکس گرفتم."
+        },
+        {
+          "de": "bestellen",
+          "pr": "be-shte-len",
+          "fa": "سفارش دادن",
+          "ex": "Wir haben Pizza bestellt.",
+          "exFa": "ما پیتزا سفارش دادیم."
+        },
+        {
+          "de": "essen",
+          "pr": "es-sen",
+          "fa": "خوردن (غذا)",
+          "ex": "Wir haben zusammen gegessen.",
+          "exFa": "با هم غذا خوردیم."
+        },
+        {
+          "de": "trinken",
+          "pr": "trin-ken",
+          "fa": "نوشیدن",
+          "ex": "Ich habe Tee getrunken.",
+          "exFa": "چای نوشیدم."
+        },
+        {
+          "de": "sehen",
+          "pr": "ze-en",
+          "fa": "دیدن",
+          "ex": "Wir haben einen Film gesehen.",
+          "exFa": "یک فیلم دیدیم."
+        },
+        {
+          "de": "lesen",
+          "pr": "le-zen",
+          "fa": "خواندن",
+          "ex": "Er hat ein Buch gelesen.",
+          "exFa": "او یک کتاب خواند."
+        },
+        {
+          "de": "schlafen",
+          "pr": "shla-fen",
+          "fa": "خوابیدن",
+          "ex": "Ich habe bis zehn Uhr geschlafen.",
+          "exFa": "تا ساعت ده خوابیدم."
+        }
+      ],
+      "conversation": {
+        "title": "Wie war dein Wochenende?",
+        "lines": [
+          {
+            "who": "Anna",
+            "de": "Hallo Ali! Wie war dein Wochenende?",
+            "fa": "سلام علی! آخر هفته‌ات چطور بود؟"
+          },
+          {
+            "who": "Ali",
+            "de": "Hallo Anna! Es war schön, danke. Und deins?",
+            "fa": "سلام آنا! خوب بود، ممنون. مال تو چطور؟"
+          },
+          {
+            "who": "Anna",
+            "de": "Auch gut. Am Samstag habe ich lange geschlafen und dann habe ich die Wohnung geputzt.",
+            "fa": "منم خوب. شنبه مدت زیادی خوابیدم و بعد خانه را تمیز کردم."
+          },
+          {
+            "who": "Ali",
+            "de": "Und am Abend? Hast du etwas gemacht?",
+            "fa": "و عصر؟ کاری کردی؟"
+          },
+          {
+            "who": "Anna",
+            "de": "Ja, ich habe mit Freunden gekocht. Wir haben Pizza gemacht und viel gelacht.",
+            "fa": "بله، با دوستان آشپزی کردم. پیتزا درست کردیم و خیلی خندیدیم."
+          },
+          {
+            "who": "Ali",
+            "de": "Das klingt toll! Ich habe am Samstag gearbeitet. Am Sonntag habe ich aber einen Spaziergang gemacht und ein Buch gelesen.",
+            "fa": "عالی به نظر می‌رسد! من شنبه کار کردم. ولی یکشنبه قدم زدم و کتاب خواندم."
+          },
+          {
+            "who": "Anna",
+            "de": "Hast du auch Musik gehört?",
+            "fa": "موسیقی هم گوش دادی؟"
+          },
+          {
+            "who": "Ali",
+            "de": "Ja, natürlich. Ich habe zwei Stunden Musik gehört.",
+            "fa": "بله، حتماً. دو ساعت موسیقی گوش دادم."
+          },
+          {
+            "who": "Anna",
+            "de": "Super! Wollen wir nächstes Wochenende zusammen etwas machen?",
+            "fa": "عالی! آخر هفتهٔ بعد با هم کاری بکنیم؟"
+          },
+          {
+            "who": "Ali",
+            "de": "Gern! Ich habe schon eine Idee: Wir besuchen ein Konzert.",
+            "fa": "با کمال میل! من یک ایده دارم: برویم کنسرت."
+          }
+        ],
+        "phrases": [
+          {
+            "de": "Wie war dein Wochenende?",
+            "fa": "آخر هفته‌ات چطور بود؟"
+          },
+          {
+            "de": "Was hast du am Wochenende gemacht?",
+            "fa": "آخر هفته چه کار کردی؟"
+          },
+          {
+            "de": "Ich habe nichts Besonderes gemacht.",
+            "fa": "کار خاصی نکردم."
+          },
+          {
+            "de": "Ich habe lange geschlafen.",
+            "fa": "مدت زیادی خوابیدم."
+          },
+          {
+            "de": "Ich habe meine Familie besucht.",
+            "fa": "به دیدن خانواده‌ام رفتم."
+          },
+          {
+            "de": "Wir haben zusammen gekocht.",
+            "fa": "با هم آشپزی کردیم."
+          },
+          {
+            "de": "Ich habe Deutsch gelernt.",
+            "fa": "آلمانی یاد گرفتم."
+          },
+          {
+            "de": "Ich habe viel gearbeitet.",
+            "fa": "زیاد کار کردم."
+          },
+          {
+            "de": "Wir haben einen Ausflug gemacht.",
+            "fa": "گردشی رفتیم."
+          },
+          {
+            "de": "Ich habe einen Film gesehen.",
+            "fa": "یک فیلم دیدم."
+          },
+          {
+            "de": "Hast du Lust auf einen Spaziergang?",
+            "fa": "حوصلهٔ یک قدم‌زدن داری؟"
+          },
+          {
+            "de": "Das klingt gut!",
+            "fa": "خوب به نظر می‌رسد!"
+          },
+          {
+            "de": "Das hat Spaß gemacht.",
+            "fa": "خوش گذشت (لذت‌بخش بود)."
+          },
+          {
+            "de": "Hast du schon etwas gegessen?",
+            "fa": "چیزی خورده‌ای؟"
+          },
+          {
+            "de": "Ich habe noch nie Sushi gegessen.",
+            "fa": "تا حالا سوشی نخورده‌ام."
+          },
+          {
+            "de": "Wie lange hast du geschlafen?",
+            "fa": "چقدر خوابیدی؟"
+          },
+          {
+            "de": "Was hast du gestern Abend gemacht?",
+            "fa": "دیشب چه کار کردی؟"
+          },
+          {
+            "de": "Ich habe mit meiner Freundin telefoniert.",
+            "fa": "با دوستم تلفنی حرف زدم."
+          },
+          {
+            "de": "Wollen wir am Wochenende etwas zusammen machen?",
+            "fa": "آخر هفته با هم کاری بکنیم؟"
+          },
+          {
+            "de": "Ich habe leider keine Zeit gehabt.",
+            "fa": "متأسفانه وقت نداشتم."
+          }
+        ]
+      },
+      "culture": {
+        "tips": [
+          {
+            "t": "یکشنبه روز آرامش است",
+            "x": "در آلمان یکشنبه‌ها اکثر مغازه‌ها بسته‌اند و کارهای پرسروصدا مثل دریل‌کاری مناسب نیست. به همین دلیل قدم‌زدن و دیدار خانوادگی در یکشنبه رایج است."
+          },
+          {
+            "t": "سؤال دوشنبه‌ها",
+            "x": "«Wie war dein Wochenende?» یک شروع گفتگوی خیلی معمول در محل کار و کلاس است. یک پاسخ کوتاه و مثبت مثل «Schön, danke! Und deins?» کافی است."
+          },
+          {
+            "t": "قرار از قبل",
+            "x": "آلمانی‌ها معمولاً قرار را از قبل می‌گذارند. «یکهو بیا» کمتر رایج است و بهتر است با پیام یا تماس هماهنگ کنی."
+          },
+          {
+            "t": "عضویت در باشگاه‌ها",
+            "x": "Verein (باشگاه ورزشی، فرهنگی یا موسیقی) یکی از راه‌های اصلی دوست‌یابی و تمرین زبان است."
+          },
+          {
+            "t": "تو یا شما",
+            "x": "با دوستان و هم‌کلاسی‌ها du و با غریبه‌ها، مسئولان یا مشتری Sie به کار ببر."
+          }
+        ],
+        "pronunciation": [
+          {
+            "t": "ch",
+            "x": "در «ich» نرم و نزدیک به «ش» ملایم؛ در «machen» از گلو مثل «خ»."
+          },
+          {
+            "t": "w",
+            "x": "مثل «و» فارسی/v انگلیسی: Wochenende (وُخن‌اِنده)."
+          },
+          {
+            "t": "z",
+            "x": "مثل «تس»: Zeit (تسایت)."
+          },
+          {
+            "t": "s قبل از مصوت",
+            "x": "مثل «ز»: sehen (زِ‌ان)."
+          },
+          {
+            "t": "sp و st ابتدای کلمه",
+            "x": "مثل «شپ» و «شت»: spielen، studieren."
+          },
+          {
+            "t": "ü و ö",
+            "x": "در فارسی معادل ندارند؛ برای ü لب‌ها را مثل «او» جمع کن و «ای» بگو. ö مثل «اُ» با لب گرد."
+          }
+        ]
+      },
+      "listening": {
+        "sources": [
+          {
+            "name": "Deutsche Welle — Nicos Weg (سطح A2)",
+            "note": "دورهٔ ویدیویی رایگان با متن و تمرین، مناسب برای تکرار موضوع‌های روزمره."
+          },
+          {
+            "name": "Slow German (پادکست)",
+            "note": "گفتار آهسته و واضح؛ برای گوش‌دادن عادی و تکرار."
+          }
+        ],
+        "tip": "در این نمونه فایل صوتی نداریم. اگر دستگاهت صدای آلمانی آفلاین داشته باشد، دکمهٔ «پخش متن» دیده می‌شود. وگرنه متن را آهسته و بلند خودت بخوان. یک بار بدون نگاه به ترجمه گوش بده یا بخوان، بعد با ترجمه مقایسه کن.",
+        "text": [
+          "Hallo, ich bin Mina. Am Wochenende habe ich viel gemacht.",
+          "Am Samstag habe ich lange geschlafen. Dann habe ich Brot und Obst gekauft und die Wohnung geputzt.",
+          "Am Nachmittag habe ich meine Freundin Sara besucht. Wir haben Tee getrunken und viel gelacht.",
+          "Am Abend habe ich Deutsch gelernt.",
+          "Am Sonntag habe ich einen Spaziergang gemacht und Musik gehört. Ich habe nicht gearbeitet.",
+          "Das war ein schönes Wochenende!"
+        ],
+        "textFa": "سلام، من مینا هستم. آخر هفته کارهای زیادی کردم. شنبه مدت زیادی خوابیدم. بعد نان و میوه خریدم و خانه را تمیز کردم. بعدازظهر به دیدن دوستم سارا رفتم. چای نوشیدیم و خیلی خندیدیم. عصر آلمانی خواندم. یکشنبه قدم زدم و موسیقی گوش دادم. کار نکردم. آخر هفتهٔ قشنگی بود!",
+        "questions": [
+          {
+            "q": "Was hat Mina am Samstag gekauft?",
+            "a": "Brot und Obst. (نان و میوه)"
+          },
+          {
+            "q": "Wen hat Mina besucht?",
+            "a": "Ihre Freundin Sara. (دوستش سارا)"
+          },
+          {
+            "q": "Was haben Mina und Sara getrunken?",
+            "a": "Tee. (چای)"
+          },
+          {
+            "q": "Hat Mina am Sonntag gearbeitet?",
+            "a": "Nein, sie hat nicht gearbeitet."
+          },
+          {
+            "q": "Was hat Mina am Sonntag gemacht?",
+            "a": "Sie hat einen Spaziergang gemacht und Musik gehört."
+          }
+        ]
+      },
+      "pack": {
+        "structures": [
+          {
+            "de": "Subjekt + haben + Objekt + Partizip II.",
+            "fa": "ساختار پایهٔ جملهٔ Perfekt"
+          },
+          {
+            "de": "Zeitangabe + haben + Subjekt + ... + Partizip II.",
+            "fa": "اگر جمله با زمان شروع شود، فاعل بعد از haben می‌آید"
+          },
+          {
+            "de": "Haben + Subjekt + ... + Partizip II?",
+            "fa": "پرسش بله/خیر"
+          },
+          {
+            "de": "W-Wort + haben + Subjekt + ... + Partizip II?",
+            "fa": "پرسش با کلمهٔ پرسشی"
+          },
+          {
+            "de": "Regelmäßig: ge + Stamm + t (gemacht)",
+            "fa": "باقاعده"
+          },
+          {
+            "de": "Unregelmäßig: ge + (Stamm) + en (gesehen)",
+            "fa": "بی‌قاعده؛ همراه فعل حفظ شود"
+          },
+          {
+            "de": "Verben auf -ieren: Stamm + t (telefoniert)",
+            "fa": "بدون ge"
+          },
+          {
+            "de": "be-, ver-, er-, ent-, zer-: kein ge- (besucht)",
+            "fa": "پیشوندهای جدانشدنی بدون ge"
+          },
+          {
+            "de": "Trennbar: Präfix + ge + Stamm + t (eingekauft)",
+            "fa": "ge میان پیشوند و ریشه"
+          },
+          {
+            "de": "nicht vor Partizip II, kein vor Nomen",
+            "fa": "ساختار منفی"
+          }
+        ],
+        "verbs": [
+          {
+            "inf": "essen",
+            "fa": "خوردن",
+            "pres": [
+              "esse",
+              "isst",
+              "isst",
+              "essen",
+              "esst",
+              "essen"
+            ],
+            "pp": "gegessen"
+          },
+          {
+            "inf": "sehen",
+            "fa": "دیدن",
+            "pres": [
+              "sehe",
+              "siehst",
+              "sieht",
+              "sehen",
+              "seht",
+              "sehen"
+            ],
+            "pp": "gesehen"
+          },
+          {
+            "inf": "lesen",
+            "fa": "خواندن",
+            "pres": [
+              "lese",
+              "liest",
+              "liest",
+              "lesen",
+              "lest",
+              "lesen"
+            ],
+            "pp": "gelesen"
+          },
+          {
+            "inf": "schlafen",
+            "fa": "خوابیدن",
+            "pres": [
+              "schlafe",
+              "schläfst",
+              "schläft",
+              "schlafen",
+              "schlaft",
+              "schlafen"
+            ],
+            "pp": "geschlafen"
+          },
+          {
+            "inf": "nehmen",
+            "fa": "گرفتن",
+            "pres": [
+              "nehme",
+              "nimmst",
+              "nimmt",
+              "nehmen",
+              "nehmt",
+              "nehmen"
+            ],
+            "pp": "genommen"
+          },
+          {
+            "inf": "treffen",
+            "fa": "ملاقات کردن",
+            "pres": [
+              "treffe",
+              "triffst",
+              "trifft",
+              "treffen",
+              "trefft",
+              "treffen"
+            ],
+            "pp": "getroffen"
+          }
+        ],
+        "persons": [
+          "ich",
+          "du",
+          "er/sie/es",
+          "wir",
+          "ihr",
+          "sie/Sie"
+        ],
+        "aux": [
+          "habe",
+          "hast",
+          "hat",
+          "haben",
+          "habt",
+          "haben"
+        ],
+        "preps": [
+          {
+            "p": "am",
+            "use": "روز و بخش‌های روز",
+            "ex": "Am Samstag habe ich gearbeitet.",
+            "fa": "شنبه کار کردم."
+          },
+          {
+            "p": "im",
+            "use": "فصل و ماه",
+            "ex": "Im Sommer haben wir einen Ausflug gemacht.",
+            "fa": "تابستان گردشی رفتیم."
+          },
+          {
+            "p": "um",
+            "use": "ساعت دقیق",
+            "ex": "Um sechs Uhr haben wir gegessen.",
+            "fa": "ساعت شش غذا خوردیم."
+          },
+          {
+            "p": "mit + Dativ",
+            "use": "همراهی",
+            "ex": "Ich habe mit Freunden gekocht.",
+            "fa": "با دوستان آشپزی کردم."
+          },
+          {
+            "p": "für + Akkusativ",
+            "use": "برای کسی/چیزی",
+            "ex": "Ich habe ein Geschenk für meine Mutter gekauft.",
+            "fa": "برای مادرم هدیه خریدم."
+          },
+          {
+            "p": "auf + Akkusativ (warten auf)",
+            "use": "منتظر چیزی بودن",
+            "ex": "Wir haben auf den Bus gewartet.",
+            "fa": "منتظر اتوبوس ماندیم."
+          },
+          {
+            "p": "nach + Dativ",
+            "use": "بعد از",
+            "ex": "Nach dem Essen haben wir einen Spaziergang gemacht.",
+            "fa": "بعد از غذا قدم زدیم."
+          },
+          {
+            "p": "bei + Dativ",
+            "use": "نزد، منزل کسی",
+            "ex": "Ich habe bei Freunden geschlafen.",
+            "fa": "خانهٔ دوستان خوابیدم."
+          }
+        ]
+      },
+      "reading": {
+        "title": "Das Wochenende von Familie Weber",
+        "text": "Familie Weber wohnt in Hamburg. Am Samstag hat Herr Weber im Garten gearbeitet. Frau Weber hat Kuchen gebacken. Die Großeltern haben die Familie besucht. Die Kinder, Lea und Tim, haben Fußball gespielt. Am Abend haben alle zusammen gegessen und viel gelacht. Am Sonntag hat die Familie einen Ausflug an den See gemacht. Sie haben Fotos gemacht und Eis gegessen. Tim hat ein Buch gelesen. Um sechs Uhr haben sie zu Hause Pizza bestellt. Alle waren müde, aber glücklich.",
+        "textFa": "خانوادهٔ وبر در هامبورگ زندگی می‌کند. شنبه آقای وبر در باغ کار کرد. خانم وبر کیک پخت. پدربزرگ و مادربزرگ به خانواده سر زدند. بچه‌ها، لئا و تیم، فوتبال بازی کردند. عصر همه با هم غذا خوردند و خیلی خندیدند. یکشنبه خانواده به دریاچه رفت. عکس گرفتند و بستنی خوردند. تیم یک کتاب خواند. ساعت شش در خانه پیتزا سفارش دادند. همه خسته بودند ولی خوشحال.",
+        "glossary": [
+          [
+            "backen",
+            "پختن (کیک، نان)"
+          ],
+          [
+            "der Garten",
+            "باغ، حیاط"
+          ],
+          [
+            "die Großeltern",
+            "پدربزرگ و مادربزرگ"
+          ],
+          [
+            "der See",
+            "دریاچه"
+          ],
+          [
+            "müde",
+            "خسته"
+          ],
+          [
+            "glücklich",
+            "خوشحال"
+          ]
+        ],
+        "questions": [
+          {
+            "q": "Herr Weber hat am Samstag im Garten gearbeitet. (richtig / falsch?)",
+            "a": "Richtig."
+          },
+          {
+            "q": "Frau Weber hat Pizza gebacken. (richtig / falsch?)",
+            "a": "Falsch. Sie hat Kuchen gebacken."
+          },
+          {
+            "q": "Wer hat Fußball gespielt?",
+            "a": "Lea und Tim."
+          },
+          {
+            "q": "Wohin hat die Familie am Sonntag einen Ausflug gemacht?",
+            "a": "An den See."
+          },
+          {
+            "q": "Was hat die Familie um sechs Uhr bestellt?",
+            "a": "Pizza."
+          }
+        ]
+      },
+      "summary": "Perfekt با haben: فاعل + haben (جایگاه ۲) + بقیهٔ جمله + Partizip II (آخر جمله)؛ باقاعده ge-t، بی‌قاعده ge-en، و فعل‌های -ieren یا با پیشوند be-/ver-/er-/ent- بدون ge.",
+      "writing": [
+        {
+          "title": "تمرین ۱: Partizip II را بنویس",
+          "instruction": "برای هر فعل Partizip II را بنویس.",
+          "items": [
+            {
+              "q": "lernen",
+              "a": "gelernt"
+            },
+            {
+              "q": "kaufen",
+              "a": "gekauft"
+            },
+            {
+              "q": "arbeiten",
+              "a": "gearbeitet"
+            },
+            {
+              "q": "besuchen",
+              "a": "besucht"
+            },
+            {
+              "q": "studieren",
+              "a": "studiert"
+            },
+            {
+              "q": "essen",
+              "a": "gegessen"
+            }
+          ]
+        },
+        {
+          "title": "تمرین ۲: haben را درست صرف کن",
+          "instruction": "جای خالی را با شکل درست haben پر کن.",
+          "items": [
+            {
+              "q": "Ich ___ Musik gehört.",
+              "a": "habe"
+            },
+            {
+              "q": "Du ___ gekocht.",
+              "a": "hast"
+            },
+            {
+              "q": "Er ___ gearbeitet.",
+              "a": "hat"
+            },
+            {
+              "q": "Wir ___ viel gelacht.",
+              "a": "haben"
+            },
+            {
+              "q": "Ihr ___ lange gewartet.",
+              "a": "habt"
+            },
+            {
+              "q": "Sie (آن‌ها) ___ Fußball gespielt.",
+              "a": "haben"
+            }
+          ]
+        },
+        {
+          "title": "تمرین ۳: کلمه‌ها را مرتب کن",
+          "instruction": "با کلمه‌های درهم، یک جملهٔ درست بساز.",
+          "items": [
+            {
+              "q": "habe / ich / Deutsch / gestern / gelernt",
+              "a": "Gestern habe ich Deutsch gelernt. (یا: Ich habe gestern Deutsch gelernt.)"
+            },
+            {
+              "q": "hast / was / du / gemacht / am Wochenende",
+              "a": "Was hast du am Wochenende gemacht?"
+            },
+            {
+              "q": "hat / Pizza / bestellt / Anna",
+              "a": "Anna hat Pizza bestellt."
+            },
+            {
+              "q": "keinen Kaffee / ich / getrunken / habe",
+              "a": "Ich habe keinen Kaffee getrunken."
+            },
+            {
+              "q": "nicht / er / gearbeitet / hat",
+              "a": "Er hat nicht gearbeitet."
+            }
+          ]
+        },
+        {
+          "title": "تمرین ۴: از حال به Perfekt",
+          "instruction": "جمله‌ها را به Perfekt تبدیل کن.",
+          "items": [
+            {
+              "q": "Ich koche Suppe.",
+              "a": "Ich habe Suppe gekocht."
+            },
+            {
+              "q": "Sie spielt Tennis.",
+              "a": "Sie hat Tennis gespielt."
+            },
+            {
+              "q": "Wir hören Radio.",
+              "a": "Wir haben Radio gehört."
+            },
+            {
+              "q": "Du liest ein Buch.",
+              "a": "Du hast ein Buch gelesen."
+            },
+            {
+              "q": "Er schreibt eine E-Mail.",
+              "a": "Er hat eine E-Mail geschrieben."
+            }
+          ]
+        },
+        {
+          "title": "تمرین ۵: متن آزاد دربارهٔ آخر هفتهٔ خودت",
+          "instruction": "چهار جمله دربارهٔ آخر هفتهٔ خودت بنویس. حداقل دو Partizip II متفاوت به کار ببر.",
+          "items": [
+            {
+              "q": "آخر هفتهٔ تو",
+              "a": "نمونه: Am Samstag habe ich lange geschlafen. Dann habe ich die Wohnung geputzt. Am Abend habe ich mit Freunden gekocht. Am Sonntag habe ich Deutsch gelernt."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "exams": {
+    "1": {
+      "lesson": 1,
+      "parts": [
+        {
+          "key": "mc",
+          "title": "چندگزینه‌ای (واژگان و گرامر)",
+          "points": 3,
+          "kind": "mc",
+          "items": [
+            {
+              "id": "mc1",
+              "q": "Ich ___ gestern Deutsch gelernt.",
+              "opts": [
+                "bin",
+                "habe",
+                "hat",
+                "haben"
+              ],
+              "a": 1
+            },
+            {
+              "id": "mc2",
+              "q": "Partizip II von «machen» ist …",
+              "opts": [
+                "machen",
+                "gemachen",
+                "gemacht",
+                "gemachet"
+              ],
+              "a": 2
+            },
+            {
+              "id": "mc3",
+              "q": "Partizip II von «telefonieren» ist …",
+              "opts": [
+                "getelefoniert",
+                "telefoniert",
+                "gtelefoniert",
+                "telefonieret"
+              ],
+              "a": 1
+            },
+            {
+              "id": "mc4",
+              "q": "Wir ___ Pizza gegessen.",
+              "opts": [
+                "hat",
+                "habt",
+                "haben",
+                "hast"
+              ],
+              "a": 2
+            },
+            {
+              "id": "mc5",
+              "q": "Wo steht das Partizip II im Satz?",
+              "opts": [
+                "direkt nach dem Subjekt",
+                "am Ende",
+                "am Anfang",
+                "vor haben"
+              ],
+              "a": 1
+            },
+            {
+              "id": "mc6",
+              "q": "Er hat das Buch ___.",
+              "opts": [
+                "lesen",
+                "gelest",
+                "gelesen",
+                "gelesst"
+              ],
+              "a": 2
+            },
+            {
+              "id": "mc7",
+              "q": "Was bedeutet «das Wochenende»?",
+              "opts": [
+                "تعطیلات سالانه",
+                "آخر هفته",
+                "هفتهٔ گذشته",
+                "اوقات فراغت"
+              ],
+              "a": 1
+            },
+            {
+              "id": "mc8",
+              "q": "Welcher Satz ist richtig?",
+              "opts": [
+                "Gestern ich habe einen Film gesehen.",
+                "Gestern habe ich einen Film gesehen.",
+                "Gestern habe ich gesehen einen Film.",
+                "Gestern habe gesehen ich einen Film."
+              ],
+              "a": 1
+            },
+            {
+              "id": "mc9",
+              "q": "Partizip II von «besuchen» ist …",
+              "opts": [
+                "gebesucht",
+                "besuchen",
+                "besucht",
+                "gesucht"
+              ],
+              "a": 2
+            },
+            {
+              "id": "mc10",
+              "q": "Du ___ viel gelacht.",
+              "opts": [
+                "habe",
+                "hast",
+                "hat",
+                "habt"
+              ],
+              "a": 1
+            }
+          ]
+        },
+        {
+          "key": "gap",
+          "title": "جای خالی (Lückentext)",
+          "points": 4,
+          "kind": "text",
+          "items": [
+            {
+              "id": "g1",
+              "q": "Gestern habe ich Fußball ___. (spielen)",
+              "a": [
+                "gespielt"
+              ]
+            },
+            {
+              "id": "g2",
+              "q": "Wir ___ am Samstag zusammen gekocht.",
+              "a": [
+                "haben"
+              ]
+            },
+            {
+              "id": "g3",
+              "q": "Sie hat Brot ___. (kaufen)",
+              "a": [
+                "gekauft"
+              ]
+            },
+            {
+              "id": "g4",
+              "q": "Hast du Musik ___? (hören)",
+              "a": [
+                "gehört"
+              ]
+            },
+            {
+              "id": "g5",
+              "q": "Er ___ nichts gesagt.",
+              "a": [
+                "hat"
+              ]
+            }
+          ]
+        },
+        {
+          "key": "tr",
+          "title": "ترجمه از فارسی به آلمانی",
+          "points": 4,
+          "kind": "text",
+          "items": [
+            {
+              "id": "t1",
+              "q": "من دیروز کار کردم.",
+              "a": [
+                "Ich habe gestern gearbeitet.",
+                "Gestern habe ich gearbeitet."
+              ]
+            },
+            {
+              "id": "t2",
+              "q": "تو آخر هفته چه کار کردی?",
+              "a": [
+                "Was hast du am Wochenende gemacht?",
+                "Was hast du am Wochenende gemacht"
+              ]
+            },
+            {
+              "id": "t3",
+              "q": "ما موسیقی گوش دادیم.",
+              "a": [
+                "Wir haben Musik gehört."
+              ]
+            },
+            {
+              "id": "t4",
+              "q": "او (مرد) نان خرید.",
+              "a": [
+                "Er hat Brot gekauft."
+              ]
+            },
+            {
+              "id": "t5",
+              "q": "من تا حالا نرقصیده‌ام.",
+              "a": [
+                "Ich habe noch nie getanzt."
+              ]
+            }
+          ]
+        },
+        {
+          "key": "conv",
+          "title": "مکالمه (خودت جواب بده، بعد با نمونه مقایسه کن)",
+          "points": 5,
+          "kind": "self",
+          "items": [
+            {
+              "id": "c1",
+              "q": "Wie war dein Wochenende? (جواب کوتاه با دو جمله)",
+              "model": "Es war schön. Ich habe lange geschlafen und Freunde besucht.",
+              "check": [
+                "حداقل یک جمله با Perfekt",
+                "haben درست صرف شده",
+                "Partizip II آخر جمله است"
+              ]
+            },
+            {
+              "id": "c2",
+              "q": "Was hast du gestern Abend gemacht?",
+              "model": "Ich habe Deutsch gelernt und Musik gehört.",
+              "check": [
+                "فاعل + haben + ... + Partizip II",
+                "حداقل دو فعل"
+              ]
+            },
+            {
+              "id": "c3",
+              "q": "Hast du schon einmal getanzt? (بله/خیر + یک جمله)",
+              "model": "Ja, ich habe auf einer Party getanzt. / Nein, ich habe noch nie getanzt.",
+              "check": [
+                "پاسخ با Ja یا Nein شروع شده",
+                "یک جملهٔ کامل با Perfekt"
+              ]
+            }
+          ]
+        },
+        {
+          "key": "write",
+          "title": "نوشتاری کوتاه",
+          "points": 5,
+          "kind": "self",
+          "items": [
+            {
+              "id": "w1",
+              "q": "سه جمله دربارهٔ دیروزت بنویس (با Perfekt).",
+              "model": "Gestern habe ich lange geschlafen. Dann habe ich Brot gekauft. Am Abend habe ich einen Film gesehen.",
+              "check": [
+                "سه جمله",
+                "هر جمله haben و Partizip II دارد",
+                "Partizip II آخر جمله است"
+              ]
+            },
+            {
+              "id": "w2",
+              "q": "یک پیام کوتاه (۴ جمله) برای دوستت بنویس و آخر هفته‌ات را تعریف کن.",
+              "model": "Hallo Sara! Mein Wochenende war schön. Am Samstag habe ich gearbeitet. Am Sonntag habe ich einen Spaziergang gemacht und Musik gehört. Und du, was hast du gemacht?",
+              "check": [
+                "سلام و پرسش پایانی",
+                "حداقل دو جمله Perfekt",
+                "یک قید زمان مثل Am Samstag"
+              ]
+            }
+          ]
+        },
+        {
+          "key": "listen",
+          "title": "شنیداری / تلفظ",
+          "points": 5,
+          "kind": "self",
+          "items": [
+            {
+              "id": "l1",
+              "q": "جملهٔ زیر را سه بار بلند بخوان (یا با دکمهٔ پخش گوش بده و تکرار کن).",
+              "say": "Am Samstag habe ich lange geschlafen und Musik gehört.",
+              "model": "Am Samstag habe ich lange geschlafen und Musik gehört.",
+              "check": [
+                "«ch» در lange/gehört و «s» در Samstag را مرور کردی",
+                "جمله را بدون مکث طولانی خواندی"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "progressFormat": {
+    "lessons": {
+      "<n>": {
+        "done": [
+          0,
+          1
+        ]
+      }
+    },
+    "exams": [
+      {
+        "lesson": 1,
+        "score": 0,
+        "max": 0,
+        "date": "YYYY-MM-DD"
+      }
+    ]
+  }
+}

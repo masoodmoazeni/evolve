@@ -1,0 +1,7 @@
+.hm-future{background:transparent}
+.hm-legend{flex-wrap:wrap;gap:8px 12px}
+.hm-legend span{gap:6px}
+.hm-legend i{width:14px;height:14px;border-radius:4px;display:inline-block}
+.rate{background:var(--mint);border-radius:14px;padding:10px 12px;display:flex;flex-direction:column;gap:2px}
+.rate b{font-size:20px;color:var(--forest)}
+.rate.sandy{background:var(--sand)}
