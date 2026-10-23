@@ -1,7 +1,6 @@
 import { db } from './db.js';
 import { buildGoal } from './goalUtils.js';
 import { toHabitRecord } from './screens/habitLogic.js';
-import { rescheduleAll } from './notify.js';
 
 // نمونه‌های عمومی؛ با یک لمس اضافه می‌شوند و مثل هر مورد دیگر قابل ویرایش و حذف‌اند.
 export const GOAL_EXAMPLES = [
@@ -32,6 +31,5 @@ export async function addHabitExample(ex) {
     timeOfDay: ex.timeOfDay ?? 'any', reminder: '', goalId: '', cue: ex.cue ?? '', challengeMin: '', difficulty: '', prep: [], obstaclesNote: [],
   };
   const id = await db.habits.add({ ...toHabitRecord(f, null), example: true });
-  rescheduleAll().catch(() => {});
   return id;
 }

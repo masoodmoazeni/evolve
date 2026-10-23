@@ -3,7 +3,6 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db, useKV } from '../db.js';
 import { useKeepAwake } from '../alerts.js';
-import { cancelFocusEnd, exactAlarmState, isNative, openExactAlarmSettings, scheduleFocusEnd, showFocusOngoing } from '../notify.js';
 import { actualMinutes, elapsedMs, finishRun, fmtClock, pauseRun, progressRatio, remainingMs, resumeRun, startRun, OUTCOME_LABEL } from '../focusLogic.js';
 import { Card, Chip, Dialog, Field, Icon, Page, Skeleton, Top, useToast } from '../ui.jsx';
 import { dateKey, faNum } from '../util.js';
@@ -22,16 +21,12 @@ export function FocusHome() {
   const [taskId, setTaskId] = useState(null);
   const [intent, setIntent] = useState('');
   const [planned, setPlanned] = useState(25);
-  const [exact, setExact] = useState('granted');
-  useEffect(() => { if (isNative()) exactAlarmState().then(setExact).catch(() => {}); }, []);
 
   if (run === undefined || !tasks) return <Page><Top title="تمرکز" /><Skeleton /></Page>;
 
   const start = async () => {
     const r = startRun({ title: title.trim() || 'تمرکز آزاد', taskId, intent: intent.trim(), planned });
     await db.kv.put({ key: 'focusRun', value: r });
-    const end = r.startedAt + planned * 60000;
-    scheduleFocusEnd(end).then(() => showFocusOngoing(r.title, end)).catch(() => {});
     nav('/focus/run');
   };
 
@@ -117,16 +112,12 @@ export function FocusRun() {
     if (paused) {
       const r = resumeRun(run);
       await save(r);
-      const end = Date.now() + Math.max(1000, remainingMs(r));
-      scheduleFocusEnd(end).then(() => showFocusOngoing(run.title, end)).catch(() => {});
     } else {
       await save(pauseRun(run));
-      cancelFocusEnd().catch(() => {});
     }
   };
   const finish = async () => {
     await save(finishRun(run));
-    cancelFocusEnd().catch(() => {});
     nav('/focus/end');
   };
 
@@ -164,7 +155,7 @@ export function FocusEnd() {
   if (!run) return <Navigate to="/focus" replace />;
   if (!run.endedAt) return <Navigate to="/focus/run" replace />;
 
-  const clear = async () => { await db.kv.delete('focusRun'); cancelFocusEnd().catch(() => {}); };
+  const clear = async () => { await db.kv.delete('focusRun'); };
   const actual = actualMinutes(run);
 
   const save = async () => {

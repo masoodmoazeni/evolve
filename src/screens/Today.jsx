@@ -64,7 +64,7 @@ export function Today() {
 
   const name = profile?.name;
   const head = (
-    <Top title={`${greeting(new Date().getHours())}${name ? `، ${name}` : ''}`} right={<><Link className="ib bg" to="/notifications" aria-label="اعلان‌ها"><Icon name="bell" /></Link><Link className="ib bg" to="/profile" aria-label="پروفایل"><Icon name="user" /></Link></>} />
+    <Top title={`${greeting(new Date().getHours())}${name ? `، ${name}` : ''}`} right={<><Link className="ib bg" to="/profile" aria-label="پروفایل"><Icon name="user" /></Link></>} />
   );
   if (!habits || !tasks || !logs14 || !moods || !focusRows || !history || seen === undefined || recovDismissed === undefined || pending === undefined) return <Page>{head}<Skeleton rows={4} /></Page>;
 

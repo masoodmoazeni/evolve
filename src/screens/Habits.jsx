@@ -8,7 +8,6 @@ import { db } from '../db.js';
 import { recordRevision } from '../data.js';
 import { habitsForDate } from '../logic.js';
 import { addDays, dateKey, faNum, fmtDate, WEEKDAYS, WEEKDAYS_SHORT } from '../util.js';
-import { rescheduleAll } from '../notify.js';
 import { Bars, Chip, Ck, Dialog, Empty, Fab, Field, Page, Select, Skeleton, STATUS_LABEL, Top, useToast, Card } from '../ui.jsx';
 import { TIME_OF_DAY, barValues, changedFields, emptyHabit, habitToForm, hasExtras, lastDays, splitCounts, toHabitRecord, validateHabit } from './habitLogic.js';
 import { DifficultyChips, HabitLogSheet, ListEditor, PrepChecklist, Revisions, habitSub } from './HabitParts.jsx';
@@ -112,7 +111,6 @@ function HabitFormInner({ initial, prev }) {
         await db.habits.put({ ...rec, id });
       }
       else id = await db.habits.add(rec);
-      rescheduleAll().catch(() => {});
       toast('عادت ذخیره شد');
       nav(prev ? `/habits/${id}` : '/habits');
     } catch {
@@ -153,8 +151,8 @@ function HabitFormInner({ initial, prev }) {
           ))}
         </div>
       </div>
-      <Field label="یادآور (اختیاری)" error={err.reminder}>
-        <TimeField value={f.reminder} onChange={(v) => set('reminder', v)} label="ساعت یادآور" title="ساعت یادآور" />
+      <Field label="ساعت مناسب (اختیاری)" error={err.reminder}>
+        <TimeField value={f.reminder} onChange={(v) => set('reminder', v)} label="ساعت مناسب" title="ساعت مناسب" />
       </Field>
       <button className="lnk" aria-expanded={more} onClick={() => setMore(!more)}>
         {more ? 'بستن گزینه‌های بیشتر' : 'گزینه‌های بیشتر: نشانه، نسخهٔ چالشی، آماده‌سازی'}
@@ -208,7 +206,6 @@ export function HabitDetail() {
   const togglePause = async () => {
     const was = !!habit.paused;
     await db.habits.update(id, { paused: !was });
-    rescheduleAll().catch(() => {});
     toast(was ? 'عادت از سر گرفته شد' : 'عادت موقتاً متوقف شد؛ داده‌هایت سر جایش است', () => db.habits.update(id, { paused: was }));
   };
   const remove = async () => {
@@ -218,7 +215,6 @@ export function HabitDetail() {
       await db.kv.delete(`prep:${id}`);
       await db.habits.delete(id);
     });
-    rescheduleAll().catch(() => {});
     toast('عادت حذف شد');
     nav('/habits');
   };
@@ -237,7 +233,7 @@ export function HabitDetail() {
         </div>
         {habit.difficulty && <p className="xs">سختی: {['', 'آسان', 'متوسط', 'چالشی'][habit.difficulty]}</p>}
         {habit.obstaclesNote?.length > 0 && <p className="xs">موانع احتمالی: {habit.obstaclesNote.join('، ')}</p>}
-        {habit.reminder && <p className="s">یادآور: {faNum(habit.reminder)}</p>}
+        {habit.reminder && <p className="s">ساعت مناسب: {faNum(habit.reminder)}</p>}
         {habit.paused && <span className="chip sand">توقف موقت</span>}
       </Card>
       <Card>
