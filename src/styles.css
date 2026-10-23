@@ -147,3 +147,15 @@ body.modal-open{overflow:hidden}
 @media (prefers-reduced-motion:reduce){.toast-wrap .toast{animation:toastlife 3s steps(1,end) forwards}}
 /* فهرست بازشوی انتخاب هم راست‌چین */
 select,select.in,select option{direction:rtl;text-align:right;text-align-last:right}
+/* صفحه‌های معرفی */
+.splash{justify-content:space-between;gap:10px;padding-top:16px;background:linear-gradient(180deg,var(--ivory),var(--mint) 140%)}
+.splash-art{display:flex;justify-content:center;animation:splashin .45s ease both}
+.splash-art svg{width:100%;max-width:300px;height:auto}
+.splash-text{text-align:center;display:flex;flex-direction:column;gap:10px;animation:splashin .45s ease both}
+.splash-text h1{font-size:26px}
+.splash-dots{display:flex;justify-content:center;gap:8px}
+.splash-dots button{width:10px;height:10px;border-radius:5px;border:0;background:#CBD5CB;padding:0;cursor:pointer;transition:width .2s}
+.splash-dots button.on{width:28px;background:var(--forest)}
+@keyframes splashin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.splash-art,.splash-text{animation:none}}
+.splash,.body.hero{min-height:100dvh}
