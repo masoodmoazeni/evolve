@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db, setKV, useKV } from '../db.js';
 import { Page, Top, Card, Chip, Field, Icon, Skeleton, Toggle, useToast } from '../ui.jsx';
-import { DEFAULT_NOTIF, buildSchedule, exactAlarmState, isNative, openExactAlarmSettings, permissionState, requestPermission, rescheduleAll } from '../notify.js';
+import { DEFAULT_NOTIF, buildSchedule, exactAlarmState, isNative, openExactAlarmSettings, pendingCount, permissionState, requestPermission, rescheduleAll, sendTestNotification } from '../notify.js';
 import { WEEKDAYS, faNum } from '../util.js';
 import { SOUNDS, playSound } from '../sound.js';
 import { alertNow, requestWebPermission } from '../alerts.js';
@@ -22,12 +22,15 @@ export function Notifications() {
   const habits = useLiveQuery(() => db.habits.toArray(), []);
   const [web, setWeb] = useState(typeof Notification === 'undefined' ? 'unsupported' : Notification.permission);
   const [exact, setExact] = useState('granted');
-  useEffect(() => { permissionState().then(setPerm).catch(() => setPerm('web')); exactAlarmState().then(setExact).catch(() => {}); }, []);
+  const [pending, setPending] = useState(null);
+  const [testMsg, setTestMsg] = useState('');
+  useEffect(() => { permissionState().then(setPerm).catch(() => setPerm('unknown')); exactAlarmState().then(setExact).catch(() => {}); pendingCount().then(setPending); }, []);
 
-  if (perm === null || stored === undefined || !habits) return <Page><Top title="اعلان‌ها" back /><Skeleton /></Page>;
+  if (stored === undefined || !habits) return <Page><Top title="اعلان‌ها" back /><Skeleton /></Page>;
   const cfg = { ...DEFAULT_NOTIF, ...stored };
   const items = buildSchedule(profile, habits, cfg);
-  const ask = async () => { setPerm(await requestPermission()); rs(); };
+  const ask = async () => { setPerm(await requestPermission()); await rescheduleAll().catch(() => {}); setPending(await pendingCount()); };
+  const test = async () => { setTestMsg((await sendTestNotification()) ? 'تا ۵ ثانیه‌ی دیگر یک اعلان می‌آید. اگر نیامد، اپ را ببند و صبر کن.' : 'مجوز اعلان داده نشده است.'); };
   return (
     <Page>
       <Top title="اعلان‌ها" back />
@@ -47,6 +50,14 @@ export function Notifications() {
           <h3>زمان‌بندی دقیق خاموش است</h3>
           <p className="s">بدون این اجازه ممکن است اعلان پایان تمرکز با تأخیر برسد.</p>
           <button className="btn sm s2" onClick={openExactAlarmSettings}>باز کردن تنظیم</button>
+        </Card>
+      )}
+      {perm === null && <p className="xs">در حال بررسی مجوز اعلان…</p>}
+      {perm === 'unknown' && (
+        <Card kind="sand">
+          <h3>وضعیت اعلان معلوم نشد</h3>
+          <p className="s">برای روشن‌کردن اعلان‌ها دکمه‌ی زیر را بزن تا اجازه را بخواهیم.</p>
+          <button className="btn sm" onClick={ask}>روشن کردن اعلان‌ها</button>
         </Card>
       )}
       {perm === 'denied' && (
@@ -73,6 +84,15 @@ export function Notifications() {
         </Card>
       )}
       <Link className="btn s2" to="/notifications/settings">تنظیم یادآورها</Link>
+      {isNative() && (
+        <Card>
+          <h3>بررسی اعلان‌ها</h3>
+          <p className="s">{pending == null ? 'تعداد اعلان‌های زمان‌بندی‌شده خوانده نشد.' : `${faNum(pending)} اعلان زمان‌بندی شده است.`}</p>
+          <button className="btn sm s2" onClick={test}>ارسال اعلان آزمایشی</button>
+          {testMsg && <p className="xs">{testMsg}</p>}
+          <p className="xs">اگر اعلان با بسته‌بودن اپ نمی‌رسد: در تنظیمات گوشی برای اِوالو «شروع خودکار» (Autostart) را روشن و مصرف باتری را «بدون محدودیت» کن. در بعضی گوشی‌ها مثل شیائومی، سیستم اپ‌های بسته‌شده را متوقف می‌کند.</p>
+        </Card>
+      )}
     </Page>
   );
 }
@@ -108,7 +128,6 @@ export function NotifSettings() {
       </Card>
       <Card>
         <span className="lbl">تایمر تمرکز</span>
-        <div className="row"><span className="grow">نوار تایمر روی همهٔ صفحه‌ها</span><Toggle on={cfg.timerOnScreen} label="نوار تایمر" onChange={(v) => save({ timerOnScreen: v })} /></div>
         <div className="row"><span className="grow">روشن ماندن صفحه هنگام تمرکز</span><Toggle on={cfg.keepAwake} label="روشن ماندن صفحه" onChange={(v) => save({ keepAwake: v })} /></div>
         {isNative() && <div className="row"><span className="grow">اعلان پایدار تایمر (روی صفحهٔ قفل)</span><Toggle on={cfg.ongoing} label="اعلان پایدار تایمر" onChange={(v) => save({ ongoing: v })} /></div>}
       </Card>

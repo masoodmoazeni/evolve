@@ -236,7 +236,7 @@ export function GoalDetail() {
     await db.transaction('rw', db.goals, db.goalLogs, db.goalMetrics, db.habits, async () => {
       await db.goalLogs.where('goalId').equals(gid).delete();
       await db.goalMetrics.where('goalId').equals(gid).delete();
-      await db.habits.where('goalId').equals(gid).modify({ goalId: null });
+      await db.habits.filter((h) => h.goalId === gid).modify({ goalId: null });
       await db.goals.delete(gid);
     });
     setConfirm(null);

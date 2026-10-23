@@ -9,7 +9,7 @@ import { recordRevision } from '../data.js';
 import { habitsForDate } from '../logic.js';
 import { addDays, dateKey, faNum, fmtDate, WEEKDAYS, WEEKDAYS_SHORT } from '../util.js';
 import { rescheduleAll } from '../notify.js';
-import { Bars, Chip, Ck, Dialog, Empty, Fab, Field, Page, Skeleton, STATUS_LABEL, Top, useToast, Card } from '../ui.jsx';
+import { Bars, Chip, Ck, Dialog, Empty, Fab, Field, Page, Select, Skeleton, STATUS_LABEL, Top, useToast, Card } from '../ui.jsx';
 import { TIME_OF_DAY, barValues, changedFields, emptyHabit, habitToForm, hasExtras, lastDays, splitCounts, toHabitRecord, validateHabit } from './habitLogic.js';
 import { DifficultyChips, HabitLogSheet, ListEditor, PrepChecklist, Revisions, habitSub } from './HabitParts.jsx';
 import './Habits.css';
@@ -173,14 +173,7 @@ function HabitFormInner({ initial, prev }) {
         </div>
       )}
       <Field label="مرتبط با هدف (اختیاری)">
-        <select className="in" value={f.goalId} onChange={(e) => set('goalId', e.target.value)}>
-          <option value="">بدون هدف</option>
-          {goals.map((g) => (
-            <option key={g.id} value={g.id}>
-              {g.title}
-            </option>
-          ))}
-        </select>
+        <Select label="مرتبط با هدف" value={f.goalId} onChange={(v) => set('goalId', String(v))} options={[{ value: '', label: 'بدون هدف' }, ...goals.map((g) => ({ value: g.id, label: g.title }))]} />
       </Field>
       <button className="btn" onClick={submit}>
         ذخیره

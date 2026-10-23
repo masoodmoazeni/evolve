@@ -6,21 +6,53 @@ export const isNative = () => Capacitor.isNativePlatform();
 
 const plugin = async () => (await import('@capacitor/local-notifications')).LocalNotifications;
 
-// 'granted' | 'denied' | 'web'
+// اگر پلاگین جواب ندهد صفحه برای همیشه در حالت بارگذاری نماند
+const withTimeout = (p, ms, fallback) => Promise.race([p, new Promise((res) => setTimeout(() => res(fallback), ms))]);
+
+// 'granted' | 'denied' | 'unknown' | 'web'
 export async function requestPermission() {
   if (!isNative()) return 'web';
-  const ln = await plugin();
-  const r = await ln.requestPermissions();
-  return r.display === 'granted' ? 'granted' : 'denied';
+  try {
+    const ln = await plugin();
+    const r = await withTimeout(ln.requestPermissions(), 20000, null);
+    if (!r) return 'unknown';
+    return r.display === 'granted' ? 'granted' : 'denied';
+  } catch {
+    return 'unknown';
+  }
 }
 
 export async function permissionState() {
   if (!isNative()) return 'web';
-  const r = await (await plugin()).checkPermissions();
-  return r.display === 'granted' ? 'granted' : 'denied';
+  try {
+    const r = await withTimeout((await plugin()).checkPermissions(), 3000, null);
+    if (!r) return 'unknown';
+    return r.display === 'granted' ? 'granted' : 'denied';
+  } catch {
+    return 'unknown';
+  }
 }
 
-export const DEFAULT_NOTIF = { enabled: true, daily: true, habits: true, review: false, quietFrom: '22:00', quietTo: '07:00', cap: 5, sound: 'ding', volume: 0.7, vibrate: true, timerOnScreen: true, keepAwake: true, ongoing: true };
+// تعداد اعلان‌های زمان‌بندی‌شده و ارسال اعلان آزمایشی (پنج ثانیه بعد) برای عیب‌یابی
+export async function pendingCount() {
+  if (!isNative()) return null;
+  try {
+    return (await withTimeout((await plugin()).getPending(), 3000, { notifications: [] })).notifications.length;
+  } catch {
+    return null;
+  }
+}
+
+export async function sendTestNotification() {
+  if (!isNative()) return false;
+  const ln = await plugin();
+  if ((await requestPermission()) !== 'granted') return false;
+  await ln.createChannel({ id: 'evolve-reminders', name: 'یادآورها', description: 'یادآور روزانه و عادت‌ها', importance: 4, vibration: true }).catch(() => {});
+  await ln.schedule({ notifications: [{ id: 424244, title: 'اِوالو', body: 'اعلان آزمایشی؛ اگر این را می‌بینی اعلان‌ها کار می‌کنند.', channelId: 'evolve-reminders', schedule: { at: new Date(Date.now() + 5000), allowWhileIdle: true } }] });
+  return true;
+}
+
+export const DEFAULT_NOTIF = { enabled: true, daily: true, habits: true, review: false, quietFrom: '22:00', quietTo: '07:00', cap: 5, sound: 'ding', volume: 0.7, vibrate: true, keepAwake: true, ongoing: true };
 
 const inQuiet = (t, from, to) => {
   const m = timeToMin(t);
@@ -47,6 +79,14 @@ const hash = (s) => [...s].reduce((a, c) => (a * 31 + c.charCodeAt(0)) % 2000000
 
 export async function rescheduleAll() {
   if (!isNative()) return;
+  try {
+    await rescheduleNow();
+  } catch {
+    // اعلان اختیاری است؛ اپ بدون آن کار می‌کند
+  }
+}
+
+async function rescheduleNow() {
   const ln = await plugin();
   await ln.createChannel({ id: 'evolve-reminders', name: 'یادآورها', description: 'یادآور روزانه و عادت‌ها', importance: 4, vibration: true }).catch(() => {});
   const pending = await ln.getPending();

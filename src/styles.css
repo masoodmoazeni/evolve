@@ -159,3 +159,8 @@ select,select.in,select option{direction:rtl;text-align:right;text-align-last:ri
 @keyframes splashin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.splash-art,.splash-text{animation:none}}
 .splash,.body.hero{min-height:100dvh}
+
+.in.sel{display:flex;align-items:center;gap:8px;text-align:right;cursor:pointer;font-family:inherit;color:var(--text)}
+.in.sel .i{transform:rotate(90deg);width:18px;height:18px;flex:none}
+.sel-opt{min-height:50px;display:flex;align-items:center;gap:10px;border:1px solid var(--line);background:#fff;border-radius:14px;padding:0 14px;font-family:inherit;font-size:15px;color:var(--text);text-align:right;cursor:pointer;width:100%}
+.sel-opt.on{background:var(--mint);border-color:var(--sage);font-weight:700;color:var(--forest)}
