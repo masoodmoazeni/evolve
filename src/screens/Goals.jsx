@@ -10,6 +10,7 @@ import { goalProgress, weekDates } from '../logic.js';
 import { dateKey, fmtDate, fmtDateFull, WEEKDAYS, WEEKDAYS_SHORT, faNum } from '../util.js';
 import { GOAL_TYPES, PRIORITIES, buildGoal, newMilestone, sortGoals, toggleMilestone, validateGoal } from '../goalUtils.js';
 import { GoalFormExtras, SkillSection } from './GoalMetrics.jsx';
+import { GoalTime } from './GoalTime.jsx';
 import './Goals.css';
 
 const TABS = [
@@ -293,6 +294,7 @@ export function GoalDetail() {
           ))}
         </Card>
       )}
+      <GoalTime goal={goal} />
       <SkillSection goal={goal} />
       <button className="btn" onClick={() => setConfirm('complete')}>تکمیل هدف</button>
       {goal.status !== 'archived' && (

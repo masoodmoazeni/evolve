@@ -51,3 +51,35 @@ export async function saveFile(name, text, mime) {
   setTimeout(() => URL.revokeObjectURL(url), 2000);
   return `Downloads/${name}`;
 }
+
+// کپی متن در کلیپ‌بورد؛ در نبود دسترسی، با ناحیهٔ متنی موقت
+export async function copyText(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    const ok = document.execCommand?.('copy') ?? false;
+    ta.remove();
+    return ok;
+  }
+}
+
+// برگهٔ اشتراک‌گذاری متن (نیتیو یا وب)؛ false اگر در دسترس نبود
+export async function shareText(title, text) {
+  if (isNative()) {
+    const { Share } = await import('@capacitor/share');
+    await Share.share({ title, text });
+    return true;
+  }
+  if (navigator.share) {
+    await navigator.share({ title, text });
+    return true;
+  }
+  return false;
+}
