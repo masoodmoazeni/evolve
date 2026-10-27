@@ -3,6 +3,7 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db, useKV } from '../db.js';
 import { useKeepAwake } from '../alerts.js';
+import { requestPermission, syncNotifications } from '../notify.js';
 import { actualMinutes, elapsedMs, finishRun, fmtClock, pauseRun, progressRatio, remainingMs, resumeRun, startRun, OUTCOME_LABEL } from '../focusLogic.js';
 import { Card, Chip, Dialog, Field, Icon, Page, Select, Skeleton, Top, useToast } from '../ui.jsx';
 import { dateKey, faNum } from '../util.js';
@@ -32,6 +33,9 @@ export function FocusHome() {
     const gid = taskGoal !== '' ? Number(taskGoal) : goalId === '' ? null : Number(goalId);
     const r = startRun({ title: title.trim() || 'تمرکز آزاد', taskId, goalId: gid, intent: intent.trim(), planned });
     await db.kv.put({ key: 'focusRun', value: r });
+    // اولین بار مجوز اعلان پرسیده می‌شود تا پایان جلسه با بسته بودن اپ هم خبر بدهد
+    await requestPermission();
+    await syncNotifications();
     nav('/focus/run');
   };
 

@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
+import { useLiveQuery } from 'dexie-react-hooks';
 import { db, getKV } from './db.js';
-import { DEFAULT_NOTIF } from './notify.js';
+import { DEFAULT_NOTIF, syncNotifications } from './notify.js';
 import { playSound } from './sound.js';
 import { remainingMs, staleRun } from './focusLogic.js';
 
@@ -79,4 +80,18 @@ export function useKeepAwake(active) {
     document.addEventListener('visibilitychange', take);
     return () => { off = true; document.removeEventListener('visibilitychange', take); lock?.release?.().catch(() => {}); };
   }, [active]);
+}
+
+// اعلان‌های سیستمی را با تمرکز در جریان، تنظیمات و ساعت عادت‌ها همگام نگه می‌دارد
+export function useNotifSync() {
+  const sig = useLiveQuery(async () => {
+    const [run, notif, profile, habits] = await Promise.all([db.kv.get('focusRun'), db.kv.get('notif'), db.kv.get('profile'), db.habits.toArray()]);
+    return JSON.stringify([run?.value, notif?.value, profile?.value?.name, habits.map((h) => [h.id, h.reminder, h.days, h.paused, h.status, h.title])]);
+  }, [], '');
+  useEffect(() => {
+    syncNotifications().catch(() => {});
+    const onShow = () => document.visibilityState === 'visible' && syncNotifications().catch(() => {});
+    document.addEventListener('visibilitychange', onShow);
+    return () => document.removeEventListener('visibilitychange', onShow);
+  }, [sig]);
 }
