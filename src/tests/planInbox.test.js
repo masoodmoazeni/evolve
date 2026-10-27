@@ -67,3 +67,33 @@ describe('if-then', () => {
     expect(toHabitRecord(f).ifThen).toBeNull();
   });
 });
+
+import { buildCoach } from '../coachLogic.js';
+import { applySuggestion } from '../coachApply.js';
+
+describe('coach plan rules', () => {
+  const today = '2026-10-27';
+  const focusAll = Array.from({ length: 8 }, (_, i) => ({ date: '2026-10-2' + (i % 5), start: ['09:00', '14:00', '20:00', '10:00'][i % 4], planned: 30, actual: 45, outcome: i % 4 === 1 || i % 4 === 2 ? 'partial' : 'done', energy: 80 }));
+  const base = { habits: [], habitLogs: [], moods: [], suggestions: [], today, focus: focusAll, focusAll, access: { habits: true, focus: true } };
+  it('suggests longer estimates and heavy-in-peak, with undo', async () => {
+    await db.tasks.clear();
+    const id = await db.tasks.add({ title: 'گزارش', date: '2026-10-28', minutes: 30, effort: 'heavy', time: '15:00', done: false });
+    const tasksTomorrow = await db.tasks.toArray();
+    const r = buildCoach({ ...base, tasksTomorrow });
+    const kinds = r.suggestions.filter((s) => s.kind === 'task').map((s) => s.rule);
+    expect(kinds).toEqual(expect.arrayContaining(['estimate', 'peak']));
+    const est = r.suggestions.find((s) => s.rule === 'estimate');
+    expect(est.patch.minutes).toBe(45);
+    expect(est.before).toBeTruthy();
+    const undo = await applySuggestion(est, today);
+    expect((await db.tasks.get(id)).minutes).toBe(45);
+    await undo();
+    expect((await db.tasks.get(id)).minutes).toBe(30);
+  });
+  it('does not repeat a rejected ukey', () => {
+    const tasksTomorrow = [{ id: 1, title: 'x', date: '2026-10-28', minutes: 30 }];
+    const first = buildCoach({ ...base, tasksTomorrow }).suggestions[0];
+    const again = buildCoach({ ...base, tasksTomorrow, suggestions: [{ ukey: first.ukey, status: 'rejected' }] });
+    expect(again.suggestions.find((s) => s.ukey === first.ukey)).toBeUndefined();
+  });
+});

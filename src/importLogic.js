@@ -2,11 +2,11 @@ import { DEFAULT_RETENTION, DATED_TABLES, db, getKV, setKV } from './db.js';
 import { addDays, dateKey } from './util.js';
 
 // کلیدهای kv که وضعیت موقت همین دستگاه‌اند و از پشتیبان وارد نمی‌شوند
-export const LOCAL_KV = ['lastPrune', 'focusRun', 'pruneAck'];
+export const LOCAL_KV = ['lastPrune', 'focusRun', 'pruneAck', 'breakRun', 'exportNudgeAt', 'lastRecur'];
 
 export const TABLE_LABELS = {
   goals: 'هدف‌ها', goalLogs: 'ثبت هدف‌ها', habits: 'عادت‌ها', habitLogs: 'ثبت عادت‌ها', tasks: 'کارها', focus: 'جلسه‌های تمرکز',
-  notes: 'یادداشت‌ها', moods: 'ثبت حال', reviews: 'مرورها', suggestions: 'پیشنهادها', kv: 'تنظیمات و پروفایل',
+  notes: 'یادداشت‌ها', moods: 'ثبت حال', reviews: 'مرورها', suggestions: 'پیشنهادها', recurring: 'کارهای تکراری', dayTemplates: 'قالب‌های روز', monthSummaries: 'خلاصه‌های ماهانه', habitRevisions: 'تاریخچهٔ عادت‌ها', goalMetrics: 'معیارهای هدف', kv: 'تنظیمات و پروفایل',
 };
 
 // بررسی ساختار فایل پشتیبان؛ { ok, error?, backup? }

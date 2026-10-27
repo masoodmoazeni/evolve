@@ -5,6 +5,8 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { db, setKV, useKV } from '../db.js';
 import { Page, Top, Card, Chip, Field, Icon, Skeleton, Toggle, useToast } from '../ui.jsx';
 import { DEFAULT_NOTIF } from '../notify.js';
+import { DEFAULT_DAY_PLAN } from '../capacityLogic.js';
+import { DEFAULT_RITUALS } from './Ritual.jsx';
 import { WEEKDAYS, faNum } from '../util.js';
 import { SOUNDS, playSound } from '../sound.js';
 import { alertNow } from '../alerts.js';
@@ -16,7 +18,8 @@ export { Privacy, PrivacyExport, PrivacyDelete } from './PrivacyScreens.jsx';
 
 export function AlertSettings() {
   const [stored, setStored] = useKV('notif', {});
-  if (stored === undefined) return <Page tabs={false}><Top title="صدا و هشدار" back="/profile" /><Skeleton /></Page>;
+  const [rit, setRit] = useKV('rituals', DEFAULT_RITUALS);
+  if (stored === undefined || rit === undefined) return <Page tabs={false}><Top title="صدا و هشدار" back="/profile" /><Skeleton /></Page>;
   const cfg = { ...DEFAULT_NOTIF, ...stored };
   const save = async (patch) => { await setStored({ ...cfg, ...patch }); };
   return (
@@ -36,6 +39,16 @@ export function AlertSettings() {
           </Field>
         )}
         <p className="xs">یادآور هر عادت از «ساعت مناسب» همان عادت و فقط در روزهای انتخاب‌شده‌اش می‌آید. کارهایی که ساعت دارند سر همان ساعت اعلان می‌دهند.</p>
+      </Card>
+      <Card>
+        <span className="lbl">آیین شروع و پایان روز (اختیاری)</span>
+        {[['morning', 'آیین صبح', '/ritual/morning'], ['evening', 'آیین شب', '/ritual/evening']].map(([k, label, to]) => (
+          <div key={k} className="col">
+            <div className="row"><span className="grow">{label}</span><Toggle on={rit[k]?.on} label={label} onChange={(v) => setRit({ ...DEFAULT_RITUALS, ...rit, [k]: { ...DEFAULT_RITUALS[k], ...rit[k], on: v } })} /></div>
+            {rit[k]?.on && <Field label="ساعت یادآور"><TimeField value={rit[k].at} onChange={(v) => setRit({ ...rit, [k]: { ...rit[k], at: v || DEFAULT_RITUALS[k].at } })} label={`ساعت ${label}`} clearable={false} /></Field>}
+            <Link className="lnk" to={to}>دیدن مسیر</Link>
+          </div>
+        ))}
       </Card>
       <Card>
         <span className="lbl">تایمر تمرکز</span>
@@ -107,7 +120,8 @@ export function Prefs() {
   const [prefs, setPrefs] = useKV('prefs', {});
   const [ret, setRet] = useKV('retention', 60);
   const [todayMode, setTodayMode] = useKV('todayMode', 'full');
-  if (prefs === undefined || ret === undefined || todayMode === undefined) return <Page tabs={false}><Top title="ترجیحات" back /><Skeleton /></Page>;
+  const [dayPlan, setDayPlan] = useKV('dayPlan', null);
+  if (prefs === undefined || ret === undefined || todayMode === undefined || dayPlan === undefined) return <Page tabs={false}><Top title="ترجیحات" back /><Skeleton /></Page>;
   const p = { tone: 'balanced', big: false, reduce: false, ...prefs };
   const set = (patch) => setPrefs({ ...p, ...patch });
   return (
@@ -118,6 +132,15 @@ export function Prefs() {
         <span className="lbl">لحن مربی</span>
         <p className="xs">فقط جمله‌بندی را عوض می‌کند.</p>
         <div className="chips">{Object.entries(TONE_LABEL).map(([k, l]) => <Chip key={k} on={p.tone === k} onClick={() => set({ tone: k })}>{l}</Chip>)}</div>
+      </Card>
+      <Card>
+        <span className="lbl">ساعت‌های در دسترس من</span>
+        <p className="xs">ظرفیت هر روز از همین ساعت‌ها (با ۲۰٪ حاشیه) حساب می‌شود.</p>
+        <div className="g2">
+          <Field label="شروع"><TimeField value={(dayPlan ?? DEFAULT_DAY_PLAN).start} onChange={(v) => setDayPlan({ ...DEFAULT_DAY_PLAN, ...dayPlan, start: v || '08:00' })} label="شروع" clearable={false} /></Field>
+          <Field label="پایان"><TimeField value={(dayPlan ?? DEFAULT_DAY_PLAN).end} onChange={(v) => setDayPlan({ ...DEFAULT_DAY_PLAN, ...dayPlan, end: v || '22:00' })} label="پایان" clearable={false} /></Field>
+        </div>
+        <Link className="btn s2 sm" to="/rest">استراحت و سفر</Link>
       </Card>
       <Card>
         <span className="lbl">نمای امروز</span>

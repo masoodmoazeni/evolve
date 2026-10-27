@@ -7,7 +7,6 @@ export const LEVEL_NAMES = ['جوانه', 'نهال', 'ساقه', 'برگ', 'ش�
 export const QUEST_FOCUS_MIN = 20;
 export const CHEST_XP = 15;
 export const START_XP = 3;
-export const CHAIN_MIN = 15;
 export const EMPTY_TOTALS = { xp: 0, focusMin: 0, sessions: 0, morning: 0, tasksDone: 0, habitDone: 0, reviews: 0 };
 
 const ok = (l) => l.status === 'done' || l.status === 'partial';
@@ -41,21 +40,16 @@ export function questsFor(s, light = false) {
 }
 
 
-// ضریب زنجیره: دومین جلسهٔ مفید روز ×۱٫۲، سومی ×۱٫۳، چهارم به بعد ×۱٫۵
-export const chainMult = (n) => (n <= 1 ? 1 : n === 2 ? 1.2 : n === 3 ? 1.3 : 1.5);
-
-// امتیاز تمرکز یک روز: ۳ امتیاز شروع برای هر جلسهٔ ثبت‌شده، ۲ امتیاز به‌ازای هر ۵ دقیقه (تا سقف روزانه) با ضریب زنجیره
+// امتیاز تمرکز یک روز: ۳ امتیاز شروع برای هر جلسهٔ ثبت‌شده، ۲ امتیاز به‌ازای هر ۵ دقیقه (تا سقف روزانه) بدون ضریب
 export function focusXp(sessions, capMin = DEFAULT_GAME.capMin) {
   let left = capMin;
-  let chain = 0;
   let xp = 0;
   [...sessions].sort((a, b) => (a.start || '').localeCompare(b.start || '')).forEach((x) => {
     const a = x.actual || 0;
     if (a >= 1) xp += START_XP;
     const counted = Math.min(a, left);
     left -= counted;
-    if (a >= CHAIN_MIN) chain += 1;
-    xp += Math.round(Math.floor(counted / 5) * 2 * chainMult(a >= CHAIN_MIN ? chain : 1));
+    xp += Math.floor(counted / 5) * 2;
   });
   return xp;
 }

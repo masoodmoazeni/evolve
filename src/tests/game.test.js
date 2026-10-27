@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { BADGES, chainMult, focusXp, activeDaysLast7, earnedBadges, hasComeback, levelInfo, questsFor, totalsForRows, weeklyChallenge, dayStats } from '../gameLogic.js';
+import { BADGES, focusXp, activeDaysLast7, earnedBadges, hasComeback, levelInfo, questsFor, totalsForRows, weeklyChallenge, dayStats } from '../gameLogic.js';
 
 const rows = {
   focus: [{ date: '2026-06-15', actual: 30, start: '08:00' }, { date: '2026-06-14', actual: 600, start: '10:00' }],
@@ -16,15 +16,11 @@ describe('game logic', () => {
     expect(t.focusMin).toBe(630);
     expect(t.morning).toBe(1);
   });
-  it('start bonus and chain multiplier', () => {
-    expect(chainMult(1)).toBe(1);
-    expect(chainMult(2)).toBe(1.2);
-    expect(chainMult(5)).toBe(1.5);
+  it('start bonus without any multiplier', () => {
     expect(focusXp([{ actual: 2, start: '08:00' }])).toBe(3);
-    // جلسه ۱: 3+12؛ جلسه ۲: 3+round(12×1.2)=3+14
-    expect(focusXp([{ actual: 30, start: '08:00' }, { actual: 30, start: '10:00' }])).toBe(15 + 17);
+    expect(focusXp([{ actual: 30, start: '08:00' }, { actual: 30, start: '10:00' }])).toBe(15 + 15);
     // سقف روزانه
-    expect(focusXp([{ actual: 100, start: '08:00' }, { actual: 100, start: '10:00' }], 120)).toBe(43 + 13);
+    expect(focusXp([{ actual: 100, start: '08:00' }, { actual: 100, start: '10:00' }], 120)).toBe(43 + 11);
   });
   it('never gives XP for skipped habits or open tasks', () => {
     expect(totalsForRows({ tasks: [{ date: 'a', done: false }], habitLogs: [{ date: 'a', status: 'skipped' }] }).xp).toBe(0);

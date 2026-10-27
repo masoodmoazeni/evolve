@@ -5,3 +5,8 @@
 .rate{background:var(--mint);border-radius:14px;padding:10px 12px;display:flex;flex-direction:column;gap:2px}
 .rate b{font-size:20px;color:var(--forest)}
 .rate.sandy{background:var(--sand)}
+.stack{display:flex;height:16px;border-radius:8px;overflow:hidden;border:1px solid var(--line)}
+.stack i{display:block;border-inline-end:1px solid #fff}
+.area-tbl{width:100%;font-size:13px;border-collapse:collapse}
+.area-tbl th{text-align:right;font-weight:600}
+.area-tbl td{text-align:left;color:var(--text2);padding:2px 6px}

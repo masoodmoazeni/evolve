@@ -3,6 +3,7 @@ import { LocalNotifications } from '@capacitor/local-notifications';
 import { db, getKV } from './db.js';
 import { remainingMs } from './focusLogic.js';
 import { dateKey } from './util.js';
+import { isRest } from './restLogic.js';
 
 export const isNative = () => Capacitor.isNativePlatform();
 
@@ -119,9 +120,16 @@ export function focusEndAt(run, now = Date.now()) {
 }
 
 // فهرست یادآورهای تکرارشونده (خالص و قابل‌آزمون)؛ weekday: یکشنبه=۱ … شنبه=۷
-export function buildReminders(profile, habits, cfg) {
-  if (!cfg.enabled) return [];
+export function buildReminders(profile, habits, cfg, extra = {}) {
+  if (!cfg.enabled || extra.resting) return []; // در بازهٔ استراحت یادآورها ساکت‌اند
   const out = [];
+  const { rituals } = extra;
+  if (rituals?.morning?.on && /^\d\d:\d\d$/.test(rituals.morning.at || '')) {
+    out.push({ key: 'ritual-morning', time: rituals.morning.at, weekday: null, title: 'اِوالو', body: 'اگر دوست داشتی، دو دقیقه برای شروع روزت.' });
+  }
+  if (rituals?.evening?.on && /^\d\d:\d\d$/.test(rituals.evening.at || '')) {
+    out.push({ key: 'ritual-evening', time: rituals.evening.at, weekday: null, title: 'اِوالو', body: 'اگر دوست داشتی، دو دقیقه برای شبت.' });
+  }
   if (cfg.daily && /^\d\d:\d\d$/.test(cfg.dailyAt || '')) {
     out.push({ key: 'daily', time: cfg.dailyAt, weekday: null, title: 'اِوالو', body: `${profile?.name ? `${profile.name}، ` : ''}امروز چطوری؟ هر وقت آماده بودی نگاهی بینداز.` });
   }
@@ -171,7 +179,7 @@ export async function syncNotifications(now = Date.now()) {
       notifications.push({ id: n.id, title: n.title, body: 'وقت این کار رسیده؛ هر قدر که بشود کافی است.', channelId: CH_REMIND, schedule: { at: new Date(n.at), allowWhileIdle: true } });
     });
     const habits = await db.habits.toArray();
-    buildReminders(await getKV('profile'), habits, cfg).forEach((n) => {
+    buildReminders(await getKV('profile'), habits, cfg, { rituals: await getKV('rituals', null), resting: isRest(dateKey(new Date(now)), (await getKV('rest', [])) ?? []) }).forEach((n) => {
       const [hour, minute] = n.time.split(':').map(Number);
       notifications.push({ id: REMIND_ID_BASE + hash(n.key), title: n.title, body: n.body, channelId: CH_REMIND, schedule: { on: { hour, minute, ...(n.weekday ? { weekday: n.weekday } : {}) }, allowWhileIdle: true } });
     });

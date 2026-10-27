@@ -146,11 +146,12 @@ export const HABIT_RULES = [strongerCue, betterTime, smallerMinimum, shorterDefa
 export const OBSTACLE_LABEL = OBSTACLES;
 
 // حالت «سختی»: عادت‌های برنامه‌ریزی‌شدهٔ ۳ روز گذشته که انجام/نیمه‌کاره ثبت نشده‌اند (ثبت‌نشده و ردشده هر دو «داده» هستند، نه شکست)
-export function recoveryState({ habits, habitLogs, today }) {
-  const days = [1, 2, 3].map((i) => addDays(today, -i));
+export function recoveryState({ habits, habitLogs, today, rest = [] }) {
+  const days = [1, 2, 3].map((i) => addDays(today, -i)).filter((d) => !rest.some((r) => d >= r.from && d <= r.to));
   const wd = (key) => (new Date(Number(key.slice(0, 4)), Number(key.slice(5, 7)) - 1, Number(key.slice(8, 10)), 12).getDay() + 1) % 7;
   const rows = [];
   habits.filter(isActive).forEach((h) => {
+    if (h.weeklyTarget > 0) return; // نرخ این عادت‌ها هفتگی است؛ هیچ روزی «غایب» نیست
     const sched = days.filter((d) => (h.days ?? []).includes(wd(d)));
     if (sched.length < 2) return;
     const gaps = sched.filter((d) => !habitLogs.some((l) => l.habitId === h.id && l.date === d && (l.status === 'done' || l.status === 'partial')));

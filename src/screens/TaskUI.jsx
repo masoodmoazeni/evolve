@@ -1,7 +1,10 @@
 import TimeField from '../TimeField.jsx';
 import { useState } from 'react';
 import { db } from '../db.js';
-import { MAX_PRIORITIES } from '../data.js';
+import { EFFORT, MAX_PRIORITIES } from '../data.js';
+import { skipInstance } from '../recurLogic.js';
+import RecurPicker, { defaultRule, ruleError } from './RecurPicker.jsx';
+import DateField from '../DateField.jsx';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { Card, Chip, Ck, Dialog, Field, Icon, Select, Sheet, Toggle, useToast } from '../ui.jsx';
 import { addDays, dateKey, faNum, fmtDate } from '../util.js';
@@ -30,6 +33,17 @@ export function TaskRow({ task }) {
   );
 }
 
+// نشان انرژی با شکل: سنگین ۳ خط، متوسط ۲، سبک ۱
+export function EffortMark({ effort }) {
+  const e = EFFORT.find((x) => x.key === effort);
+  if (!e) return null;
+  return (
+    <svg className="eff" viewBox="0 0 12 12" role="img" aria-label={`انرژی ${e.label}`} width="12" height="12">
+      {Array.from({ length: e.weight }, (_, i) => <path key={i} d={`M1 ${3 + i * 3}h10`} />)}
+    </svg>
+  );
+}
+
 function TaskText({ task, onEdit }) {
   const [open, setOpen] = useState(false);
   const meta = [task.time && faNum(task.time), task.minutes && `${faNum(task.minutes)} دقیقه`].filter(Boolean).join(' · ');
@@ -37,24 +51,28 @@ function TaskText({ task, onEdit }) {
     <>
       <button className="txt" aria-label={`ویرایش «${task.title}»`} onClick={onEdit ?? (() => setOpen(true))}>
         <span className={task.done ? 'done-t' : ''} style={{ fontWeight: 600 }}>{task.title}</span>
-        {meta && <span className="xs">{meta}</span>}
+        {(meta || task.effort) && <span className="xs">{task.effort && <EffortMark effort={task.effort} />}{meta}</span>}
       </button>
       {open && <TaskSheet task={task} date={task.date} onClose={() => setOpen(false)} />}
     </>
   );
 }
 
-export function TaskSheet({ task, date, onClose }) {
+export function TaskSheet({ task, date, preset, onClose }) {
   const toast = useToast();
   const today = dateKey();
   const [f, setF] = useState({
     title: task?.title ?? '',
-    time: task?.time ?? '',
-    minutes: task?.minutes ?? '',
+    time: task?.time ?? preset?.time ?? '',
+    minutes: task?.minutes ?? preset?.minutes ?? '',
     priority: !!task?.priority,
     date: task?.date ?? date ?? today,
     goalId: task?.goalId == null ? '' : String(task.goalId),
+    effort: task?.effort ?? '',
+    important: !!task?.important,
+    deadline: task?.deadline ?? '',
   });
+  const [rule, setRule] = useState(defaultRule(task?.date ?? date ?? today));
   const goals = useLiveQuery(() => db.goals.where('status').equals('active').toArray(), [], []);
   const [err, setErr] = useState('');
   const [confirmDel, setConfirmDel] = useState(false);
@@ -67,19 +85,25 @@ export function TaskSheet({ task, date, onClose }) {
     if (!f.title.trim()) return setErr('یک عنوان کوتاه بنویس.');
     let priority = f.priority && f.date !== 'someday';
     if (priority && (await countPriority(f.date)) >= MAX_PRIORITIES) priority = false;
-    const rec = { title: f.title.trim(), date: f.date, time: f.time || '', minutes: f.minutes ? Number(f.minutes) : null, priority, goalId: f.goalId === '' ? null : Number(f.goalId) };
+    const re = !task && rule.type !== 'none' ? ruleError(rule) : '';
+    if (re) return setErr(re);
+    const rec = { title: f.title.trim(), date: f.date, time: f.time || '', minutes: f.minutes ? Number(f.minutes) : null, priority, goalId: f.goalId === '' ? null : Number(f.goalId), effort: f.effort || null, important: f.important, deadline: f.deadline || null };
     if (task) await db.tasks.update(task.id, rec);
-    else await db.tasks.add({ ...rec, done: false });
+    else if (rule.type !== 'none' && f.date !== 'someday') {
+      const rid = await db.recurring.add({ title: rec.title, time: rec.time, minutes: rec.minutes, priority, goalId: rec.goalId, effort: rec.effort, rule, startDate: f.date, endDate: null, status: 'active', skip: [] });
+      await db.tasks.add({ ...rec, done: false, recurId: rid });
+    } else await db.tasks.add({ ...rec, done: false });
     if (f.priority && !priority) toast('سه اولویت پر است؛ این کار به «کارهای دیگر» رفت.');
     onClose();
   };
 
   const remove = async () => {
     const copy = { ...task };
+    const unskip = await skipInstance(task);
     await db.tasks.delete(task.id);
     setConfirmDel(false);
     onClose();
-    toast('کار حذف شد.', () => db.tasks.add(copy));
+    toast('کار حذف شد.', async () => { await db.tasks.add(copy); await unskip?.(); });
   };
 
   return (
@@ -107,6 +131,20 @@ export function TaskSheet({ task, date, onClose }) {
           {!DATE_CHOICES(today).some((c) => c.key === f.date) && <Chip on>{fmtDate(f.date)}</Chip>}
         </div>
       </div>
+      <div className="col">
+        <span className="lbl">انرژی این کار (اختیاری)</span>
+        <div className="chips" role="group" aria-label="انرژی کار">
+          {EFFORT.map((e) => <Chip key={e.key} on={f.effort === e.key} onClick={() => set('effort', f.effort === e.key ? '' : e.key)}>{e.label}</Chip>)}
+        </div>
+      </div>
+      <div className="row">
+        <span className="grow">مهم است</span>
+        <Toggle on={f.important} onChange={(v) => set('important', v)} label="مهم است" />
+      </div>
+      <Field label="مهلت (اختیاری)">
+        <DateField value={f.deadline} onChange={(v) => set('deadline', v)} placeholder="بدون مهلت" label="مهلت" />
+      </Field>
+      {!task && f.date !== 'someday' && <RecurPicker rule={rule} onChange={setRule} />}
       <div className="row">
         <div className="grow">
           <h3>اولویت</h3>

@@ -4,6 +4,7 @@ import { db } from '../db.js';
 import { Page, Top, Card, Empty, Skeleton } from '../ui.jsx';
 import { WEEKDAYS_SHORT, addDays, dateKey, faNum, fmtDate, weekStart } from '../util.js';
 import { buildInsights, dayMap, difficultyTrend, indicators, MIN_DAYS, obstacleRanking, periodStats, slotStats, weeklyTrend } from '../insightLogic.js';
+import { AreaCard, EstimateCard, MonthlyCard, PeakCard } from './InsightPlan.jsx';
 import { DifficultyCard, ObstaclesCard, RatesCard, SlotsCard, WeeklyTrendCard } from './InsightSections.jsx';
 import './Insights.css';
 
@@ -15,13 +16,17 @@ export function Insights() {
   const start = weekStart(addDays(today, -7 * (WEEKS - 1)));
   const cells = Array.from({ length: WEEKS * 7 }, (_, i) => addDays(start, i));
   const data = useLiveQuery(async () => {
-    const [habits, habitLogs, focus, moods] = await Promise.all([
+    const [habits, habitLogs, focus, moods, focusAll, goals, tasks, sums] = await Promise.all([
       db.habits.toArray(),
       db.habitLogs.where('date').between(start, today, true, true).toArray(),
       db.focus.where('date').between(start, today, true, true).toArray(),
       db.moods.where('date').between(start, today, true, true).toArray(),
+      db.focus.toArray(),
+      db.goals.toArray(),
+      db.tasks.where('date').between(addDays(today, -28), today, true, true).toArray(),
+      db.monthSummaries.toArray(),
     ]);
-    return { habits, habitLogs, focus, moods };
+    return { habits, habitLogs, focus, moods, focusAll, goals, tasks, sums };
   }, [start, today]);
 
   if (!data) return <Page><Top title="بینش‌ها" back /><Skeleton /></Page>;
@@ -93,6 +98,11 @@ export function Insights() {
       <ObstaclesCard list={obstacleRanking(data.habitLogs)} />
       <SlotsCard rows={slotStats(data.habits, data.habitLogs)} />
       <DifficultyCard trend={difficultyTrend(data.habitLogs, weekStarts)} />
+
+      <EstimateCard focus={data.focusAll} />
+      <PeakCard focus={data.focusAll} />
+      <AreaCard focus={data.focusAll} goals={data.goals} tasks={data.tasks} today={today} />
+      <MonthlyCard sums={data.sums} />
 
       <h2>از داده‌های تو</h2>
       {!ins.enough && (

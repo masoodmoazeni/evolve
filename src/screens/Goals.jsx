@@ -7,6 +7,7 @@ import { Icon, Page, Top, Card, Chip, Empty, Fab, Field, Ck, Sheet, Dialog, Skel
 import { db } from '../db.js';
 import { setGoalLog } from '../data.js';
 import { goalProgress, weekDates } from '../logic.js';
+import GoalKeyResults, { AreaChips } from './GoalKeyResults.jsx';
 import { dateKey, fmtDate, fmtDateFull, WEEKDAYS, WEEKDAYS_SHORT, faNum } from '../util.js';
 import { GOAL_TYPES, PRIORITIES, buildGoal, newMilestone, sortGoals, toggleMilestone, validateGoal } from '../goalUtils.js';
 import { GoalFormExtras, SkillSection } from './GoalMetrics.jsx';
@@ -149,6 +150,7 @@ export function GoalForm() {
           <input className={`in${errors.target ? ' e' : ''}`} type="number" inputMode="numeric" min="1" max="7" value={f.target} onChange={(e) => set({ target: e.target.value })} />
         </Field>
       )}
+      <AreaChips value={f.area ?? null} onChange={(area) => set({ area })} />
       {f.type === 'milestones' && (
         <div className="col">
           <span className="lbl">نقطه‌عطف‌ها</span>
@@ -268,7 +270,7 @@ export function GoalDetail() {
           {goal.obstacles?.length > 0 && <div className="chips" aria-label="موانع احتمالی">{goal.obstacles.map((o) => <span key={o} className="chip sand">{o}</span>)}</div>}
         </Card>
       )}
-      {goal.type !== 'milestones' ? (
+      {goal.type === 'okr' ? null : goal.type !== 'milestones' ? (
         <Card>
           <h3>ثبت روزانه</h3>
           <div className="goal-days">
@@ -294,6 +296,7 @@ export function GoalDetail() {
           ))}
         </Card>
       )}
+      <GoalKeyResults goal={goal} status={setStatus} />
       <GoalTime goal={goal} />
       <SkillSection goal={goal} />
       <button className="btn" onClick={() => setConfirm('complete')}>تکمیل هدف</button>

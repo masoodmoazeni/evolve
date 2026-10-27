@@ -1,14 +1,25 @@
 import { addDays, weekdayIdx, weekStart } from './util.js';
+import { isRest } from './restLogic.js';
+import { goalKrProgress } from './keyResultLogic.js';
 
 export const weekDates = (today) => {
   const s = weekStart(today);
   return Array.from({ length: 7 }, (_, i) => addDays(s, i));
 };
 
+// عادت با «تعداد در هفته» هر روز نمایش داده می‌شود تا سهم هفته پر شود
 export const habitsForDay = (habits, dayIdx) =>
-  habits.filter((h) => h.status !== 'archived' && !h.paused && (h.days ?? []).includes(dayIdx));
+  habits.filter((h) => h.status !== 'archived' && !h.paused && (h.weeklyTarget > 0 || (h.days ?? []).includes(dayIdx)));
 
-export const habitsForDate = (habits, date) => habitsForDay(habits, weekdayIdx(date));
+// در روز استراحت هیچ عادتی برنامه‌ریزی‌شده نیست
+export const habitsForDate = (habits, date, rest = []) => (isRest(date, rest) ? [] : habitsForDay(habits, weekdayIdx(date)));
+
+// تعداد انجام/نیمه‌کاره در یک هفته؛ count ≥ target یعنی «این هفته کامل» (هنوز قابل‌ثبت)
+export function weekCount(habitId, logs, weekStartKey) {
+  const end = addDays(weekStartKey, 6);
+  return logs.filter((l) => l.habitId === habitId && l.date >= weekStartKey && l.date <= end && (l.status === 'done' || l.status === 'partial')).length;
+}
+export const weekComplete = (habit, logs, weekStartKey) => habit.weeklyTarget > 0 && weekCount(habit.id, logs, weekStartKey) >= habit.weeklyTarget;
 
 // پیشرفت هدف طبق قواعد CLAUDE.md؛ logs = ثبت‌های همین هفتهٔ هدف
 export function goalProgress(goal, logs) {
@@ -17,6 +28,10 @@ export function goalProgress(goal, logs) {
     const ms = goal.milestones ?? [];
     const n = ms.filter((m) => m.done).length;
     return { ratio: ms.length ? n / ms.length : 0, label: `${n} از ${ms.length} نقطه‌عطف` };
+  }
+  if (goal.type === 'okr') {
+    const r = goalKrProgress(goal);
+    return { ratio: r, label: `${Math.round(r * 100)}٪ از نتایج کلیدی` };
   }
   if (goal.type === 'weekly') {
     const t = Math.max(1, goal.target || 1);

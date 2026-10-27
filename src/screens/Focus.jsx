@@ -1,11 +1,11 @@
 import FocusCapture from './FocusCapture.jsx';
 import { useEffect, useState } from 'react';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { db, useKV } from '../db.js';
+import { db, setKV, useKV } from '../db.js';
 import { useKeepAwake } from '../alerts.js';
 import { requestPermission, syncNotifications } from '../notify.js';
-import { actualMinutes, elapsedMs, finishRun, fmtClock, pauseRun, progressRatio, remainingMs, resumeRun, startRun, OUTCOME_LABEL } from '../focusLogic.js';
+import { actualMinutes, elapsedMs, finishRun, fmtClock, pauseRun, progressRatio, remainingMs, resumeRun, startRun, startBreak, FOCUS_PRESETS, OUTCOME_LABEL } from '../focusLogic.js';
 import { Card, Chip, Dialog, Field, Icon, Page, Select, Skeleton, Top, useToast } from '../ui.jsx';
 import { dateKey, faNum } from '../util.js';
 import './Focus.css';
@@ -25,6 +25,13 @@ export function FocusHome() {
   const goals = useLiveQuery(() => db.goals.where('status').equals('active').toArray(), [], []);
   const [intent, setIntent] = useState('');
   const [planned, setPlanned] = useState(25);
+  const [restMin, setRestMin] = useState(null);
+  const [params] = useSearchParams();
+  const wanted = Number(params.get('task')) || null;
+  useEffect(() => {
+    const t = wanted && tasks?.find((x) => x.id === wanted);
+    if (t && taskId === null) { setTaskId(t.id); setTitle(t.title); if (t.minutes > 0) setPlanned(Math.min(180, Math.max(5, t.minutes))); }
+  }, [wanted, tasks]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (run === undefined || !tasks) return <Page><Top title="تمرکز" /><Skeleton /></Page>;
   const taskGoalRaw = tasks.find((t) => t.id === taskId)?.goalId;
@@ -39,7 +46,7 @@ export function FocusHome() {
 
   const start = async () => {
     const gid = taskGoal !== '' ? Number(taskGoal) : goalId === '' ? null : Number(goalId);
-    const r = startRun({ title: title.trim() || 'تمرکز آزاد', taskId, goalId: gid, intent: intent.trim(), planned });
+    const r = startRun({ title: title.trim() || 'تمرکز آزاد', taskId, goalId: gid, intent: intent.trim(), planned, restMin });
     await db.kv.put({ key: 'focusRun', value: r });
     // اولین بار مجوز اعلان پرسیده می‌شود تا پایان جلسه با بسته بودن اپ هم خبر بدهد
     await requestPermission();
@@ -78,9 +85,13 @@ export function FocusHome() {
         <Field label="نیت این جلسه (اختیاری)">
           <input className="in" value={intent} onChange={(e) => setIntent(e.target.value)} placeholder="مثلاً: فقط شروع کنم" />
         </Field>
+        <span className="lbl">پیش‌تنظیم</span>
+        <div className="chips" role="group" aria-label="پیش‌تنظیم تمرکز و استراحت">
+          {FOCUS_PRESETS.map((p) => <Chip key={p.key} on={planned === p.focus && restMin === p.rest} onClick={() => { setPlanned(p.focus); setRestMin(p.rest); }}>{p.label}</Chip>)}
+        </div>
         <span className="lbl">مدت</span>
         <div className="chips">
-          {PRESETS.map((m) => <Chip key={m} on={planned === m} onClick={() => setPlanned(m)}>{faNum(m)} دقیقه</Chip>)}
+          {PRESETS.map((m) => <Chip key={m} on={planned === m} onClick={() => { setPlanned(m); setRestMin(null); }}>{faNum(m)} دقیقه</Chip>)}
         </div>
         <div className="mins">
           <button className="ib bg" aria-label="پنج دقیقه کمتر" onClick={() => setPlanned(Math.max(5, planned - 5))}>−</button>
@@ -166,6 +177,7 @@ export function FocusEnd() {
   const [energy, setEnergy] = useState(null);
   const [note, setNote] = useState('');
   const [discard, setDiscard] = useState(false);
+  const [wantBreak, setWantBreak] = useState(true);
   if (run === undefined) return <Page tabs={false}><Skeleton /></Page>;
   if (!run) return <Navigate to="/focus" replace />;
   if (!run.endedAt) return <Navigate to="/focus/run" replace />;
@@ -178,6 +190,10 @@ export function FocusEnd() {
     if (outcome === 'done' && run.taskId) await db.tasks.update(run.taskId, { done: true });
     await clear();
     toast('جلسه ثبت شد.');
+    if (run.restMin && wantBreak && outcome !== 'skip') {
+      await setKV('breakRun', startBreak(run.restMin));
+      return nav('/focus/break');
+    }
     nav('/focus/history');
   };
 
@@ -200,6 +216,16 @@ export function FocusEnd() {
           {ENERGY.map((e) => <Chip key={e.v} on={energy === e.v} onClick={() => setEnergy(energy === e.v ? null : e.v)}>{e.label}</Chip>)}
         </div>
       </div>
+      {run.restMin ? (
+        <Card kind="mint">
+          <span className="lbl">پس از ثبت</span>
+          <p>{faNum(run.restMin)} دقیقه استراحت؟</p>
+          <div className="chips">
+            <Chip on={wantBreak} onClick={() => setWantBreak(true)}>شروع استراحت</Chip>
+            <Chip on={!wantBreak} onClick={() => setWantBreak(false)}>نه، ممنون</Chip>
+          </div>
+        </Card>
+      ) : null}
       <Field label="یادداشت (اختیاری)">
         <textarea className="in" value={note} onChange={(e) => setNote(e.target.value)} placeholder="چه چیزی کمک کرد یا چه چیزی حواس را پرت کرد؟" />
       </Field>

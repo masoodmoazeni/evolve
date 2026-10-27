@@ -12,6 +12,7 @@ import { addDays, dateKey, faNum, fmtDate, WEEKDAYS, WEEKDAYS_SHORT } from '../u
 import { Bars, Chip, Ck, Dialog, Empty, Fab, Field, Page, Select, Skeleton, STATUS_LABEL, Top, useToast, Card } from '../ui.jsx';
 import { TIME_OF_DAY, barValues, changedFields, emptyHabit, habitToForm, hasExtras, lastDays, splitCounts, toHabitRecord, validateHabit } from './habitLogic.js';
 import { DifficultyChips, HabitLogSheet, ListEditor, PrepChecklist, Revisions, habitSub } from './HabitParts.jsx';
+import { AreaChips } from './GoalKeyResults.jsx';
 import './Habits.css';
 
 export { HabitLogSheet };
@@ -144,6 +145,14 @@ function HabitFormInner({ initial, prev }) {
         {err.days && <span className="err">{err.days}</span>}
       </div>
       <div className="col">
+        <span className="lbl">دفعات</span>
+        <div className="chips" role="group" aria-label="دفعات">
+          <Chip on={!f.weeklyTarget} onClick={() => set('weeklyTarget', '')}>روزهای ثابت</Chip>
+          {[2, 3, 4, 5].map((n) => <Chip key={n} on={Number(f.weeklyTarget) === n} onClick={() => set('weeklyTarget', String(n))}>{faNum(n)} بار در هفته</Chip>)}
+        </div>
+        {f.weeklyTarget && <span className="xs">هر روز که شد؛ بعد از {faNum(f.weeklyTarget)} بار، «این هفته کامل» نشان داده می‌شود. روزِ ثبت‌نشده غایب حساب نمی‌شود.</span>}
+      </div>
+      <div className="col">
         <span className="lbl">زمان روز</span>
         <div className="chips" role="group" aria-label="زمان روز">
           {TIME_OF_DAY.map((t) => (
@@ -183,6 +192,7 @@ function HabitFormInner({ initial, prev }) {
           <ListEditor label="موانع احتمالی" items={f.obstaclesNote} onChange={(v) => set('obstaclesNote', v)} placeholder="مثلاً خستگی بعد از کار" />
         </div>
       )}
+      <AreaChips value={f.area || null} onChange={(a) => set('area', a ?? '')} />
       <Field label="مرتبط با هدف (اختیاری)">
         <Select label="مرتبط با هدف" value={f.goalId} onChange={(v) => set('goalId', String(v))} options={[{ value: '', label: 'بدون هدف' }, ...goals.map((g) => ({ value: g.id, label: g.title }))]} />
       </Field>
@@ -211,12 +221,12 @@ export function HabitDetail() {
   const logs = useLiveQuery(() => db.habitLogs.where('[habitId+date]').between([id, dates[0]], [id, today], true, true).toArray(), [id, today], undefined);
   const [sheet, setSheet] = useState(false);
   const [del, setDel] = useState(false);
+  const allHabits = useLiveQuery(() => db.habits.toArray(), [], []);
 
   if (habit === undefined || !logs) return <Page tabs={false}><Top title="عادت" back="/habits" /><Skeleton rows={4} /></Page>;
   if (!habit) return <Page tabs={false}><Top title="عادت" back="/habits" /><Empty title="این عادت پیدا نشد" text="ممکن است حذف شده باشد." action={<Link className="btn" to="/habits">بازگشت به عادت‌ها</Link>} /></Page>;
 
   const counts = splitCounts(logs);
-  const allHabits = useLiveQuery(() => db.habits.toArray(), [], []);
   const sentence = ifThenSentence(habit, new Map(allHabits.map((h) => [h.id, h])));
   const togglePause = async () => {
     const was = !!habit.paused;
