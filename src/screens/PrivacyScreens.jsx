@@ -4,6 +4,7 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { countPrunable, exportAll, prune, setPruneAck, useKV, wipeAll } from '../db.js';
 import { Page, Top, Card, Dialog, Field, Icon, Skeleton, useToast } from '../ui.jsx';
 import { faNum } from '../util.js';
+import { demoCount, removeDemoData } from '../demoLogic.js';
 import { logsCSV, saveFile, stamp } from '../exportLogic.js';
 import { DataLossNote, LocalBadge, RetentionPolicy } from './PrivacyNotes.jsx';
 
@@ -14,6 +15,15 @@ export function Privacy() {
   const [ret] = useKV('retention', 60);
   const [ack] = useKV('pruneAck', false);
   const count = useLiveQuery(() => countPrunable(), [], undefined);
+  const demo = useLiveQuery(() => demoCount(), [], 0);
+  const dropDemo = async () => {
+    try {
+      const r = await removeDemoData();
+      toast(`${faNum(r.count)} داده نمونه حذف شد.`, r.undo);
+    } catch {
+      toast('نتوانستیم حذف کنیم؛ دوباره امتحان کن. داده‌هایت امن است.');
+    }
+  };
   if (ret === undefined || ack === undefined || count === undefined) return <Page tabs={false}><Top title="حریم خصوصی" back="/profile" /><Skeleton /></Page>;
   const exportNow = async () => {
     try {
@@ -51,6 +61,7 @@ export function Privacy() {
         <Link className="btn s2" to="/privacy/import">وارد کردن پشتیبان</Link>
         <Link className="btn s2" to="/privacy/coach">خروجی برای مربی هوشمند (AI)</Link>
         <Link className="btn s2" to="/privacy/report">گزارش و تحلیل داده‌ها</Link>
+        {demo > 0 && <button className="btn s2" onClick={dropDemo}>حذف داده‌های نمونه ({faNum(demo)})</button>}
         <Link className="btn t" to="/privacy/delete">حذف همهٔ داده‌ها</Link>
       </div>
     </Page>
