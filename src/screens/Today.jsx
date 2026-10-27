@@ -110,6 +110,7 @@ export function Today() {
       <MilestoneCard items={milestones} seen={seen} />
       {recov && <RecoveryCard state={recov} suggestion={recovSuggestion} nextHabit={nextHabit} today={today} onMinimum={logMinimum} onResume={(h) => setSheet({ habit: h, date: today })} />}
       <GameCard />
+      <Link className="card teal" to="/german"><div className="row"><Icon name="book" /><span className="grow"><b>برنامهٔ آلمانی A1</b><span className="xs" style={{ display: 'block' }}>کدام درس، کدام روز</span></span><Icon name="chevl" /></div></Link>
       <Intent today={today} />
       <NextAction next={next} remaining={remainingMinutes(todays, logged)} onHabit={(h) => setSheet({ habit: h, date: today })} />
       {hardDay && <HardDay todays={todays} logged={logged} today={today} />}
