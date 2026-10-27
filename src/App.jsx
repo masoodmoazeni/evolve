@@ -15,7 +15,7 @@ import { Coach } from './screens/Coach.jsx';
 import { AlertSettings, Profile, ProfileEdit, Prefs, Privacy, PrivacyExport, PrivacyDelete } from './screens/Settings.jsx';
 
 import AlertBanner from './AlertBanner.jsx';
-import { useFocusWatcher } from './alerts.js';
+import { useFocusWatcher, useNotifSync } from './alerts.js';
 import { foldBank } from './game.js';
 import { GamePage, Howto } from './screens/Game.jsx';
 import { About } from './screens/About.jsx';
@@ -29,6 +29,7 @@ export default function App() {
   const { pathname } = useLocation();
   const nav = useNavigate();
   useFocusWatcher();
+  useNotifSync();
   const [profile] = useKV('profile', null);
   const [prefs] = useKV('prefs', {});
 

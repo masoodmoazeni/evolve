@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Icon, Page, Top, Card, Chip, Field } from '../ui.jsx';
 import { setKV } from '../db.js';
+import { NotifPermissionCard } from './NotifStatus.jsx';
 
 export function Welcome() {
   const nav = useNavigate();
@@ -189,6 +190,7 @@ export function Setup() {
       <Field label="نام (اختیاری)">
         <input className="in" value={name} maxLength={40} onChange={(e) => setName(e.target.value)} autoComplete="off" />
       </Field>
+      <NotifPermissionCard />
       {err && <p className="err" role="alert">{err}</p>}
       <div style={{ flex: 1 }} />
       <button className={`btn${saving ? ' dis' : ''}`} onClick={() => finish(false)} disabled={saving}>

@@ -8,6 +8,7 @@ import { DEFAULT_NOTIF } from '../notify.js';
 import { WEEKDAYS, faNum } from '../util.js';
 import { SOUNDS, playSound } from '../sound.js';
 import { alertNow } from '../alerts.js';
+import { NotifPermissionCard } from './NotifStatus.jsx';
 import { LocalBadge, RetentionPolicy } from './PrivacyNotes.jsx';
 import './Settings.css';
 
@@ -21,6 +22,20 @@ export function AlertSettings() {
   return (
     <Page tabs={false}>
       <Top title="صدا و هشدار" back />
+      <NotifPermissionCard full />
+      <Card>
+        <span className="lbl">اعلان‌ها</span>
+        <div className="row"><span className="grow">اعلان‌ها روشن باشند</span><Toggle on={cfg.enabled} label="اعلان‌ها" onChange={(v) => save({ enabled: v })} /></div>
+        <div className="row"><span className="grow">پایان جلسهٔ تمرکز</span><Toggle on={cfg.focusEnd} label="اعلان پایان تمرکز" onChange={(v) => save({ focusEnd: v })} /></div>
+        <div className="row"><span className="grow">ساعت‌های عادت‌ها</span><Toggle on={cfg.habits} label="یادآور عادت‌ها" onChange={(v) => save({ habits: v })} /></div>
+        <div className="row"><span className="grow">یادآور روزانه</span><Toggle on={cfg.daily} label="یادآور روزانه" onChange={(v) => save({ daily: v })} /></div>
+        {cfg.daily && (
+          <Field label="ساعت یادآور روزانه">
+            <TimeField value={cfg.dailyAt} onChange={(v) => save({ dailyAt: v || DEFAULT_NOTIF.dailyAt })} label="ساعت یادآور" title="ساعت یادآور روزانه" clearable={false} />
+          </Field>
+        )}
+        <p className="xs">یادآور هر عادت از «ساعت مناسب» همان عادت گرفته می‌شود و فقط در روزهای انتخاب‌شدهٔ آن می‌آید.</p>
+      </Card>
       <Card>
         <span className="lbl">تایمر تمرکز</span>
         <div className="row"><span className="grow">روشن ماندن صفحه هنگام تمرکز</span><Toggle on={cfg.keepAwake} label="روشن ماندن صفحه" onChange={(v) => save({ keepAwake: v })} /></div>
@@ -37,7 +52,7 @@ export function AlertSettings() {
         </Field>
         <div className="row"><span className="grow">لرزش</span><Toggle on={cfg.vibrate} label="لرزش" onChange={(v) => save({ vibrate: v })} /></div>
         <button className="btn s2 sm" onClick={async () => { alertNow({ title: 'آزمایش هشدار', body: 'اگر این را می‌بینی و می‌شنوی، هشدار درون اپ درست کار می‌کند.' }); }}>آزمایش صدا و هشدار</button>
-        <p className="xs">صدا و بنر پایان تمرکز وقتی اپ باز است در خود اپ نشان داده می‌شود. اِوالو اعلان سیستمی نمی‌فرستد.</p>
+        <p className="xs">وقتی اپ باز است، صدا و بنر در خود اپ نشان داده می‌شود؛ وقتی بسته است، اعلان سیستمی می‌رسد.</p>
       </Card>
     </Page>
   );
