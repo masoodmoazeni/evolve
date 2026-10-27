@@ -5,7 +5,7 @@ import { db, useKV } from '../db.js';
 import { useKeepAwake } from '../alerts.js';
 import { requestPermission, syncNotifications } from '../notify.js';
 import { actualMinutes, elapsedMs, finishRun, fmtClock, pauseRun, progressRatio, remainingMs, resumeRun, startRun, OUTCOME_LABEL } from '../focusLogic.js';
-import { Card, Chip, Dialog, Field, Icon, Page, Select, Skeleton, Top, useToast } from '../ui.jsx';
+import { Card, Chip, Dialog, Field, Icon, Page, Select, Skeleton, Toggle, Top, useToast } from '../ui.jsx';
 import { dateKey, faNum } from '../util.js';
 import './Focus.css';
 
@@ -17,7 +17,7 @@ export function FocusHome() {
   const nav = useNavigate();
   const today = dateKey();
   const [run] = useKV('focusRun', null);
-  const tasks = useLiveQuery(() => db.tasks.where('date').equals(today).filter((t) => !t.done).toArray(), [today]);
+  const tasks = useLiveQuery(() => db.tasks.filter((t) => !t.done && (t.date === 'someday' || t.date >= today)).toArray(), [today]);
   const [title, setTitle] = useState('');
   const [taskId, setTaskId] = useState(null);
   const [goalId, setGoalId] = useState('');
@@ -28,6 +28,15 @@ export function FocusHome() {
   if (run === undefined || !tasks) return <Page><Top title="تمرکز" /><Skeleton /></Page>;
   const taskGoalRaw = tasks.find((t) => t.id === taskId)?.goalId;
   const taskGoal = taskGoalRaw == null || taskGoalRaw === '' ? '' : String(taskGoalRaw);
+
+  const pickTask = (v) => {
+    const t = tasks.find((x) => String(x.id) === String(v));
+    setTaskId(t ? t.id : null);
+    if (t) {
+      setTitle(t.title);
+      if (t.minutes) setPlanned(Math.min(180, Math.max(5, t.minutes)));
+    }
+  };
 
   const start = async () => {
     const gid = taskGoal !== '' ? Number(taskGoal) : goalId === '' ? null : Number(goalId);
@@ -51,16 +60,9 @@ export function FocusHome() {
       )}
       <Card>
         <span className="lbl">آماده‌سازی</span>
-        {tasks.length > 0 && (
-          <div className="col">
-            <span className="xs">یکی از کارهای امروز را انتخاب کن (اختیاری)</span>
-            <div className="chips">
-              {tasks.map((t) => (
-                <Chip key={t.id} on={taskId === t.id} onClick={() => { setTaskId(taskId === t.id ? null : t.id); setTitle(taskId === t.id ? '' : t.title); }}>{t.title}</Chip>
-              ))}
-            </div>
-          </div>
-        )}
+        <Field label="مرتبط با کار (اختیاری)">
+          <Select label="کار این جلسه" value={taskId == null ? '' : String(taskId)} onChange={pickTask} options={[{ value: '', label: 'بدون کار؛ فقط تمرکز' }, ...tasks.map((t) => ({ value: String(t.id), label: t.title }))]} />
+        </Field>
         <Field label="روی چه چیزی تمرکز می‌کنی؟">
           <input className="in" value={title} onChange={(e) => { setTitle(e.target.value); setTaskId(null); }} placeholder="مثلاً: خواندن فصل دوم" />
         </Field>
@@ -156,6 +158,8 @@ export function FocusEnd() {
   const [outcome, setOutcome] = useState('done');
   const [energy, setEnergy] = useState(null);
   const [note, setNote] = useState('');
+  const [markDone, setMarkDone] = useState(true);
+  const task = useLiveQuery(() => (run?.taskId ? db.tasks.get(run.taskId).then((t) => t ?? null) : null), [run?.taskId], undefined);
   const [discard, setDiscard] = useState(false);
   if (run === undefined) return <Page tabs={false}><Skeleton /></Page>;
   if (!run) return <Navigate to="/focus" replace />;
@@ -166,7 +170,7 @@ export function FocusEnd() {
 
   const save = async () => {
     await db.focus.add({ date: run.date, start: run.start, planned: run.planned, actual, taskId: run.taskId, goalId: run.goalId ?? null, title: run.title, intent: run.intent, outcome, energy, note: note.trim() });
-    if (outcome === 'done' && run.taskId) await db.tasks.update(run.taskId, { done: true });
+    if (task) await db.tasks.update(task.id, { spent: (task.spent || 0) + actual, ...(outcome === 'done' && markDone ? { done: true } : {}) });
     await clear();
     toast('جلسه ثبت شد.');
     nav('/focus/history');
@@ -185,6 +189,18 @@ export function FocusEnd() {
           {Object.entries(OUTCOME_LABEL).map(([k, l]) => <Chip key={k} on={outcome === k} onClick={() => setOutcome(k)}>{l}</Chip>)}
         </div>
       </div>
+      {task && (
+        <Card>
+          <span className="lbl">کار مرتبط</span>
+          <p className="s">{task.title} · {faNum(actual)} دقیقه به زمان این کار اضافه می‌شود</p>
+          {outcome === 'done' && (
+            <div className="row">
+              <span className="grow s">کار را هم انجام‌شده علامت بزن</span>
+              <Toggle on={markDone} onChange={setMarkDone} label="علامت انجام‌شده برای کار" />
+            </div>
+          )}
+        </Card>
+      )}
       <div className="col">
         <span className="lbl">انرژی بعد از جلسه (اختیاری)</span>
         <div className="chips">

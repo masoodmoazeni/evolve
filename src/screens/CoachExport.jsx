@@ -3,6 +3,7 @@ import { exportAll } from '../db.js';
 import { Page, Top, Card, Chip, Skeleton } from '../ui.jsx';
 import { faNum } from '../util.js';
 import { copyText, saveFile, shareText, stamp } from '../exportLogic.js';
+import { BackToApp } from './PrivacyNotes.jsx';
 import { DEFAULT_COACH_OPTS, buildCoachExport } from '../coachExport.js';
 
 const RANGES = [7, 30, 60];
@@ -67,6 +68,7 @@ export function CoachExport() {
         <span className="lbl">پیش‌نمایش</span>
         <pre className="xs" dir="auto" style={{ whiteSpace: 'pre-wrap', maxHeight: 320, overflow: 'auto', margin: 0 }}>{text}</pre>
       </Card>
+      <BackToApp />
     </Page>
   );
 }

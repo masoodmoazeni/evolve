@@ -2,7 +2,7 @@ import TimeField from '../TimeField.jsx';
 import { useState } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../db.js';
-import { MAX_PRIORITIES } from '../data.js';
+import { DURATIONS, MAX_PRIORITIES } from '../data.js';
 import { Chip, Field, Sheet, Toggle, useToast } from '../ui.jsx';
 import { canAddPriority, emptyHabit, toHabitRecord, validateHabit } from './habitLogic.js';
 
@@ -19,6 +19,8 @@ export default function AddSheet({ today, onClose }) {
   const [title, setTitle] = useState('');
   const [time, setTime] = useState('');
   const [priority, setPriority] = useState(false);
+  const [minutes, setMinutes] = useState(null);
+  const [custom, setCustom] = useState('');
   const [amount, setAmount] = useState('');
   const [cue, setCue] = useState('');
   const [text, setText] = useState('');
@@ -29,7 +31,8 @@ export default function AddSheet({ today, onClose }) {
     try {
       if (kind === 'task') {
         if (!title.trim()) return setErr('یک نام کوتاه برای کار بنویس.');
-        const id = await db.tasks.add({ title: title.trim(), date: today, time: time || null, minutes: null, priority: priority && room, goalId: null, done: false });
+        if (minutes === 'custom' && !(Number(custom) > 0)) return setErr('مدت دلخواه را با عدد دقیقه بنویس.');
+        const id = await db.tasks.add({ title: title.trim(), date: today, time: time || null, minutes: minutes === 'custom' ? Math.round(Number(custom)) : minutes || null, priority: priority && room, goalId: null, done: false });
         toast('کار اضافه شد', () => db.tasks.delete(id));
       } else if (kind === 'habit') {
         const form = { ...emptyHabit(), title, amount, cue };
@@ -76,6 +79,18 @@ export default function AddSheet({ today, onClose }) {
           <Field label="ساعت (اختیاری)">
             <TimeField value={time} onChange={setTime} label="ساعت" />
           </Field>
+          <div className="col">
+            <span className="lbl">مدت انجام (اختیاری)</span>
+            <div className="chips" role="group" aria-label="مدت انجام">
+              {DURATIONS.map((d) => (
+                <Chip key={d.min} on={minutes === d.min} onClick={() => setMinutes(minutes === d.min ? null : d.min)}>{d.label}</Chip>
+              ))}
+              <Chip on={minutes === 'custom'} onClick={() => setMinutes(minutes === 'custom' ? null : 'custom')}>دلخواه</Chip>
+            </div>
+            {minutes === 'custom' && (
+              <input className="in" type="number" inputMode="numeric" min="1" max="1440" aria-label="مدت دلخواه به دقیقه" placeholder="دقیقه" value={custom} onChange={(e) => setCustom(e.target.value)} />
+            )}
+          </div>
           <div className="row">
             <span className="grow s">اولویت امروز</span>
             <Toggle on={priority && room} onChange={(v) => room && setPriority(v)} label="اولویت امروز" />

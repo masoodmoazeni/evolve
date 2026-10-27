@@ -5,7 +5,7 @@ import { countPrunable, exportAll, prune, setPruneAck, useKV, wipeAll } from '..
 import { Page, Top, Card, Dialog, Field, Icon, Skeleton, useToast } from '../ui.jsx';
 import { faNum } from '../util.js';
 import { logsCSV, saveFile, stamp } from '../exportLogic.js';
-import { DataLossNote, LocalBadge, RetentionPolicy } from './PrivacyNotes.jsx';
+import { BackToApp, DataLossNote, LocalBadge, RetentionPolicy } from './PrivacyNotes.jsx';
 
 const SAVE_ERR = 'نتوانستیم خروجی بسازیم؛ دوباره امتحان کن. داده‌هایت امن است.';
 
@@ -53,6 +53,7 @@ export function Privacy() {
         <Link className="btn s2" to="/privacy/report">گزارش و تحلیل داده‌ها</Link>
         <Link className="btn t" to="/privacy/delete">حذف همهٔ داده‌ها</Link>
       </div>
+      <BackToApp />
     </Page>
   );
 }
@@ -95,6 +96,7 @@ export function PrivacyExport() {
         <Link className="btn t" to="/privacy/report">گزارش و تحلیل داده‌ها</Link>
         <Link className="btn t" to="/privacy/import">وارد کردن پشتیبان</Link>
       </div>
+      <BackToApp />
     </Page>
   );
 }
@@ -126,6 +128,7 @@ export function PrivacyDelete() {
           <Field label="کلمهٔ تأیید" error={err}><input className="in" value={word} onChange={(e) => setWord(e.target.value)} autoComplete="off" /></Field>
         </Dialog>
       )}
+      <BackToApp />
     </Page>
   );
 }

@@ -27,3 +27,10 @@ export async function recordRevision(habit, reason, source = 'user') {
   const { id, ...snapshot } = habit;
   await db.habitRevisions.add({ habitId: habit.id ?? id, ts: Date.now(), reason, source, snapshot });
 }
+
+// مدت‌های پیشنهادی برای کار (دقیقه)
+export const DURATIONS = [
+  { min: 30, label: '۳۰ دقیقه' },
+  { min: 60, label: 'یک ساعت' },
+  { min: 120, label: 'دو ساعت' },
+];

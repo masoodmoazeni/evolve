@@ -46,3 +46,12 @@ export function DataLossNote() {
     </Card>
   );
 }
+
+// خروج از صفحه‌های حریم/داده بدون بن‌بست: همیشه راهی به «امروز»
+export function BackToApp() {
+  return (
+    <Link className="btn s2" to="/today">
+      بازگشت به اپ
+    </Link>
+  );
+}

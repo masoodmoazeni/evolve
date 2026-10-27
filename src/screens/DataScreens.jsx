@@ -6,6 +6,7 @@ import { MOODS } from '../logic.js';
 import { faNum, fmtDateFull } from '../util.js';
 import { saveFile, stamp } from '../exportLogic.js';
 import { TABLE_LABELS, applyImport, parseBackup, previewImport } from '../importLogic.js';
+import { BackToApp } from './PrivacyNotes.jsx';
 import { buildReport, dailyCSV, habitsCSV, obstaclesCSV, skillsCSV } from '../reportLogic.js';
 
 const label = (n) => TABLE_LABELS[n] ?? n;
@@ -104,6 +105,7 @@ export function PrivacyImport() {
           </button>
         </>
       )}
+      <BackToApp />
     </Page>
   );
 }
@@ -235,6 +237,7 @@ export function PrivacyReport() {
         <button className="btn sm s2" onClick={() => save(`evolve-report-${stamp()}.json`, JSON.stringify(report, null, 2), 'application/json')}>گزارش کامل (JSON)</button>
       </Card>
       {msg && <p className="s" role="status">{msg}</p>}
+      <BackToApp />
     </Page>
   );
 }

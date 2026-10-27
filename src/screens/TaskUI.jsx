@@ -32,7 +32,7 @@ export function TaskRow({ task }) {
 
 function TaskText({ task, onEdit }) {
   const [open, setOpen] = useState(false);
-  const meta = [task.time && faNum(task.time), task.minutes && `${faNum(task.minutes)} دقیقه`].filter(Boolean).join(' · ');
+  const meta = [task.time && faNum(task.time), task.minutes && `${faNum(task.minutes)} دقیقه`, task.spent > 0 && `${faNum(task.spent)} دقیقه تمرکز`].filter(Boolean).join(' · ');
   return (
     <>
       <button className="txt" aria-label={`ویرایش «${task.title}»`} onClick={onEdit ?? (() => setOpen(true))}>
