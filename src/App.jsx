@@ -30,6 +30,7 @@ import { foldBank } from './game.js';
 import { GamePage, Howto } from './screens/Game.jsx';
 import { About } from './screens/About.jsx';
 import { PrivacyImport, PrivacyReport } from './screens/DataScreens.jsx';
+import { GermanPlan } from './screens/GermanPlan.jsx';
 import { CoachExport } from './screens/CoachExport.jsx';
 
 const ONBOARDING = ['/welcome', '/intro', '/personalize', '/setup'];
@@ -124,6 +125,7 @@ export default function App() {
           <Route path="/privacy/coach" element={<CoachExport />} />
           <Route path="/privacy/report" element={<PrivacyReport />} />
           <Route path="/game" element={<GamePage />} />
+          <Route path="/german" element={<GermanPlan />} />
           <Route path="/howto" element={<Howto />} />
           <Route path="/about" element={<About />} />
           <Route path="/privacy/delete" element={<PrivacyDelete />} />

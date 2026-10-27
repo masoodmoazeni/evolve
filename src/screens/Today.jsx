@@ -169,6 +169,7 @@ export function Today() {
           <MilestoneCard items={milestones} seen={seen} />
           <GameCard />
           <Intent today={today} />
+          <Link className="card teal" to="/german"><div className="row"><Icon name="book" /><span className="grow"><b>برنامهٔ آلمانی A1</b><span className="xs" style={{ display: 'block' }}>کدام درس، کدام روز</span></span><Icon name="chevl" /></div></Link>
       <DaySummary todays={todays} todayLogs={todayLogs} />
       <Link className="card teal" to="/focus">
         <div className="row"><Icon name="timer" /><span className="grow"><b>یک جلسهٔ تمرکز</b><span className="xs" style={{ display: 'block' }}>هر وقت آماده بودی شروع کن</span></span><Icon name="chevl" /></div>
