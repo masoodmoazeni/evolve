@@ -26,6 +26,18 @@ db.version(2).stores({
   goalMetrics: '++id,goalId,date,[goalId+dimension]',
 });
 
+// v3: کارهای تکراری و قالب روز (تعریف‌اند، پاک‌سازی نمی‌شوند) + ایندکس کارِ ساخته‌شده از تکرار
+db.version(3).stores({
+  tasks: '++id,date,recurId',
+  recurring: '++id,status',
+  dayTemplates: '++id',
+});
+
+// v4: خلاصهٔ ماهانهٔ عددی؛ کلید = ماه شمسی 'yyyy-mm' و در DATED_TABLES نیست
+db.version(4).stores({
+  monthSummaries: 'month',
+});
+
 // رکوردهای روزانه که پاک‌سازی روی آن‌ها اجرا می‌شود
 export const DATED_TABLES = ['habitLogs', 'goalLogs', 'tasks', 'focus', 'notes', 'moods', 'reviews'];
 
@@ -74,8 +86,12 @@ export async function prune(now = new Date()) {
   const count = await countPrunable(now);
   if (count > 0 && !(await getKV('pruneAck', false))) return { status: 'needs-ack', count };
 
+  // خلاصهٔ عددی ماه‌های تمام‌شده پیش از حذف رکوردها ساخته می‌شود
+  await (await import('./monthLogic.js')).rollupMonths(today).catch(() => {});
+
   const cutoff = cutoffFor(await getKV('retention', DEFAULT_RETENTION), today);
   await db.transaction('rw', [...DATED_TABLES, 'suggestions', 'kv'], async () => {
+    await db.kv.filter((r) => r.key.startsWith('weekPlan:') && r.key.slice(9) < cutoff).delete();
     for (const t of DATED_TABLES) await db[t].where('date').below(cutoff).delete();
     await db.suggestions.filter((s) => s.status !== 'pending' && !!s.date && s.date < cutoff).delete();
     await setKV('lastPrune', today);

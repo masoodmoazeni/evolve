@@ -168,6 +168,7 @@ export function Setup() {
   const finish = async (skip) => {
     setSaving(true);
     try {
+      await setKV('todayMode', 'simple');
       await setKV('profile', {
         name: skip ? '' : name.trim(),
         createdAt: Date.now(),

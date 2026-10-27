@@ -69,7 +69,7 @@ function Facts({ kind, dates, facts }) {
   );
 }
 
-const BLANK = { good: '', hard: '', tomorrow: '', intent: '', obstacles: [], realistic: '', learned: '', keep: '', stop: '', change: '', drafts: '' };
+const BLANK = { good: '', hard: '', tomorrow: '', intent: '', obstacles: [], realistic: '', learned: '', areaNote: '', keep: '', stop: '', change: '', drafts: '' };
 const pick = (r) => ({ ...BLANK, ...Object.fromEntries(Object.keys(BLANK).map((k) => [k, r[k] ?? BLANK[k]])) });
 
 function Review({ kind }) {
@@ -119,7 +119,7 @@ function Review({ kind }) {
       if (line && addTask && !(existing?.accepted ?? []).length) {
         accepted.push(await db.tasks.add({ title: line, date: nextDate, priority: false, done: false }));
       }
-      const text = Object.fromEntries(['good', 'hard', 'learned', 'keep', 'stop', 'change', 'drafts', 'realistic'].map((k) => [k, (v[k] ?? '').trim()]));
+      const text = Object.fromEntries(['good', 'hard', 'learned', 'areaNote', 'keep', 'stop', 'change', 'drafts', 'realistic'].map((k) => [k, (v[k] ?? '').trim()]));
       const rec = { kind, date, ...text, obstacles: v.obstacles, tomorrow: line, priority: kind === 'week' ? line : undefined, intent, accepted: [...(existing?.accepted ?? []), ...accepted], ts: Date.now() };
       if (existing) await db.reviews.update(existing.id, rec);
       else await db.reviews.add(rec);
@@ -141,6 +141,8 @@ function Review({ kind }) {
           <h2>مرور ثبت شد</h2>
           <p className="s">همین که نگاهی انداختی کافی است. هر وقت خواستی برگرد.</p>
         </Card>
+        {kind === 'day' && <Link className="btn s2" to="/review/tomorrow">ادامه: سه کار فردا (اختیاری)</Link>}
+        {kind === 'week' && <Link className="btn s2" to="/plan/week">ادامه: برنامهٔ هفتهٔ بعد (اختیاری)</Link>}
         <Link className="btn" to="/today">بازگشت به امروز</Link>
         <Link className="btn t" to="/insights">دیدن بینش‌ها</Link>
       </Page>
@@ -202,6 +204,7 @@ function Review({ kind }) {
           <Field label="ادامه بدهم"><input className="in" value={v.keep} onChange={set('keep')} /></Field>
           <Field label="متوقف کنم"><input className="in" value={v.stop} onChange={set('stop')} /></Field>
           <Field label="تغییر بدهم"><input className="in" value={v.change} onChange={set('change')} /></Field>
+          <Field label="کدام حوزهٔ زندگی کم‌توجهی ماند؟ (اختیاری)"><input className="in" value={v.areaNote} onChange={set('areaNote')} placeholder="مثلاً سلامت یا رابطه‌ها" /></Field>
         </>
       )}
       {cur.key === 'tomorrow' && (

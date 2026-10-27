@@ -4,9 +4,11 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../db.js';
 import { MAX_PRIORITIES } from '../data.js';
 import { Chip, Field, Sheet, Toggle, useToast } from '../ui.jsx';
+import { addInbox } from '../planLogic.js';
 import { canAddPriority, emptyHabit, toHabitRecord, validateHabit } from './habitLogic.js';
 
 const KINDS = [
+  { key: 'inbox', label: 'فقط بنویس' },
   { key: 'task', label: 'کار' },
   { key: 'habit', label: 'عادت' },
   { key: 'note', label: 'یادداشت' },
@@ -15,9 +17,10 @@ const KINDS = [
 export default function AddSheet({ today, onClose }) {
   const toast = useToast();
   const todays = useLiveQuery(() => db.tasks.where('date').equals(today).toArray(), [today], []);
-  const [kind, setKind] = useState('task');
+  const [kind, setKind] = useState('inbox');
   const [title, setTitle] = useState('');
   const [time, setTime] = useState('');
+  const [minutes, setMinutes] = useState('');
   const [priority, setPriority] = useState(false);
   const [amount, setAmount] = useState('');
   const [cue, setCue] = useState('');
@@ -27,9 +30,13 @@ export default function AddSheet({ today, onClose }) {
 
   async function save() {
     try {
-      if (kind === 'task') {
+      if (kind === 'inbox') {
+        const r = await addInbox(title);
+        if (!r) return setErr('چیزی بنویس تا در صندوق ورودی بماند.');
+        toast('به صندوق ورودی رفت', r.undo);
+      } else if (kind === 'task') {
         if (!title.trim()) return setErr('یک نام کوتاه برای کار بنویس.');
-        const id = await db.tasks.add({ title: title.trim(), date: today, time: time || null, minutes: null, priority: priority && room, goalId: null, done: false });
+        const id = await db.tasks.add({ title: title.trim(), date: today, time: time || null, minutes: Number(minutes) > 0 ? Math.round(Number(minutes)) : null, priority: priority && room, goalId: null, done: false });
         toast('کار اضافه شد', () => db.tasks.delete(id));
       } else if (kind === 'habit') {
         const form = { ...emptyHabit(), title, amount, cue };
@@ -67,7 +74,7 @@ export default function AddSheet({ today, onClose }) {
           <textarea className={`in${err ? ' e' : ''}`} value={text} onChange={(e) => setText(e.target.value)} />
         </Field>
       ) : (
-        <Field label={kind === 'task' ? 'نام کار' : 'نام عادت'} error={err}>
+        <Field label={kind === 'habit' ? 'نام عادت' : kind === 'inbox' ? 'هر چیزی که یادت آمد' : 'نام کار'} error={err}>
           <input className={`in${err ? ' e' : ''}`} value={title} onChange={(e) => setTitle(e.target.value)} />
         </Field>
       )}
@@ -75,6 +82,9 @@ export default function AddSheet({ today, onClose }) {
         <>
           <Field label="ساعت (اختیاری)">
             <TimeField value={time} onChange={setTime} label="ساعت" />
+          </Field>
+          <Field label="مدت (دقیقه، اختیاری)">
+            <input className="in" type="number" inputMode="numeric" min="0" value={minutes} onChange={(e) => setMinutes(e.target.value)} />
           </Field>
           <div className="row">
             <span className="grow s">اولویت امروز</span>

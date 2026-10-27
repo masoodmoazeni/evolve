@@ -4,6 +4,7 @@ import { db } from '../db.js';
 import { OUTCOME_LABEL, dailyMinutes, summarize } from '../focusLogic.js';
 import { Bars, Card, Empty, Page, Skeleton, Top } from '../ui.jsx';
 import { WEEKDAYS_SHORT, addDays, dateKey, faNum, fmtDate, weekdayIdx } from '../util.js';
+import { EstimateCard } from './InsightPlan.jsx';
 import './Focus.css';
 
 const NoSessions = () => (
@@ -57,6 +58,7 @@ export function FocusStats() {
             </div>
             <p className="xs">ستون نقطه‌چین یعنی در آن روز جلسه‌ای ثبت نشده؛ نه اینکه اتفاقی افتاده باشد.</p>
           </Card>
+          <EstimateCard focus={all} />
           <div className="g2">
             <Card><span className="xs">جمع دقیقه</span><h2>{faNum(s.minutes)}</h2></Card>
             <Card><span className="xs">جلسه</span><h2>{faNum(s.count)}</h2></Card>

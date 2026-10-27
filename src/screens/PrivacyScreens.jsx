@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { countPrunable, exportAll, prune, setPruneAck, useKV, wipeAll } from '../db.js';
-import { Page, Top, Card, Dialog, Field, Icon, Skeleton, useToast } from '../ui.jsx';
+import { countPrunable, exportAll, prune, setKV, setPruneAck, useKV, wipeAll } from '../db.js';
+import { Page, Top, Card, Dialog, Field, Icon, Skeleton, Toggle, useToast } from '../ui.jsx';
+import { dateKey } from '../util.js';
 import { faNum } from '../util.js';
 import { logsCSV, saveFile, stamp } from '../exportLogic.js';
 import { DataLossNote, LocalBadge, RetentionPolicy } from './PrivacyNotes.jsx';
@@ -13,11 +14,13 @@ export function Privacy() {
   const toast = useToast();
   const [ret] = useKV('retention', 60);
   const [ack] = useKV('pruneAck', false);
+  const [keepMonthly, setKeepMonthly] = useKV('keepMonthly', true);
   const count = useLiveQuery(() => countPrunable(), [], undefined);
-  if (ret === undefined || ack === undefined || count === undefined) return <Page tabs={false}><Top title="حریم خصوصی" back /><Skeleton /></Page>;
+  if (ret === undefined || ack === undefined || keepMonthly === undefined || count === undefined) return <Page tabs={false}><Top title="حریم خصوصی" back="/profile" /><Skeleton /></Page>;
   const exportNow = async () => {
     try {
       const where = await saveFile(`evolve-${stamp()}.json`, JSON.stringify(await exportAll(), null, 2), 'application/json');
+      await setKV('lastExport', dateKey());
       toast(where ? `خروجی ذخیره شد: ${where}` : 'خروجی آماده شد.');
     } catch {
       toast(SAVE_ERR);
@@ -30,13 +33,17 @@ export function Privacy() {
   };
   return (
     <Page tabs={false}>
-      <Top title="حریم خصوصی" back />
+      <Top title="حریم خصوصی" back="/profile" />
       <LocalBadge />
       <Card kind="mint">
         <Icon name="lock" />
         <p className="s">داده‌هایت فقط روی همین دستگاه می‌ماند؛ هیچ حساب، سرور یا ردیابی‌ای در کار نیست.</p>
       </Card>
       <RetentionPolicy days={ret} />
+      <Card>
+        <div className="row"><span className="grow">نگه‌داشتن خلاصهٔ ماهانهٔ عددی</span><Toggle on={keepMonthly} label="نگه‌داشتن خلاصهٔ ماهانهٔ عددی" onChange={setKeepMonthly} /></div>
+        <p className="xs">فقط عددهای هر ماه (مثل دقیقهٔ تمرکز) نگه داشته می‌شود؛ هیچ عنوان یا متنی نه.</p>
+      </Card>
       <DataLossNote />
       {!ack && count > 0 && (
         <Card kind="sand">
@@ -68,6 +75,7 @@ export function PrivacyExport() {
       let where;
       if (kind === 'json') where = await saveFile(`evolve-${stamp()}.json`, JSON.stringify(all, null, 2), 'application/json');
       else where = await saveFile(`evolve-logs-${stamp()}.csv`, logsCSV(all.tables), 'text/csv');
+      await setKV('lastExport', dateKey());
       setMsg(where ? `خروجی ذخیره شد: ${where}` : 'خروجی آماده شد و برگهٔ اشتراک‌گذاری باز شد.');
     } catch {
       setMsg(SAVE_ERR);
@@ -76,7 +84,7 @@ export function PrivacyExport() {
   };
   return (
     <Page tabs={false}>
-      <Top title="خروجی داده‌ها" back />
+      <Top title="خروجی داده‌ها" back="/privacy" />
       <LocalBadge />
       <p className="s">خروجی فایل است و فقط تو به آن دسترسی داری. آن را جای امنی نگه دار.</p>
       <Card>
@@ -114,7 +122,7 @@ export function PrivacyDelete() {
   };
   return (
     <Page tabs={false}>
-      <Top title="حذف همهٔ داده‌ها" back />
+      <Top title="حذف همهٔ داده‌ها" back="/privacy" />
       <Card kind="sand">
         <h3>این کار برگشت‌پذیر نیست</h3>
         <p className="s">هدف‌ها، عادت‌ها، ثبت‌ها، یادداشت‌ها و تنظیمات از این دستگاه پاک می‌شود. پیشنهاد می‌کنیم اول خروجی بگیری.</p>

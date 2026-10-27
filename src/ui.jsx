@@ -18,6 +18,7 @@ const ICONS = {
   spark: 'M12 3l2 6 6 2-6 2-2 6-2-6-6-2 6-2z',
   lock: 'M5 11h14v10H5zM8 11V8a4 4 0 018 0v3',
   more: 'M5 12h.01M12 12h.01M19 12h.01',
+  edit: 'M4 20h4L19 9l-4-4L4 16zM14 6l4 4',
 };
 
 export function Icon({ name, size }) {

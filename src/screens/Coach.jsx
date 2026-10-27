@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { db, useKV } from '../db.js';
+import { db, getKV, useKV } from '../db.js';
 import { Page, Top, Card, Empty, Sheet, Skeleton, Toggle, useToast } from '../ui.jsx';
 import { addDays, dateKey, weekStart } from '../util.js';
 import { buildCoach, DEFAULT_ACCESS } from '../coachLogic.js';
@@ -39,16 +39,19 @@ export function Coach() {
 
   const data = useLiveQuery(async () => {
     const wk = weekStart(today);
-    const [habits, habitLogs, tasksTomorrow, focus, moods, notesCount, suggestions] = await Promise.all([
+    const [habits, habitLogs, tasksTomorrow, focus, focusAll, moods, notesCount, suggestions, dayPlan, rest] = await Promise.all([
       db.habits.toArray(),
       db.habitLogs.where('date').between(addDays(today, -30), today, true, true).toArray(),
       db.tasks.where('date').equals(addDays(today, 1)).toArray(),
       db.focus.where('date').between(wk, today, true, true).toArray(),
+      db.focus.toArray(),
       db.moods.where('date').between(wk, today, true, true).toArray(),
       db.notes.count(),
       db.suggestions.toArray(),
+      getKV('dayPlan', null),
+      getKV('rest', []),
     ]);
-    return { habits, habitLogs, tasksTomorrow, focus, moods, notesCount, suggestions };
+    return { habits, habitLogs, tasksTomorrow, focus, focusAll, moods, notesCount, suggestions, dayPlan, rest };
   }, [today]);
 
   if (!data || access === undefined) return <Page><Top title="مربی" back /><Skeleton /></Page>;

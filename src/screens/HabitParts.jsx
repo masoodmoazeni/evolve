@@ -1,3 +1,4 @@
+import { ifThenSentence } from '../ifThenLogic.js';
 import { useState } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db, useKV } from '../db.js';
@@ -61,7 +62,7 @@ export function HabitLogSheet({ habit, date, onClose }) {
         {fmtDate(date, true)}
         {habitSub(habit) ? ` · ${habitSub(habit)}` : ''}
       </p>
-      {habit.cue && <p className="xs">نشانهٔ شروع: {habit.cue}</p>}
+      {ifThenSentence(habit) && <p className="xs">{ifThenSentence(habit)}</p>}
       {existing && (
         <p className="xs">
           ثبت فعلی: {STATUS_LABEL[existing.status]}

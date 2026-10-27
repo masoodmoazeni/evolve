@@ -22,6 +22,11 @@ export async function applySuggestion(s, today) {
     undo = await patchHabit(s.habitId, { amount: s.to }, 'کاهش مقدار (پیشنهاد مربی)');
   } else if (s.kind === 'habit') {
     undo = await patchHabit(s.habitId, s.patch, s.change ?? s.rule);
+  } else if (s.kind === 'task') {
+    const cur = await db.tasks.get(s.taskId);
+    if (cur) await db.tasks.update(s.taskId, s.patch);
+    const prevPatch = cur ? Object.fromEntries(Object.keys(s.patch).map((k) => [k, cur[k] ?? null])) : null;
+    undo = () => (prevPatch ? db.tasks.update(s.taskId, prevPatch) : null);
   } else {
     const prev = s.moving.map((t) => ({ id: t.id, date: t.date }));
     await Promise.all(prev.map((t) => db.tasks.update(t.id, { date: 'someday' })));

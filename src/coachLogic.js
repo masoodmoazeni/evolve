@@ -1,6 +1,7 @@
 import { addDays, faNum } from './util.js';
 import { weekDates } from './logic.js';
 import { HABIT_RULES } from './coachRules.js';
+import { PLAN_RULES, overloadSuggestion } from './coachPlanRules.js';
 
 export const TONES = ['gentle', 'balanced', 'direct'];
 export const DEFAULT_ACCESS = { habits: true, focus: true, mood: true, notes: false };
@@ -52,6 +53,9 @@ export function describeSuggestion(s, tone) {
       after: [`${s.title}: ${faNum(s.to)} دقیقه`],
     };
   }
+  if (s.kind === 'task') {
+    return { ...s, text: `${say(tone, { gentle: 'شاید خوب باشد که ', balanced: 'پیشنهاد: ', direct: 'پیشنهاد: ' })}${s.change}` };
+  }
   if (s.kind === 'habit') {
     const lead = say(tone, { gentle: 'شاید خوب باشد که ', balanced: 'پیشنهاد: ', direct: 'پیشنهاد: ' });
     return { ...s, text: `${lead}${s.change}` };
@@ -94,13 +98,14 @@ export function weeklyFacts({ habitLogs, focus, moods, notesCount, access, today
   return facts;
 }
 
-export function buildCoach({ habits, habitLogs, tasksTomorrow, focus, moods, notesCount = 0, suggestions, access = DEFAULT_ACCESS, tone = 'balanced', today }) {
+export function buildCoach({ habits, habitLogs, tasksTomorrow, focus, focusAll = focus, dayPlan, rest = [], moods, notesCount = 0, suggestions, access = DEFAULT_ACCESS, tone = 'balanced', today }) {
   const acc = { ...DEFAULT_ACCESS, ...access };
   const facts = weeklyFacts({ habitLogs, focus, moods, notesCount, access: acc, today });
   const seen = new Set(suggestions.filter((s) => s.status === 'rejected' || s.status === 'accepted').map((s) => s.ukey));
-  const ctx = { habits, habitLogs, tasksTomorrow, today, history: suggestions };
+  const ctx = { habits, habitLogs, tasksTomorrow, focusAll, today, history: suggestions };
   // قانون‌ها به‌ترتیب اولویت؛ برای هر عادت فقط یک پیشنهاد (اولین) نگه داشته می‌شود
-  const raw = acc.habits ? [...HABIT_RULES.flatMap((r) => r.run(ctx)), ...reduceHabitRule(habits, habitLogs), ...lightenRule(tasksTomorrow, addDays(today, 1))] : [];
+  const raw = acc.habits ? [...HABIT_RULES.flatMap((r) => r.run(ctx)), ...reduceHabitRule(habits, habitLogs), ...(lightenRule(tasksTomorrow, addDays(today, 1)).length ? lightenRule(tasksTomorrow, addDays(today, 1)) : overloadSuggestion(tasksTomorrow, dayPlan, rest, addDays(today, 1)))] : [];
+  if (acc.focus) raw.push(...PLAN_RULES.flatMap((r) => r.run(ctx)));
   const taken = new Set();
   const list = raw
     .filter((s) => !seen.has(s.ukey))
@@ -114,6 +119,7 @@ export function buildCoach({ habits, habitLogs, tasksTomorrow, focus, moods, not
   const interpretation = [];
   if (list.some((s) => s.kind === 'reduce')) interpretation.push('در ثبت‌های اخیر، بعضی عادت‌ها نیمه‌کاره یا عمداً ردشده‌اند؛ شاید مقدارشان کمی سنگین باشد. این فقط یک برداشت است و قطعی نیست.');
   if (list.some((s) => s.kind === 'habit')) interpretation.push('در ثبت‌هایت الگویی دیده می‌شود که شاید با یک تغییر کوچک در برنامه سبک‌تر شود. فقط یک حدس از روی داده است و تصمیم با خودت.');
+  if (list.some((s) => s.kind === 'task')) interpretation.push('از ثبت‌های تمرکزت یک الگو دیده می‌شود که شاید برنامه‌ریزی را دقیق‌تر کند. این فقط یک برداشت است، نه قطعی.');
   if (list.some((s) => s.kind === 'lighten')) interpretation.push('برنامهٔ فردا فشرده به نظر می‌رسد. ممکن است سبک‌کردنش کمک کند؛ قطعی نیست.');
   if (facts.length && !interpretation.length) interpretation.push('الگوی خاصی که نیاز به تغییر باشد دیده نمی‌شود. ثبت‌هایت همین‌طور ادامه پیدا کند خوب است.');
   return { enough: facts.length > 0 || list.length > 0, facts, interpretation, suggestions: list };

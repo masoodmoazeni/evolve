@@ -5,6 +5,9 @@ import { db } from '../db.js';
 import { Card, Empty, Fab, Page, Skeleton, Top, useToast } from '../ui.jsx';
 import { dateKey, faNum, fmtDate } from '../util.js';
 import { TaskList, TaskSheet } from './TaskUI.jsx';
+import { CapacityBar, TemplatesSheet } from './PlanParts.jsx';
+import { Chip } from '../ui.jsx';
+import { FILTERS, matchesFilter } from '../priorityLogic.js';
 import './Plan.css';
 
 export { Calendar, CalendarDay, CalendarWeek } from './CalendarViews.jsx';
@@ -12,6 +15,8 @@ export { Calendar, CalendarDay, CalendarWeek } from './CalendarViews.jsx';
 export function Plan() {
   const today = dateKey();
   const [adding, setAdding] = useState(false);
+  const [tpl, setTpl] = useState(false);
+  const [filter, setFilter] = useState('all');
   const tasks = useLiveQuery(() => db.tasks.where('date').equals(today).toArray(), [today]);
   const leftover = useLiveQuery(() => db.tasks.where('date').below(today).filter((t) => !t.done).count(), [today]);
   if (!tasks) return <Page><Top title="برنامهٔ امروز" /><Skeleton /></Page>;
@@ -27,15 +32,24 @@ export function Plan() {
           <Link className="btn s2 sm" to="/plan/review">بازبینی کارها</Link>
         </Card>
       )}
+      <CapacityBar tasks={tasks} date={today} />
+      <div className="chips" role="group" aria-label="فیلتر کارها">
+        {FILTERS.map((f) => <Chip key={f.key} on={filter === f.key} onClick={() => setFilter(f.key)}>{f.label}</Chip>)}
+      </div>
       {tasks.length === 0 ? (
         <Empty title="برنامهٔ امروز خالی است" text="یک یا دو کار کوچک اضافه کن؛ لازم نیست همه‌چیز را بنویسی." />
       ) : (
-        <TaskList tasks={[...tasks].sort((a, b) => (a.time || '99').localeCompare(b.time || '99'))} />
+        <TaskList tasks={[...tasks].filter((t) => matchesFilter(t, filter, today)).sort((a, b) => (a.time || '99').localeCompare(b.time || '99'))} />
       )}
       <div className="g2">
         <Link className="btn s2 sm" to="/calendar">تقویم</Link>
         <Link className="btn s2 sm" to="/calendar/week">نمای هفته</Link>
+        <button className="btn s2 sm" onClick={() => setTpl(true)}>قالب‌ها</button>
+        <Link className="btn s2 sm" to="/plan/recurring">کارهای تکراری</Link>
+        <Link className="btn s2 sm" to="/plan/inbox">صندوق ورودی</Link>
+        <Link className="btn s2 sm" to="/plan/week">برنامهٔ هفتگی</Link>
       </div>
+      {tpl && <TemplatesSheet date={today} onClose={() => setTpl(false)} />}
       <Fab label="افزودن کار" onClick={() => setAdding(true)} />
       {adding && <TaskSheet date={today} onClose={() => setAdding(false)} />}
     </Page>

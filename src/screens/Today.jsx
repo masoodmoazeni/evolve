@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { db, useKV } from '../db.js';
+import { db, getKV, useKV } from '../db.js';
 import { habitsForDate, MOODS, weekDates } from '../logic.js';
 import { addDays, dateKey, faNum, fmtDate, WEEKDAYS_SHORT } from '../util.js';
 import { Bars, Card, Ck, Empty, Fab, Field, Icon, Page, Skeleton, STATUS_LABEL, Top } from '../ui.jsx';
@@ -15,6 +15,12 @@ import { DaySummary, HardDay, MilestoneCard, NextAction, RecoveryCard, nextActio
 import { setHabitLog } from '../data.js';
 import { GameCard } from './Game.jsx';
 import { TaskRow } from './TaskUI.jsx';
+import { ifThenSentence } from '../ifThenLogic.js';
+import { inboxItems } from '../planLogic.js';
+import { BackupNudge, RestCards, WeekOutcomesCard } from './TodayPlan.jsx';
+import { CapacityBar } from './PlanParts.jsx';
+import { generateRecurring } from '../recurLogic.js';
+import { weekCount } from '../logic.js';
 import './Today.css';
 
 function Intent({ today }) {
@@ -59,6 +65,11 @@ export function Today() {
   const [recovDismissed] = useKV(`recoveryDismiss:${today}`, false);
   const moods = useLiveQuery(() => db.moods.where('date').equals(today).toArray(), [today], undefined);
   const pending = useLiveQuery(() => db.suggestions.where('status').equals('pending').first().then((s) => s ?? null), [], undefined);
+  const [mode] = useKV('todayMode', 'full');
+  const [rest] = useKV('rest', []);
+  useEffect(() => { getKV('rest', []).then((r) => generateRecurring(today, 1, r ?? [])).catch(() => {}); }, [today]);
+  const inboxRows = useLiveQuery(() => db.tasks.where('date').equals('someday').toArray(), [], undefined);
+  const [more, setMore] = useState(false);
   const [sheet, setSheet] = useState(null);
   const [adding, setAdding] = useState(false);
 
@@ -66,11 +77,11 @@ export function Today() {
   const head = (
     <Top title={`${greeting(new Date().getHours())}${name ? `، ${name}` : ''}`} right={<><Link className="ib bg" to="/profile" aria-label="پروفایل"><Icon name="user" /></Link></>} />
   );
-  if (!habits || !tasks || !logs14 || !moods || !focusRows || !history || seen === undefined || recovDismissed === undefined || pending === undefined) return <Page>{head}<Skeleton rows={4} /></Page>;
+  if (!habits || !tasks || !logs14 || !moods || !focusRows || !history || seen === undefined || recovDismissed === undefined || mode === undefined || rest === undefined || !inboxRows || pending === undefined) return <Page>{head}<Skeleton rows={4} /></Page>;
 
   const weekLogs = logs14.filter((l) => l.date >= week[0] && l.date <= week[6]);
   const active = habits.filter((h) => h.status !== 'archived');
-  const todays = habitsForDate(active, today);
+  const todays = habitsForDate(active, today, rest);
   const todayLogs = new Map(weekLogs.filter((l) => l.date === today).map((l) => [l.habitId, l]));
   const { priorities, others } = splitTasks(tasks);
   const doneCount = weekLogs.filter((l) => l.status === 'done').length;
@@ -80,11 +91,14 @@ export function Today() {
   const logged = new Set(todayLogs.keys());
   const next = nextAction(todays, logged, tasks);
   const hardDay = moods[0] && (['tired', 'hard'].includes(moods[0].mood) || (moods[0].energy != null && moods[0].energy < 40));
-  const recov = recovDismissed ? null : recoveryState({ habits: active, habitLogs: logs14, today });
+  const recov = recovDismissed ? null : recoveryState({ habits: active, habitLogs: logs14, today, rest });
   const recovSuggestion = recov
     ? buildCoach({ habits: active, habitLogs: logs14, tasksTomorrow: [], focus: [], moods: [], suggestions: history, today }).suggestions.find((x) => x.habitId === recov.habit.id)
     : null;
   const nextHabit = todays.find((h) => !logged.has(h.id) && h.id !== recov?.habit.id);
+  const simple = mode === 'simple';
+  const byId = new Map(habits.map((h) => [h.id, h]));
+  const inboxCount = inboxItems(inboxRows).length;
   const milestones = computeMilestones({ habitLogs: logs14, focus: focusRows, today, seen });
   const logMinimum = async (h) => {
     const m = Number(h.minVersion);
@@ -107,12 +121,13 @@ export function Today() {
           }
         />
       )}
-      <MilestoneCard items={milestones} seen={seen} />
+      <RestCards today={today} rest={rest} />
+      <BackupNudge today={today} />
       {recov && <RecoveryCard state={recov} suggestion={recovSuggestion} nextHabit={nextHabit} today={today} onMinimum={logMinimum} onResume={(h) => setSheet({ habit: h, date: today })} />}
-      <GameCard />
-      <Intent today={today} />
-      <NextAction next={next} remaining={remainingMinutes(todays, logged)} onHabit={(h) => setSheet({ habit: h, date: today })} />
+      <NextAction next={next} remaining={remainingMinutes(todays, logged)} onHabit={(h) => setSheet({ habit: h, date: today })} byId={byId} />
       {hardDay && <HardDay todays={todays} logged={logged} today={today} />}
+      <CapacityBar tasks={tasks} date={today} />
+      <WeekOutcomesCard today={today} />
       <Card>
         <div className="row"><span className="lbl grow">اولویت‌های امروز</span><span className="xs">حداکثر ۳</span></div>
         {priorities.length === 0 ? <p className="s">هنوز اولویتی نگذاشته‌ای؛ با دکمهٔ + یکی اضافه کن.</p> : <div>{priorities.map((t) => <TaskRow key={t.id} task={t} />)}</div>}
@@ -136,15 +151,24 @@ export function Today() {
                   <Ck status={st} />
                   <span className="grow">
                     {h.title}
-                    {h.cue && <span className="xs" style={{ display: 'block' }}>{h.cue}</span>}
+                    {ifThenSentence(h, byId) && <span className="xs" style={{ display: 'block' }}>{ifThenSentence(h, byId)}</span>}
                   </span>
-                  {h.amount ? <span className="xs">{faNum(h.amount)} دقیقه</span> : null}
+                  {h.weeklyTarget > 0 ? <span className="xs">{weekCount(h.id, weekLogs, week[0]) >= h.weeklyTarget ? 'این هفته کامل' : `${faNum(weekCount(h.id, weekLogs, week[0]))} از ${faNum(h.weeklyTarget)} در این هفته`}</span> : h.amount ? <span className="xs">{faNum(h.amount)} دقیقه</span> : null}
                 </button>
               );
             })}
           </div>
         )}
       </Card>
+      {inboxCount > 0 && <Link className="chip out" to="/plan/inbox">صندوق ورودی · {faNum(inboxCount)}</Link>}
+      {simple && (
+        <button className="lnk" aria-expanded={more} onClick={() => setMore(!more)}>{more ? 'کمتر ˄' : 'بیشتر ˅'}</button>
+      )}
+      {(!simple || more) && (
+        <>
+          <MilestoneCard items={milestones} seen={seen} />
+          <GameCard />
+          <Intent today={today} />
       <DaySummary todays={todays} todayLogs={todayLogs} />
       <Link className="card teal" to="/focus">
         <div className="row"><Icon name="timer" /><span className="grow"><b>یک جلسهٔ تمرکز</b><span className="xs" style={{ display: 'block' }}>هر وقت آماده بودی شروع کن</span></span><Icon name="chevl" /></div>
@@ -173,6 +197,8 @@ export function Today() {
           <span className="ai-tag">پیشنهاد مربی · اعمال نشده</span>
           <p className="s">{pending.text || pending.title || 'یک پیشنهاد برای دیدن آماده است.'}</p>
         </Link>
+      )}
+        </>
       )}
       <Fab label="افزودن سریع" onClick={() => setAdding(true)} />
       {sheet && <HabitLogSheet {...sheet} onClose={() => setSheet(null)} />}

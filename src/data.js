@@ -27,3 +27,20 @@ export async function recordRevision(habit, reason, source = 'user') {
   const { id, ...snapshot } = habit;
   await db.habitRevisions.add({ habitId: habit.id ?? id, ts: Date.now(), reason, source, snapshot });
 }
+
+// انرژی کار؛ تعداد خط نشان = وزن
+export const EFFORT = [
+  { key: 'heavy', label: 'سنگین', weight: 3 },
+  { key: 'medium', label: 'متوسط', weight: 2 },
+  { key: 'light', label: 'سبک', weight: 1 },
+];
+
+// حوزه‌های زندگی (اختیاری)
+export const AREAS = [
+  { key: 'health', label: 'سلامت' },
+  { key: 'learning', label: 'یادگیری' },
+  { key: 'work', label: 'کار' },
+  { key: 'people', label: 'رابطه‌ها' },
+  { key: 'money', label: 'مالی' },
+  { key: 'self', label: 'خودمراقبتی' },
+];

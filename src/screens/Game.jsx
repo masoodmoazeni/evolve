@@ -26,7 +26,7 @@ export function GameCard() {
   const l = g.level;
   return (
     <Card kind="mint">
-      <div className="row"><strong className="grow">سطح {faNum(l.level)} · {l.name}</strong><span className="xs">{faNum(l.into)} از {faNum(l.need)} امتیاز</span></div>
+      <div className="row"><strong className="grow">مرحلهٔ رشد {faNum(l.level)} · {l.name}</strong><span className="xs">{faNum(l.into)} از {faNum(l.need)} امتیاز</span></div>
       <Bar ratio={l.ratio} />
       <span className="lbl">ماموریت‌های امروز</span>
       <Quests g={g} />
@@ -47,9 +47,9 @@ export function GamePage() {
       <Link className="lnk" to="/howto">امتیاز چطور گرفته می‌شود؟ (نحوهٔ کار)</Link>
       {!cfg.enabled && <Card kind="sand"><p className="s">بازی‌وارسازی خاموش است. داده‌هایت نگه داشته شده و هر وقت روشنش کنی ادامه می‌دهد.</p></Card>}
       <Card kind="mint">
-        <div className="row"><h2 className="grow">سطح {faNum(l.level)} · {l.name}</h2><strong>{faNum(l.xp)}</strong></div>
+        <div className="row"><h2 className="grow">مرحلهٔ رشد {faNum(l.level)} · {l.name}</h2><strong>{faNum(l.xp)}</strong></div>
         <Bar ratio={l.ratio} />
-        <p className="xs">{faNum(l.need - l.into)} امتیاز تا سطح بعد. امتیاز هیچ‌وقت کم نمی‌شود.</p>
+        <p className="xs">{faNum(l.need - l.into)} امتیاز تا مرحلهٔ بعد. امتیاز هیچ‌وقت کم نمی‌شود.</p>
       </Card>
       <Card>
         <span className="lbl">ماموریت‌های امروز</span>
@@ -68,7 +68,7 @@ export function GamePage() {
         <p className="xs">{faNum(Math.round(c.done / 6) / 10)} ساعت از {faNum(Math.round(c.target / 6) / 10)} ساعت</p>
       </Card>
       <Card>
-        <span className="lbl">زنجیرهٔ مهربان</span>
+        <span className="lbl">روزهای فعال</span>
         <p className="s">{faNum(g.active7)} از ۷ روز اخیر فعال بودی. روز بدون فعالیت چیزی را از بین نمی‌برد.</p>
       </Card>
       <Card>
@@ -103,7 +103,6 @@ const STEPS = [
 const POINTS = [
   ['شروع جلسهٔ تمرکز', '۳ امتیاز برای هر جلسه‌ای که ثبت کنی، حتی کوتاه'],
   ['تمرکز', 'هر ۵ دقیقه ۲ امتیاز (تا سقف روزانه، پیش‌فرض ۴ ساعت)'],
-  ['زنجیرهٔ جلسه‌ها', 'جلسهٔ دوم روز (حداقل ۱۵ دقیقه) ×۱٫۲، سوم ×۱٫۳ و چهارم به بعد ×۱٫۵ امتیاز تمرکز'],
   ['کار انجام‌شده', '۱۰ امتیاز'],
   ['عادت انجام‌شده یا نیمه‌کاره', '۵ امتیاز (ردشده امتیاز ندارد ولی چیزی هم کم نمی‌کند)'],
   ['یادداشت', '۳ امتیاز'],
@@ -124,12 +123,12 @@ export function Howto() {
         {POINTS.map(([t, x]) => <div className="row" key={t}><strong>{t}</strong><span className="s grow" style={{ textAlign: 'left' }}>{x}</span></div>)}
       </Card>
       <Card>
-        <h3>سطح‌ها</h3>
-        <p className="s">{LEVEL_NAMES.join(' ← ')}. سطح ۲ با ۱۰۰ امتیاز، سطح ۳ با ۳۰۰، سطح ۴ با ۶۰۰ و همین‌طور بالاتر. امتیاز فقط زیاد می‌شود.</p>
+        <h3>مرحله‌های رشد</h3>
+        <p className="s">{LEVEL_NAMES.join(' ← ')}. مرحلهٔ ۲ با ۱۰۰ امتیاز، مرحلهٔ ۳ با ۳۰۰، مرحلهٔ ۴ با ۶۰۰ و همین‌طور بالاتر. امتیاز فقط زیاد می‌شود.</p>
       </Card>
       <Card>
-        <h3>ماموریت‌ها، روز سبک و زنجیره</h3>
-        <p className="s">هر روز سه ماموریت: ۲۰ دقیقه تمرکز، یک کار تمام‌شده، و یک عادت یا یادداشت. روز کم‌انرژی را با «روز سبک» به یک ماموریت کوچک کاهش بده. به‌جای زنجیرهٔ شکننده، «x از ۷ روز اخیر فعال» نشان داده می‌شود.</p>
+        <h3>ماموریت‌ها و روز سبک</h3>
+        <p className="s">هر روز سه ماموریت: ۲۰ دقیقه تمرکز، یک کار تمام‌شده، و یک عادت یا یادداشت. روز کم‌انرژی را با «روز سبک» به یک ماموریت کوچک کاهش بده. بدون رگه، «x از ۷ روز اخیر فعال» نشان داده می‌شود.</p>
       </Card>
       <Card>
         <h3>نشان‌ها و چالش هفته</h3>
@@ -144,7 +143,7 @@ export function Howto() {
         <h3>برنامه‌ریزی و بازتاب</h3>
         <p className="s">هدف‌ها مسیر بلندمدت‌اند، عادت‌ها گام‌های تکرارشونده، تقویم برنامهٔ روز و هفته، بینش‌ها توصیف داده‌های خودت، و مربی پیشنهادهای قانون‌محور می‌دهد که فقط با تأیید خودت اعمال می‌شوند.</p>
       </Card>
-      <Link className="btn" to="/game">دیدن سطح و نشان‌ها</Link>
+      <Link className="btn" to="/game">دیدن مرحلهٔ رشد و نشان‌ها</Link>
     </Page>
   );
 }

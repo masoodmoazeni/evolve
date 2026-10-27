@@ -2,6 +2,7 @@ export const GOAL_TYPES = {
   daily: { label: 'روزانه', hint: 'هر روز یک قدم' },
   weekly: { label: 'هفتگی', hint: 'چند بار در هفته' },
   milestones: { label: 'نقطه‌عطف‌محور', hint: 'مجموعه‌ای از مراحل' },
+  okr: { label: 'نتیجه‌محور', hint: 'یک تا سه نتیجهٔ کلیدی قابل‌اندازه‌گیری' },
 };
 
 // اعتبارسنجی فرم هدف؛ خروجی: شیء خطاها (خالی = معتبر)
@@ -47,6 +48,8 @@ export function buildGoal(f) {
       f.type === 'milestones'
         ? f.milestones.filter((m) => m.title.trim()).map((m) => ({ ...m, title: m.title.trim() }))
         : [],
+    area: f.area || null,
+    keyResults: f.keyResults ?? [],
     status: f.status || 'active',
   };
 }

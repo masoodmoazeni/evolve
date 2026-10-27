@@ -33,3 +33,10 @@ export async function addHabitExample(ex) {
   const id = await db.habits.add({ ...toHabitRecord(f, null), example: true });
   return id;
 }
+
+// نمونه‌های «وقتی … آنگاه …» برای فرم عادت
+export const IF_THEN_EXAMPLES = [
+  { when: 'قهوه‌ام را ریختم', then: 'دو دقیقه مطالعه می‌کنم' },
+  { when: 'نشستم سر میز کار', then: 'اول مهم‌ترین کار را باز می‌کنم' },
+  { when: 'مسواک شب را زدم', then: 'یک صفحه می‌نویسم' },
+];

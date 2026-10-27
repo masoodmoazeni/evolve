@@ -1,3 +1,4 @@
+import { ifThenSentence } from '../ifThenLogic.js';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { db, setKV } from '../db.js';
@@ -19,7 +20,7 @@ export function nextAction(todays, logged, tasks) {
   return task ? { kind: 'task', task } : null;
 }
 
-export function NextAction({ next, remaining, onHabit }) {
+export function NextAction({ next, remaining, onHabit, byId }) {
   if (!next) return null;
   return (
     <Card kind="mint">
@@ -27,7 +28,7 @@ export function NextAction({ next, remaining, onHabit }) {
       {next.kind === 'habit' ? (
         <>
           <h3>{next.habit.title}</h3>
-          {next.habit.cue && <p className="s">نشانه: {next.habit.cue}</p>}
+          {ifThenSentence(next.habit, byId) && <p className="s">{ifThenSentence(next.habit, byId)}</p>}
           <button className="btn sm" onClick={() => onHabit(next.habit)}>ثبت همین حالا</button>
         </>
       ) : (

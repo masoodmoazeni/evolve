@@ -1,16 +1,18 @@
 import ExamplePicker from '../ExamplePicker.jsx';
-import { HABIT_EXAMPLES, addHabitExample } from '../examples.js';
+import { HABIT_EXAMPLES, IF_THEN_EXAMPLES, addHabitExample } from '../examples.js';
 import TimeField from '../TimeField.jsx';
 import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../db.js';
 import { recordRevision } from '../data.js';
+import { ifThenSentence } from '../ifThenLogic.js';
 import { habitsForDate } from '../logic.js';
 import { addDays, dateKey, faNum, fmtDate, WEEKDAYS, WEEKDAYS_SHORT } from '../util.js';
 import { Bars, Chip, Ck, Dialog, Empty, Fab, Field, Page, Select, Skeleton, STATUS_LABEL, Top, useToast, Card } from '../ui.jsx';
 import { TIME_OF_DAY, barValues, changedFields, emptyHabit, habitToForm, hasExtras, lastDays, splitCounts, toHabitRecord, validateHabit } from './habitLogic.js';
 import { DifficultyChips, HabitLogSheet, ListEditor, PrepChecklist, Revisions, habitSub } from './HabitParts.jsx';
+import { AreaChips } from './GoalKeyResults.jsx';
 import './Habits.css';
 
 export { HabitLogSheet };
@@ -92,6 +94,7 @@ function HabitFormInner({ initial, prev }) {
   const nav = useNavigate();
   const toast = useToast();
   const goals = useLiveQuery(() => db.goals.where('status').equals('active').toArray(), [], []);
+  const anchors = (useLiveQuery(() => db.habits.toArray(), [], []) ?? []).filter((h) => h.id !== prev?.id && !h.paused && h.status !== 'archived');
   const [f, setF] = useState(initial);
   const [err, setErr] = useState({});
   const [more, setMore] = useState(hasExtras(initial));
@@ -142,6 +145,14 @@ function HabitFormInner({ initial, prev }) {
         {err.days && <span className="err">{err.days}</span>}
       </div>
       <div className="col">
+        <span className="lbl">دفعات</span>
+        <div className="chips" role="group" aria-label="دفعات">
+          <Chip on={!f.weeklyTarget} onClick={() => set('weeklyTarget', '')}>روزهای ثابت</Chip>
+          {[2, 3, 4, 5].map((n) => <Chip key={n} on={Number(f.weeklyTarget) === n} onClick={() => set('weeklyTarget', String(n))}>{faNum(n)} بار در هفته</Chip>)}
+        </div>
+        {f.weeklyTarget && <span className="xs">هر روز که شد؛ بعد از {faNum(f.weeklyTarget)} بار، «این هفته کامل» نشان داده می‌شود. روزِ ثبت‌نشده غایب حساب نمی‌شود.</span>}
+      </div>
+      <div className="col">
         <span className="lbl">زمان روز</span>
         <div className="chips" role="group" aria-label="زمان روز">
           {TIME_OF_DAY.map((t) => (
@@ -159,9 +170,20 @@ function HabitFormInner({ initial, prev }) {
       </button>
       {more && (
         <div className="col hb-more">
-          <Field label="نشانهٔ شروع؛ بعد از چه کاری؟ (اختیاری)">
-            <input className="in" value={f.cue} placeholder="مثلاً بعد از صبحانه" onChange={(e) => set('cue', e.target.value)} />
+          <Field label="وقتی … (نشانهٔ شروع، اختیاری)">
+            <input className="in" value={f.cue} placeholder="مثلاً قهوه‌ام را ریختم" onChange={(e) => set('cue', e.target.value)} />
           </Field>
+          <Field label="آنگاه … (اختیاری)" error={err.thenDo}>
+            <input className={`in${err.thenDo ? ' e' : ''}`} value={f.thenDo} placeholder="مثلاً دو دقیقه مطالعه می‌کنم" onChange={(e) => set('thenDo', e.target.value)} />
+          </Field>
+          <Field label="یا بعد از این عادت (اختیاری)">
+            <Select label="عادت لنگر" value={f.afterHabitId} onChange={(v) => set('afterHabitId', String(v))} options={[{ value: '', label: 'بدون لنگر' }, ...anchors.map((h) => ({ value: String(h.id), label: h.title }))]} />
+          </Field>
+          <Card kind="ai">
+            <span className="ai-tag">راهنما</span>
+            <p className="xs">«وقتی … آنگاه …» احتمال شروع را بالا می‌برد. نمونه‌ها:</p>
+            <div className="chips">{IF_THEN_EXAMPLES.map((x) => <Chip key={x.when} onClick={() => setF({ ...f, cue: x.when, thenDo: x.then })}>{x.when}</Chip>)}</div>
+          </Card>
           <Field label="نسخهٔ چالشی (دقیقه، اختیاری)" error={err.challengeMin}>
             <input className={`in${err.challengeMin ? ' e' : ''}`} type="number" inputMode="numeric" min="0" value={f.challengeMin} onChange={(e) => set('challengeMin', e.target.value)} />
           </Field>
@@ -170,6 +192,7 @@ function HabitFormInner({ initial, prev }) {
           <ListEditor label="موانع احتمالی" items={f.obstaclesNote} onChange={(v) => set('obstaclesNote', v)} placeholder="مثلاً خستگی بعد از کار" />
         </div>
       )}
+      <AreaChips value={f.area || null} onChange={(a) => set('area', a ?? '')} />
       <Field label="مرتبط با هدف (اختیاری)">
         <Select label="مرتبط با هدف" value={f.goalId} onChange={(v) => set('goalId', String(v))} options={[{ value: '', label: 'بدون هدف' }, ...goals.map((g) => ({ value: g.id, label: g.title }))]} />
       </Field>
@@ -198,11 +221,13 @@ export function HabitDetail() {
   const logs = useLiveQuery(() => db.habitLogs.where('[habitId+date]').between([id, dates[0]], [id, today], true, true).toArray(), [id, today], undefined);
   const [sheet, setSheet] = useState(false);
   const [del, setDel] = useState(false);
+  const allHabits = useLiveQuery(() => db.habits.toArray(), [], []);
 
   if (habit === undefined || !logs) return <Page tabs={false}><Top title="عادت" back="/habits" /><Skeleton rows={4} /></Page>;
   if (!habit) return <Page tabs={false}><Top title="عادت" back="/habits" /><Empty title="این عادت پیدا نشد" text="ممکن است حذف شده باشد." action={<Link className="btn" to="/habits">بازگشت به عادت‌ها</Link>} /></Page>;
 
   const counts = splitCounts(logs);
+  const sentence = ifThenSentence(habit, new Map(allHabits.map((h) => [h.id, h])));
   const togglePause = async () => {
     const was = !!habit.paused;
     await db.habits.update(id, { paused: !was });
@@ -225,7 +250,7 @@ export function HabitDetail() {
       <Card kind="mint">
         <span className="lbl">برنامه</span>
         <p className="s">{(habit.days ?? []).map((d) => WEEKDAYS[d]).join('، ') || 'بدون روز'}</p>
-        {habit.cue && <p className="s">نشانهٔ شروع: {habit.cue}</p>}
+        {sentence && <p className="s">{sentence}</p>}
         <div className="hb-versions">
           <span><b>حداقل</b>{habit.minVersion || 'تعریف نشده'}</span>
           <span><b>عادی</b>{habit.amount ? `${faNum(habit.amount)} دقیقه` : 'تعریف نشده'}</span>

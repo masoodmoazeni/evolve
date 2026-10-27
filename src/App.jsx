@@ -2,9 +2,19 @@ import { useEffect } from 'react';
 import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { ToastProvider, TabBar, Skeleton } from './ui.jsx';
 import { getKV, prune, useKV } from './db.js';
+import { dateKey } from './util.js';
 import { Welcome, Intro, Personalize, Setup } from './screens/Onboarding.jsx';
 import { GoalsList, GoalForm, GoalDetail } from './screens/Goals.jsx';
 import { HabitsList, HabitForm, HabitDetail, HabitsLog } from './screens/Habits.jsx';
+import Inbox from './screens/Inbox.jsx';
+import Recurring from './screens/Recurring.jsx';
+import WeekPlan from './screens/WeekPlan.jsx';
+import ThreeTomorrow from './screens/ThreeTomorrow.jsx';
+import MonthReview from './screens/MonthReview.jsx';
+import Rest from './screens/Rest.jsx';
+import FocusBreak from './screens/FocusBreak.jsx';
+import { RitualEvening, RitualMorning } from './screens/Ritual.jsx';
+import { generateRecurring } from './recurLogic.js';
 import { Today } from './screens/Today.jsx';
 import { FocusHome, FocusRun, FocusEnd, FocusHistory, FocusStats } from './screens/Focus.jsx';
 import { Plan, PlanReview, Calendar, CalendarDay, CalendarWeek } from './screens/Plan.jsx';
@@ -34,7 +44,7 @@ export default function App() {
   const [prefs] = useKV('prefs', {});
 
   useEffect(() => {
-    const run = () => foldBank().catch(() => {}).then(() => prune()).catch(() => {});
+    const run = () => foldBank().catch(() => {}).then(() => getKV('rest', []).then((r) => generateRecurring(dateKey(), 1, r ?? []))).catch(() => {}).then(() => prune()).catch(() => {});
     run();
     document.addEventListener('visibilitychange', run);
     navigator.storage?.persist?.();
@@ -80,6 +90,15 @@ export default function App() {
           <Route path="/focus/history" element={<FocusHistory />} />
           <Route path="/focus/stats" element={<FocusStats />} />
           <Route path="/plan" element={<Plan />} />
+          <Route path="/plan/inbox" element={<Inbox />} />
+          <Route path="/plan/recurring" element={<Recurring />} />
+          <Route path="/plan/week" element={<WeekPlan />} />
+          <Route path="/review/tomorrow" element={<ThreeTomorrow />} />
+          <Route path="/review/month" element={<MonthReview />} />
+          <Route path="/rest" element={<Rest />} />
+          <Route path="/focus/break" element={<FocusBreak />} />
+          <Route path="/ritual/morning" element={<RitualMorning />} />
+          <Route path="/ritual/evening" element={<RitualEvening />} />
           <Route path="/plan/review" element={<PlanReview />} />
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/calendar/day/:d" element={<CalendarDay />} />

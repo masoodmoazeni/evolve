@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../db.js';
-import { buildMonth, dayBlocks, shiftMonth } from '../calendarLogic.js';
+import { buildMonth, shiftMonth } from '../calendarLogic.js';
 import { Card, Empty, Fab, Icon, Page, Skeleton, Top } from '../ui.jsx';
 import { JMONTHS, WEEKDAYS, WEEKDAYS_SHORT, addDays, dateKey, faNum, fmtDate, weekStart } from '../util.js';
-import { TaskList, TaskSheet } from './TaskUI.jsx';
+export { CalendarDay } from './DayTimeline.jsx';
 import './Plan.css';
 
 export function Calendar() {
@@ -45,42 +45,6 @@ export function Calendar() {
       </div>
       <p className="xs">نقطهٔ پر یعنی همهٔ کارهای آن روز انجام شده؛ نقطهٔ توخالی یعنی کار برنامه‌ریزی‌شده دارد.</p>
       <button className="btn s2" onClick={() => setRef(today)}>برگشت به امروز</button>
-    </Page>
-  );
-}
-
-export function CalendarDay() {
-  const { d } = useParams();
-  const [adding, setAdding] = useState(false);
-  const tasks = useLiveQuery(() => db.tasks.where('date').equals(d).toArray(), [d]);
-  const sessions = useLiveQuery(() => db.focus.where('date').equals(d).toArray(), [d]);
-  if (!tasks || !sessions) return <Page tabs={false}><Top title="روز" back="/calendar" /><Skeleton /></Page>;
-  const { timed } = dayBlocks(tasks, sessions);
-  return (
-    <Page tabs={false}>
-      <Top title={fmtDate(d, true)} back="/calendar" />
-      {timed.length > 0 && (
-        <Card>
-          <span className="lbl">خط زمانی</span>
-          {timed.map((b) => (
-            <div key={b.id} className="tl">
-              <time>{faNum(b.time)}</time>
-              <div className={`bl ${b.kind}`}>
-                {b.title}
-                {b.minutes && <span className="xs"> · {faNum(b.minutes)} دقیقه</span>}
-              </div>
-            </div>
-          ))}
-          <p className="xs">خط‌چین یعنی برنامه، سبز یعنی انجام‌شده، فیروزه‌ای یعنی جلسهٔ تمرکز.</p>
-        </Card>
-      )}
-      {tasks.length === 0 && sessions.length === 0 ? (
-        <Empty title="این روز خالی است" text="خالی بودن یعنی چیزی ثبت نشده؛ نه کمبود." />
-      ) : (
-        <TaskList tasks={tasks} />
-      )}
-      <Fab label="افزودن کار" onClick={() => setAdding(true)} />
-      {adding && <TaskSheet date={d} onClose={() => setAdding(false)} />}
     </Page>
   );
 }
