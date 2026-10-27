@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Card } from '../ui.jsx';
-import { batteryUnrestricted, exactAlarmState, isNative, openBatterySettings, openExactAlarmSettings, openNotificationSettings, pendingCount, permissionState, requestPermission, sendTestNotification, syncNotifications } from '../notify.js';
+import { batteryUnrestricted, exactAlarmState, isNative, openBatterySettings, openExactAlarmSettings, openNotificationSettings, lastSyncError, pendingCount, permissionState, requestPermission, sendTestNotification, syncNotifications } from '../notify.js';
 import { faNum } from '../util.js';
 
 const PERM_TEXT = {
@@ -13,6 +13,7 @@ const PERM_TEXT = {
 export function useNotifStatus() {
   const [st, setSt] = useState(null);
   const refresh = useCallback(async () => {
+    await syncNotifications();
     const [perm, exact, battery, pending] = await Promise.all([permissionState(), exactAlarmState(), batteryUnrestricted(), pendingCount()]);
     setSt({ perm, exact, battery, pending });
   }, []);
@@ -55,6 +56,7 @@ export function NotifPermissionCard({ full = false }) {
           <p className="s">بهینه‌سازی باتری: {st.battery === false ? 'فعال؛ ممکن است گوشی اپ را ببندد و اعلان نرسد.' : st.battery ? 'محدودیتی نیست' : 'نامشخص'}</p>
           {st.battery === false && <button className="btn s2 sm" onClick={openBatterySettings}>برداشتن محدودیت باتری برای اِوالو</button>}
           {st.pending != null && <p className="xs">اعلان‌های زمان‌بندی‌شده: {faNum(st.pending)}</p>}
+          {lastSyncError() && <p className="xs" role="status">آخرین خطای زمان‌بندی: {lastSyncError()}</p>}
           <button className="btn s2 sm" onClick={test}>ارسال اعلان آزمایشی</button>
           {msg && <p className="xs" role="status">{msg}</p>}
         </>

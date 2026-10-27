@@ -27,6 +27,7 @@ export function AlertSettings() {
         <span className="lbl">اعلان‌ها</span>
         <div className="row"><span className="grow">اعلان‌ها روشن باشند</span><Toggle on={cfg.enabled} label="اعلان‌ها" onChange={(v) => save({ enabled: v })} /></div>
         <div className="row"><span className="grow">پایان جلسهٔ تمرکز</span><Toggle on={cfg.focusEnd} label="اعلان پایان تمرکز" onChange={(v) => save({ focusEnd: v })} /></div>
+        <div className="row"><span className="grow">کارهای ساعت‌دار</span><Toggle on={cfg.tasks} label="اعلان کارهای ساعت‌دار" onChange={(v) => save({ tasks: v })} /></div>
         <div className="row"><span className="grow">ساعت‌های عادت‌ها</span><Toggle on={cfg.habits} label="یادآور عادت‌ها" onChange={(v) => save({ habits: v })} /></div>
         <div className="row"><span className="grow">یادآور روزانه</span><Toggle on={cfg.daily} label="یادآور روزانه" onChange={(v) => save({ daily: v })} /></div>
         {cfg.daily && (
@@ -34,7 +35,7 @@ export function AlertSettings() {
             <TimeField value={cfg.dailyAt} onChange={(v) => save({ dailyAt: v || DEFAULT_NOTIF.dailyAt })} label="ساعت یادآور" title="ساعت یادآور روزانه" clearable={false} />
           </Field>
         )}
-        <p className="xs">یادآور هر عادت از «ساعت مناسب» همان عادت گرفته می‌شود و فقط در روزهای انتخاب‌شدهٔ آن می‌آید.</p>
+        <p className="xs">یادآور هر عادت از «ساعت مناسب» همان عادت و فقط در روزهای انتخاب‌شده‌اش می‌آید. کارهایی که ساعت دارند سر همان ساعت اعلان می‌دهند.</p>
       </Card>
       <Card>
         <span className="lbl">تایمر تمرکز</span>
