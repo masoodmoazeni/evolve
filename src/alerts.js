@@ -4,6 +4,7 @@ import { db, getKV } from './db.js';
 import { DEFAULT_NOTIF, syncNotifications } from './notify.js';
 import { playSound } from './sound.js';
 import { remainingMs, staleRun } from './focusLogic.js';
+import { dateKey } from './util.js';
 
 export const BANNER_EVENT = 'evolve:banner';
 
@@ -82,11 +83,11 @@ export function useKeepAwake(active) {
   }, [active]);
 }
 
-// اعلان‌های سیستمی را با تمرکز در جریان، تنظیمات و ساعت عادت‌ها همگام نگه می‌دارد
+// اعلان‌های سیستمی را با تمرکز در جریان، تنظیمات، ساعت عادت‌ها و کارهای ساعت‌دار همگام نگه می‌دارد
 export function useNotifSync() {
   const sig = useLiveQuery(async () => {
-    const [run, notif, profile, habits] = await Promise.all([db.kv.get('focusRun'), db.kv.get('notif'), db.kv.get('profile'), db.habits.toArray()]);
-    return JSON.stringify([run?.value, notif?.value, profile?.value?.name, habits.map((h) => [h.id, h.reminder, h.days, h.paused, h.status, h.title])]);
+    const [run, notif, profile, habits, tasks] = await Promise.all([db.kv.get('focusRun'), db.kv.get('notif'), db.kv.get('profile'), db.habits.toArray(), db.tasks.where('date').aboveOrEqual(dateKey()).toArray()]);
+    return JSON.stringify([run?.value, notif?.value, profile?.value?.name, habits.map((h) => [h.id, h.reminder, h.days, h.paused, h.status, h.title]), tasks.map((t) => [t.id, t.date, t.time, t.done, t.title])]);
   }, [], '');
   useEffect(() => {
     syncNotifications().catch(() => {});
