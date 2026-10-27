@@ -5,6 +5,7 @@ import { getKV, prune, useKV } from './db.js';
 import { Welcome, Intro, Personalize, Setup } from './screens/Onboarding.jsx';
 import { GoalsList, GoalForm, GoalDetail } from './screens/Goals.jsx';
 import { HabitsList, HabitForm, HabitDetail, HabitsLog } from './screens/Habits.jsx';
+import Inbox from './screens/Inbox.jsx';
 import { Today } from './screens/Today.jsx';
 import { FocusHome, FocusRun, FocusEnd, FocusHistory, FocusStats } from './screens/Focus.jsx';
 import { Plan, PlanReview, Calendar, CalendarDay, CalendarWeek } from './screens/Plan.jsx';
@@ -80,6 +81,7 @@ export default function App() {
           <Route path="/focus/history" element={<FocusHistory />} />
           <Route path="/focus/stats" element={<FocusStats />} />
           <Route path="/plan" element={<Plan />} />
+          <Route path="/plan/inbox" element={<Inbox />} />
           <Route path="/plan/review" element={<PlanReview />} />
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/calendar/day/:d" element={<CalendarDay />} />

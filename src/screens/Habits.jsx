@@ -1,11 +1,12 @@
 import ExamplePicker from '../ExamplePicker.jsx';
-import { HABIT_EXAMPLES, addHabitExample } from '../examples.js';
+import { HABIT_EXAMPLES, IF_THEN_EXAMPLES, addHabitExample } from '../examples.js';
 import TimeField from '../TimeField.jsx';
 import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../db.js';
 import { recordRevision } from '../data.js';
+import { ifThenSentence } from '../ifThenLogic.js';
 import { habitsForDate } from '../logic.js';
 import { addDays, dateKey, faNum, fmtDate, WEEKDAYS, WEEKDAYS_SHORT } from '../util.js';
 import { Bars, Chip, Ck, Dialog, Empty, Fab, Field, Page, Select, Skeleton, STATUS_LABEL, Top, useToast, Card } from '../ui.jsx';
@@ -92,6 +93,7 @@ function HabitFormInner({ initial, prev }) {
   const nav = useNavigate();
   const toast = useToast();
   const goals = useLiveQuery(() => db.goals.where('status').equals('active').toArray(), [], []);
+  const anchors = (useLiveQuery(() => db.habits.toArray(), [], []) ?? []).filter((h) => h.id !== prev?.id && !h.paused && h.status !== 'archived');
   const [f, setF] = useState(initial);
   const [err, setErr] = useState({});
   const [more, setMore] = useState(hasExtras(initial));
@@ -159,9 +161,20 @@ function HabitFormInner({ initial, prev }) {
       </button>
       {more && (
         <div className="col hb-more">
-          <Field label="نشانهٔ شروع؛ بعد از چه کاری؟ (اختیاری)">
-            <input className="in" value={f.cue} placeholder="مثلاً بعد از صبحانه" onChange={(e) => set('cue', e.target.value)} />
+          <Field label="وقتی … (نشانهٔ شروع، اختیاری)">
+            <input className="in" value={f.cue} placeholder="مثلاً قهوه‌ام را ریختم" onChange={(e) => set('cue', e.target.value)} />
           </Field>
+          <Field label="آنگاه … (اختیاری)" error={err.thenDo}>
+            <input className={`in${err.thenDo ? ' e' : ''}`} value={f.thenDo} placeholder="مثلاً دو دقیقه مطالعه می‌کنم" onChange={(e) => set('thenDo', e.target.value)} />
+          </Field>
+          <Field label="یا بعد از این عادت (اختیاری)">
+            <Select label="عادت لنگر" value={f.afterHabitId} onChange={(v) => set('afterHabitId', String(v))} options={[{ value: '', label: 'بدون لنگر' }, ...anchors.map((h) => ({ value: String(h.id), label: h.title }))]} />
+          </Field>
+          <Card kind="ai">
+            <span className="ai-tag">راهنما</span>
+            <p className="xs">«وقتی … آنگاه …» احتمال شروع را بالا می‌برد. نمونه‌ها:</p>
+            <div className="chips">{IF_THEN_EXAMPLES.map((x) => <Chip key={x.when} onClick={() => setF({ ...f, cue: x.when, thenDo: x.then })}>{x.when}</Chip>)}</div>
+          </Card>
           <Field label="نسخهٔ چالشی (دقیقه، اختیاری)" error={err.challengeMin}>
             <input className={`in${err.challengeMin ? ' e' : ''}`} type="number" inputMode="numeric" min="0" value={f.challengeMin} onChange={(e) => set('challengeMin', e.target.value)} />
           </Field>
@@ -203,6 +216,8 @@ export function HabitDetail() {
   if (!habit) return <Page tabs={false}><Top title="عادت" back="/habits" /><Empty title="این عادت پیدا نشد" text="ممکن است حذف شده باشد." action={<Link className="btn" to="/habits">بازگشت به عادت‌ها</Link>} /></Page>;
 
   const counts = splitCounts(logs);
+  const allHabits = useLiveQuery(() => db.habits.toArray(), [], []);
+  const sentence = ifThenSentence(habit, new Map(allHabits.map((h) => [h.id, h])));
   const togglePause = async () => {
     const was = !!habit.paused;
     await db.habits.update(id, { paused: !was });
@@ -225,7 +240,7 @@ export function HabitDetail() {
       <Card kind="mint">
         <span className="lbl">برنامه</span>
         <p className="s">{(habit.days ?? []).map((d) => WEEKDAYS[d]).join('، ') || 'بدون روز'}</p>
-        {habit.cue && <p className="s">نشانهٔ شروع: {habit.cue}</p>}
+        {sentence && <p className="s">{sentence}</p>}
         <div className="hb-versions">
           <span><b>حداقل</b>{habit.minVersion || 'تعریف نشده'}</span>
           <span><b>عادی</b>{habit.amount ? `${faNum(habit.amount)} دقیقه` : 'تعریف نشده'}</span>

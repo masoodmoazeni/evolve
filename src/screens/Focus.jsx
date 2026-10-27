@@ -1,3 +1,4 @@
+import FocusCapture from './FocusCapture.jsx';
 import { useEffect, useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
@@ -17,7 +18,7 @@ export function FocusHome() {
   const nav = useNavigate();
   const today = dateKey();
   const [run] = useKV('focusRun', null);
-  const tasks = useLiveQuery(() => db.tasks.where('date').equals(today).filter((t) => !t.done).toArray(), [today]);
+  const tasks = useLiveQuery(() => db.tasks.where('date').anyOf(today, 'someday').filter((t) => !t.done && !t.inbox).toArray(), [today]);
   const [title, setTitle] = useState('');
   const [taskId, setTaskId] = useState(null);
   const [goalId, setGoalId] = useState('');
@@ -28,6 +29,13 @@ export function FocusHome() {
   if (run === undefined || !tasks) return <Page><Top title="تمرکز" /><Skeleton /></Page>;
   const taskGoalRaw = tasks.find((t) => t.id === taskId)?.goalId;
   const taskGoal = taskGoalRaw == null || taskGoalRaw === '' ? '' : String(taskGoalRaw);
+
+  const pickTask = (t) => {
+    const off = taskId === t.id;
+    setTaskId(off ? null : t.id);
+    setTitle(off ? '' : t.title);
+    if (!off && t.minutes > 0) setPlanned(Math.min(180, Math.max(5, t.minutes)));
+  };
 
   const start = async () => {
     const gid = taskGoal !== '' ? Number(taskGoal) : goalId === '' ? null : Number(goalId);
@@ -53,10 +61,10 @@ export function FocusHome() {
         <span className="lbl">آماده‌سازی</span>
         {tasks.length > 0 && (
           <div className="col">
-            <span className="xs">یکی از کارهای امروز را انتخاب کن (اختیاری)</span>
+            <span className="xs">یکی از کارهای امروز یا «بدون زمان» را انتخاب کن (اختیاری)</span>
             <div className="chips">
               {tasks.map((t) => (
-                <Chip key={t.id} on={taskId === t.id} onClick={() => { setTaskId(taskId === t.id ? null : t.id); setTitle(taskId === t.id ? '' : t.title); }}>{t.title}</Chip>
+                <Chip key={t.id} on={taskId === t.id} onClick={() => pickTask(t)}>{t.title}</Chip>
               ))}
             </div>
           </div>
@@ -141,6 +149,7 @@ export function FocusRun() {
       <div className="col">
         <button className="btn s2" onClick={togglePause}>{paused ? 'ادامه' : 'مکث'}</button>
         <button className="btn" onClick={finish}>{over ? 'پایان و ثبت' : 'پایان زودهنگام و ثبت'}</button>
+        <FocusCapture />
       </div>
       <p className="xs" style={{ textAlign: 'center' }}>می‌توانی اپ را ببندی؛ زمان از ساعت دستگاه حساب می‌شود.</p>
     </Page>

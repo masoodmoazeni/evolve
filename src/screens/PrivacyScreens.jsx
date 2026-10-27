@@ -14,7 +14,7 @@ export function Privacy() {
   const [ret] = useKV('retention', 60);
   const [ack] = useKV('pruneAck', false);
   const count = useLiveQuery(() => countPrunable(), [], undefined);
-  if (ret === undefined || ack === undefined || count === undefined) return <Page tabs={false}><Top title="حریم خصوصی" back /><Skeleton /></Page>;
+  if (ret === undefined || ack === undefined || count === undefined) return <Page tabs={false}><Top title="حریم خصوصی" back="/profile" /><Skeleton /></Page>;
   const exportNow = async () => {
     try {
       const where = await saveFile(`evolve-${stamp()}.json`, JSON.stringify(await exportAll(), null, 2), 'application/json');
@@ -30,7 +30,7 @@ export function Privacy() {
   };
   return (
     <Page tabs={false}>
-      <Top title="حریم خصوصی" back />
+      <Top title="حریم خصوصی" back="/profile" />
       <LocalBadge />
       <Card kind="mint">
         <Icon name="lock" />
@@ -76,7 +76,7 @@ export function PrivacyExport() {
   };
   return (
     <Page tabs={false}>
-      <Top title="خروجی داده‌ها" back />
+      <Top title="خروجی داده‌ها" back="/privacy" />
       <LocalBadge />
       <p className="s">خروجی فایل است و فقط تو به آن دسترسی داری. آن را جای امنی نگه دار.</p>
       <Card>
@@ -114,7 +114,7 @@ export function PrivacyDelete() {
   };
   return (
     <Page tabs={false}>
-      <Top title="حذف همهٔ داده‌ها" back />
+      <Top title="حذف همهٔ داده‌ها" back="/privacy" />
       <Card kind="sand">
         <h3>این کار برگشت‌پذیر نیست</h3>
         <p className="s">هدف‌ها، عادت‌ها، ثبت‌ها، یادداشت‌ها و تنظیمات از این دستگاه پاک می‌شود. پیشنهاد می‌کنیم اول خروجی بگیری.</p>

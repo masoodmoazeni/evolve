@@ -16,12 +16,12 @@ export { Privacy, PrivacyExport, PrivacyDelete } from './PrivacyScreens.jsx';
 
 export function AlertSettings() {
   const [stored, setStored] = useKV('notif', {});
-  if (stored === undefined) return <Page tabs={false}><Top title="صدا و هشدار" back /><Skeleton /></Page>;
+  if (stored === undefined) return <Page tabs={false}><Top title="صدا و هشدار" back="/profile" /><Skeleton /></Page>;
   const cfg = { ...DEFAULT_NOTIF, ...stored };
   const save = async (patch) => { await setStored({ ...cfg, ...patch }); };
   return (
     <Page tabs={false}>
-      <Top title="صدا و هشدار" back />
+      <Top title="صدا و هشدار" back="/profile" />
       <NotifPermissionCard full />
       <Card>
         <span className="lbl">اعلان‌ها</span>
@@ -106,7 +106,8 @@ const TONE_LABEL = { gentle: 'ملایم', balanced: 'متعادل', direct: 'م
 export function Prefs() {
   const [prefs, setPrefs] = useKV('prefs', {});
   const [ret, setRet] = useKV('retention', 60);
-  if (prefs === undefined || ret === undefined) return <Page tabs={false}><Top title="ترجیحات" back /><Skeleton /></Page>;
+  const [todayMode, setTodayMode] = useKV('todayMode', 'full');
+  if (prefs === undefined || ret === undefined || todayMode === undefined) return <Page tabs={false}><Top title="ترجیحات" back /><Skeleton /></Page>;
   const p = { tone: 'balanced', big: false, reduce: false, ...prefs };
   const set = (patch) => setPrefs({ ...p, ...patch });
   return (
@@ -117,6 +118,14 @@ export function Prefs() {
         <span className="lbl">لحن مربی</span>
         <p className="xs">فقط جمله‌بندی را عوض می‌کند.</p>
         <div className="chips">{Object.entries(TONE_LABEL).map(([k, l]) => <Chip key={k} on={p.tone === k} onClick={() => set({ tone: k })}>{l}</Chip>)}</div>
+      </Card>
+      <Card>
+        <span className="lbl">نمای امروز</span>
+        <p className="xs">«ساده» فقط چیزهای لازم را نشان می‌دهد و بقیه زیر «بیشتر» است.</p>
+        <div className="chips" role="group" aria-label="نمای امروز">
+          <Chip on={todayMode === 'simple'} onClick={() => setTodayMode('simple')}>ساده</Chip>
+          <Chip on={todayMode !== 'simple'} onClick={() => setTodayMode('full')}>کامل</Chip>
+        </div>
       </Card>
       <Card>
         <div className="row"><span className="grow">متن بزرگ‌تر</span><Toggle on={p.big} label="متن بزرگ‌تر" onChange={(v) => set({ big: v })} /></div>

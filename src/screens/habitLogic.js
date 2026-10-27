@@ -1,5 +1,6 @@
 import { addDays } from '../util.js';
 import { MAX_PRIORITIES } from '../data.js';
+import { validateIfThen } from '../ifThenLogic.js';
 
 export const TIME_OF_DAY = [
   { key: 'any', label: 'هر زمان' },
@@ -26,7 +27,7 @@ export const DIFFICULTY = [
 
 export const emptyHabit = () => ({
   title: '', amount: '', minVersion: '', days: [0, 1, 2, 3, 4, 5, 6], timeOfDay: 'any', reminder: '', goalId: '',
-  cue: '', challengeMin: '', difficulty: '', prep: [], obstaclesNote: [],
+  cue: '', thenDo: '', afterHabitId: '', challengeMin: '', difficulty: '', prep: [], obstaclesNote: [],
 });
 
 export function habitToForm(h) {
@@ -38,7 +39,9 @@ export function habitToForm(h) {
     timeOfDay: h.timeOfDay ?? 'any',
     reminder: h.reminder ?? '',
     goalId: h.goalId == null ? '' : String(h.goalId),
-    cue: h.cue ?? '',
+    cue: h.ifThen?.when ?? h.cue ?? '',
+    thenDo: h.ifThen?.then ?? '',
+    afterHabitId: h.afterHabitId == null ? '' : String(h.afterHabitId),
     challengeMin: h.challengeMin == null ? '' : String(h.challengeMin),
     difficulty: h.difficulty ?? '',
     prep: [...(h.prep ?? [])],
@@ -47,7 +50,7 @@ export function habitToForm(h) {
 }
 
 // آیا فیلدهای اختیاری فرم پر است؟ (برای باز بودن بخش «گزینه‌های بیشتر»)
-export const hasExtras = (f) => !!(f.cue || f.challengeMin || f.difficulty || f.prep?.length || f.obstaclesNote?.length);
+export const hasExtras = (f) => !!(f.cue || f.thenDo || f.afterHabitId || f.challengeMin || f.difficulty || f.prep?.length || f.obstaclesNote?.length);
 
 export function validateHabit(f) {
   const e = {};
@@ -56,6 +59,8 @@ export function validateHabit(f) {
   if (f.amount !== '' && !(Number(f.amount) >= 0)) e.amount = 'مقدار را به‌صورت عدد بنویس.';
   if (f.challengeMin !== '' && f.challengeMin != null && !(Number(f.challengeMin) >= 0)) e.challengeMin = 'مقدار را به‌صورت عدد بنویس.';
   if (f.difficulty !== '' && f.difficulty != null && ![1, 2, 3].includes(Number(f.difficulty))) e.difficulty = 'یکی از سه سطح را انتخاب کن.';
+  const it = validateIfThen(f);
+  if (it) e.thenDo = it;
   if (f.reminder && !/^\d\d:\d\d$/.test(f.reminder)) e.reminder = 'ساعت را مثل ۰۷:۳۰ انتخاب کن.';
   return e;
 }
@@ -73,6 +78,8 @@ export function toHabitRecord(f, prev) {
     reminder: f.reminder || null,
     goalId: f.goalId === '' ? null : Number(f.goalId),
     cue: (f.cue ?? '').trim(),
+    ifThen: (f.thenDo ?? '').trim() ? { when: (f.cue ?? '').trim(), then: f.thenDo.trim() } : null,
+    afterHabitId: f.afterHabitId === '' || f.afterHabitId == null ? null : Number(f.afterHabitId),
     challengeMin: f.challengeMin === '' || f.challengeMin == null ? null : Number(f.challengeMin),
     difficulty: f.difficulty === '' || f.difficulty == null ? null : Number(f.difficulty),
     prep: cleanList(f.prep),
@@ -84,7 +91,7 @@ export function toHabitRecord(f, prev) {
 
 const FIELD_LABELS = {
   title: 'نام', amount: 'مقدار عادی', minVersion: 'نسخهٔ حداقل', challengeMin: 'نسخهٔ چالشی', days: 'روزها', timeOfDay: 'زمان روز',
-  reminder: 'یادآور', goalId: 'هدف', cue: 'نشانهٔ شروع', difficulty: 'سختی', prep: 'آماده‌سازی', obstaclesNote: 'موانع',
+  reminder: 'یادآور', goalId: 'هدف', cue: 'نشانهٔ شروع', ifThen: 'اگر-آنگاه', afterHabitId: 'عادت لنگر', difficulty: 'سختی', prep: 'آماده‌سازی', obstaclesNote: 'موانع',
 };
 
 const same = (a, b) => JSON.stringify(a ?? null) === JSON.stringify(b ?? null);
