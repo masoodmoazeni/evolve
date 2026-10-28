@@ -4,10 +4,8 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { db, useKV } from '../db.js';
 import { Card, Chip, Empty, Fab, Page, Skeleton, Top } from '../ui.jsx';
 import { fmtDate, faNum } from '../util.js';
-import { DEFAULT_DAY_PLAN } from '../capacityLogic.js';
-import { layoutDay, minToTime } from '../timelineLogic.js';
+import { dayBounds, layoutDay, minToTime } from '../timelineLogic.js';
 import { isRest } from '../restLogic.js';
-import { timeToMin } from '../util.js';
 import { CapacityBar } from './PlanParts.jsx';
 import { EffortMark, TaskList, TaskSheet } from './TaskUI.jsx';
 import './Plan.css';
@@ -16,9 +14,7 @@ const HOUR = 48; // ارتفاع ثابت هر ساعت
 
 function Timeline({ date, tasks, focus, dayPlan, onGap, onTask }) {
   const lay = layoutDay({ tasks, focus, dayPlan, date });
-  const p = { ...DEFAULT_DAY_PLAN, ...(dayPlan ?? {}) };
-  const from = Math.floor(timeToMin(p.start) / 60);
-  const to = Math.ceil(timeToMin(p.end) / 60);
+  const { from, to } = dayBounds(lay.blocks, dayPlan);
   const top = (m) => ((m - from * 60) / 60) * HOUR;
   const hours = Array.from({ length: to - from + 1 }, (_, i) => from + i);
   return (

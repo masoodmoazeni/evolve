@@ -37,3 +37,15 @@ export function layoutDay({ tasks, focus = [], dayPlan, date }) {
   if (endDay - cur >= MIN_GAP) gaps.push({ start: cur, end: endDay });
   return { blocks, gaps: gaps.map((g) => ({ ...g, minutes: g.end - g.start })), unscheduled, conflicts };
 }
+
+// بازهٔ ساعتی نمایش: ساعت‌های برنامهٔ روز، گسترده تا هر بلوکی که بیرون از آن افتاده (مثلاً تمرکز ۰۷:۳۰) بیرون کادر نماند.
+export function dayBounds(blocks, dayPlan) {
+  const p = { ...DEFAULT_DAY_PLAN, ...(dayPlan ?? {}) };
+  let from = Math.floor(timeToMin(p.start) / 60);
+  let to = Math.ceil(timeToMin(p.end) / 60);
+  blocks.forEach((b) => {
+    from = Math.min(from, Math.floor(b.start / 60));
+    to = Math.max(to, Math.ceil(b.end / 60));
+  });
+  return { from, to };
+}
