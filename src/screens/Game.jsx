@@ -37,13 +37,13 @@ export function GameCard() {
 
 export function GamePage() {
   const g = useGame();
-  if (!g) return <Page tabs={false}><Top title="امتیاز و نشان‌ها" back /><Skeleton /></Page>;
+  if (!g) return <Page tabs={false}><Top title="امتیاز و نشان‌ها" back="/profile" /><Skeleton /></Page>;
   const { cfg, level: l, challenge: c } = g;
   const saveCfg = (patch) => setKV('game', { enabled: cfg.enabled, capMin: cfg.capMin, ...patch });
   const pct = Math.min(1, c.done / c.target);
   return (
     <Page tabs={false}>
-      <Top title="امتیاز و نشان‌ها" back />
+      <Top title="امتیاز و نشان‌ها" back="/profile" />
       <Link className="lnk" to="/howto">امتیاز چطور گرفته می‌شود؟ (نحوهٔ کار)</Link>
       {!cfg.enabled && <Card kind="sand"><p className="s">بازی‌وارسازی خاموش است. داده‌هایت نگه داشته شده و هر وقت روشنش کنی ادامه می‌دهد.</p></Card>}
       <Card kind="mint">
@@ -114,7 +114,7 @@ const POINTS = [
 export function Howto() {
   return (
     <Page tabs={false}>
-      <Top title="نحوهٔ کار با اِوالو" back />
+      <Top title="نحوهٔ کار با اِوالو" back="/profile" />
       <Card kind="mint"><p className="s">اِوالو برای شروع کردن و ادامه دادن پاداش می‌دهد، نه برای کامل بودن. هیچ امتیازی کم نمی‌شود و روز خالی سرزنشی ندارد.</p></Card>
       <h2>یک روز با اِوالو</h2>
       {STEPS.map(([t, x]) => <Card key={t}><h3>{t}</h3><p className="s">{x}</p></Card>)}

@@ -123,7 +123,7 @@ function HabitFormInner({ initial, prev }) {
 
   return (
     <Page tabs={false}>
-      <Top title={prev ? 'ویرایش عادت' : 'عادت تازه'} back close={prev ? `/habits/${prev.id}` : '/habits'} />
+      <Top title={prev ? 'ویرایش عادت' : 'عادت تازه'} back={prev ? `/habits/${prev.id}` : '/habits'} close={prev ? `/habits/${prev.id}` : '/habits'} />
       <Field label="نام عادت" error={err.title}>
         <input className={`in${err.title ? ' e' : ''}`} value={f.title} onChange={(e) => set('title', e.target.value)} />
       </Field>
@@ -206,7 +206,7 @@ function HabitFormInner({ initial, prev }) {
 export function HabitForm() {
   const { id } = useParams();
   const habit = useLiveQuery(() => (id ? db.habits.get(Number(id)).then((h) => h ?? null) : Promise.resolve(false)), [id], undefined);
-  if (habit === undefined) return <Page tabs={false}><Top title="عادت" back /><Skeleton rows={4} /></Page>;
+  if (habit === undefined) return <Page tabs={false}><Top title="عادت" back="/habits" /><Skeleton rows={4} /></Page>;
   if (id && !habit) return <Page tabs={false}><Top title="عادت" back="/habits" /><Empty title="این عادت پیدا نشد" text="ممکن است حذف شده باشد." action={<Link className="btn" to="/habits">بازگشت به عادت‌ها</Link>} /></Page>;
   return <HabitFormInner key={id ?? 'new'} initial={habit ? habitToForm(habit) : emptyHabit()} prev={habit || undefined} />;
 }

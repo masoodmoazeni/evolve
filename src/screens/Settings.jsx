@@ -99,7 +99,7 @@ export function ProfileEdit() {
   const toast = useToast();
   const [profile] = useKV('profile', null);
   const [name, setName] = useState(null);
-  if (profile === undefined) return <Page tabs={false}><Top title="ویرایش پروفایل" close /><Skeleton /></Page>;
+  if (profile === undefined) return <Page tabs={false}><Top title="ویرایش پروفایل" close="/profile" /><Skeleton /></Page>;
   const n = name ?? profile?.name ?? '';
   const save = async () => {
     await setKV('profile', { ...profile, name: n.trim() });
@@ -108,7 +108,7 @@ export function ProfileEdit() {
   };
   return (
     <Page tabs={false}>
-      <Top title="ویرایش پروفایل" close />
+      <Top title="ویرایش پروفایل" close="/profile" />
       <Field label="نام (اختیاری)"><input className="in" value={n} maxLength={30} onChange={(e) => setName(e.target.value)} /></Field>
       <button className="btn" onClick={save}>ذخیره</button>
     </Page>

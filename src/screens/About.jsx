@@ -19,7 +19,7 @@ export function About() {
   const t = `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
   return (
     <Page tabs={false}>
-      <Top title="دربارهٔ اِوالو" back />
+      <Top title="دربارهٔ اِوالو" back="/profile" />
       <Card kind="mint">
         <h3>هدف اپ</h3>
         <p className="s">اِوالو همراهی آرام برای رشد شخصی پایدار است: هدف، عادت، تمرکز، برنامه و بازتاب؛ بدون سرزنش، بدون فشار و همه‌چیز فقط روی همین دستگاه.</p>
