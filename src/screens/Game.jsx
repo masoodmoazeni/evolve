@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { ToolsGuide } from './HowtoTools.jsx';
 import { Page, Top, Card, Chip, Icon, Skeleton, Toggle, Ck } from '../ui.jsx';
 import { setKV } from '../db.js';
 import { useGame } from '../game.js';
@@ -118,6 +119,8 @@ export function Howto() {
       <Card kind="mint"><p className="s">اِوالو برای شروع کردن و ادامه دادن پاداش می‌دهد، نه برای کامل بودن. هیچ امتیازی کم نمی‌شود و روز خالی سرزنشی ندارد.</p></Card>
       <h2>یک روز با اِوالو</h2>
       {STEPS.map(([t, x]) => <Card key={t}><h3>{t}</h3><p className="s">{x}</p></Card>)}
+      <h2>ابزارهای برنامه</h2>
+      <ToolsGuide />
       <h2>امتیاز چطور گرفته می‌شود؟</h2>
       <Card>
         {POINTS.map(([t, x]) => <div className="row" key={t}><strong>{t}</strong><span className="s grow" style={{ textAlign: 'left' }}>{x}</span></div>)}

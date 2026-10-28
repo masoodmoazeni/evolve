@@ -27,7 +27,7 @@
 .tlx{position:relative;margin-inline-start:44px;border-inline-start:1px solid var(--line)}
 .tlx .hr{position:absolute;inset-inline-end:100%;margin-inline-end:6px;font-size:11.5px;color:var(--text2);transform:translateY(-50%)}
 .tlx .ln{position:absolute;inset-inline:0;border-top:1px dashed var(--line)}
-.tlx .blk{position:absolute;border-radius:10px;padding:2px 8px;font-size:13px;overflow:hidden;background:#fff;border:1.5px dashed var(--sage);color:var(--text);text-align:right;cursor:pointer}
+.tlx .blk{position:absolute;display:flex;align-items:center;gap:6px;min-width:0;border-radius:10px;padding:2px 8px;font-size:13px;line-height:1.3;overflow:hidden;background:#fff;border:1.5px dashed var(--sage);color:var(--text);text-align:right;cursor:pointer}
 .tlx .blk.done{background:var(--sage);color:#fff;border-style:solid}
 .tlx .blk.focus{background:var(--mint);border:1.5px solid var(--teal)}
 .tlx .gap{position:absolute;inset-inline:6px;border:1.5px dotted #B8C2BA;border-radius:10px;color:var(--text2);font-size:12.5px;display:flex;align-items:center;justify-content:center;background:transparent;cursor:pointer}
@@ -37,3 +37,9 @@
 .wk-cols b{display:block;width:100%;background:var(--sage);border-radius:4px 4px 0 0}
 .wk-cols b.near{background:var(--teal)}
 .wk-cols b.over{background:repeating-linear-gradient(45deg,var(--sage) 0 4px,var(--sand) 4px 8px)}
+.tlx .blk .lnk{min-width:0;flex:0 1 auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;background:none;border:0;padding:0}
+.tlx .blk>button.lnk:first-child{flex:1 1 0}
+.tlx .blk a.lnk{flex:none;font-size:12px;font-weight:600}
+.tlx .blk.half a.lnk{display:none}
+.tlx .blk.focus,.tlx .blk.focus .lnk{color:var(--text)}
+.tlx .gap{text-align:center;padding:0 8px}
