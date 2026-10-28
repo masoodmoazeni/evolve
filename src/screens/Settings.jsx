@@ -121,12 +121,12 @@ export function Prefs() {
   const [ret, setRet] = useKV('retention', 60);
   const [todayMode, setTodayMode] = useKV('todayMode', 'full');
   const [dayPlan, setDayPlan] = useKV('dayPlan', null);
-  if (prefs === undefined || ret === undefined || todayMode === undefined || dayPlan === undefined) return <Page tabs={false}><Top title="ترجیحات" back /><Skeleton /></Page>;
+  if (prefs === undefined || ret === undefined || todayMode === undefined || dayPlan === undefined) return <Page tabs={false}><Top title="ترجیحات" back="/profile" /><Skeleton /></Page>;
   const p = { tone: 'balanced', big: false, reduce: false, ...prefs };
   const set = (patch) => setPrefs({ ...p, ...patch });
   return (
     <Page tabs={false}>
-      <Top title="ترجیحات" back />
+      <Top title="ترجیحات" back="/profile" />
       <LocalBadge />
       <Card>
         <span className="lbl">لحن مربی</span>
