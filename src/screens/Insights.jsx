@@ -29,7 +29,7 @@ export function Insights() {
     return { habits, habitLogs, focus, moods, focusAll, goals, tasks, sums };
   }, [start, today]);
 
-  if (!data) return <Page><Top title="بینش‌ها" back /><Skeleton /></Page>;
+  if (!data) return <Page><Top title="بینش‌ها" back="/profile" /><Skeleton /></Page>;
 
   const past = cells.filter((d) => d <= today);
   const days = dayMap({ habits: data.habits, habitLogs: data.habitLogs, dates: past });
@@ -43,7 +43,7 @@ export function Insights() {
   if (!data.habits.length && !data.focus.length && !data.moods.length) {
     return (
       <Page>
-        <Top title="بینش‌ها" back />
+        <Top title="بینش‌ها" back="/profile" />
         <Empty title="هنوز داده کافی نیست" text="وقتی چند روز عادت، تمرکز یا حال ثبت کنی، اینجا تصویر روشنی از ثبت‌هایت می‌بینی." action={<Link className="btn sm" to="/habits/new">ساخت اولین عادت</Link>} />
       </Page>
     );
@@ -51,7 +51,7 @@ export function Insights() {
 
   return (
     <Page>
-      <Top title="بینش‌ها" back />
+      <Top title="بینش‌ها" back="/profile" />
       <p className="s">این صفحه فقط ثبت‌های خودت را توصیف می‌کند؛ قضاوت یا پیش‌بینی نیست.</p>
 
       <Card>

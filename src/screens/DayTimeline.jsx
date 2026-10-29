@@ -4,10 +4,8 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { db, useKV } from '../db.js';
 import { Card, Chip, Empty, Fab, Page, Skeleton, Top } from '../ui.jsx';
 import { fmtDate, faNum } from '../util.js';
-import { DEFAULT_DAY_PLAN } from '../capacityLogic.js';
-import { layoutDay, minToTime } from '../timelineLogic.js';
+import { dayBounds, layoutDay, minToTime } from '../timelineLogic.js';
 import { isRest } from '../restLogic.js';
-import { timeToMin } from '../util.js';
 import { CapacityBar } from './PlanParts.jsx';
 import { EffortMark, TaskList, TaskSheet } from './TaskUI.jsx';
 import './Plan.css';
@@ -16,9 +14,7 @@ const HOUR = 48; // ارتفاع ثابت هر ساعت
 
 function Timeline({ date, tasks, focus, dayPlan, onGap, onTask }) {
   const lay = layoutDay({ tasks, focus, dayPlan, date });
-  const p = { ...DEFAULT_DAY_PLAN, ...(dayPlan ?? {}) };
-  const from = Math.floor(timeToMin(p.start) / 60);
-  const to = Math.ceil(timeToMin(p.end) / 60);
+  const { from, to } = dayBounds(lay.blocks, dayPlan);
   const top = (m) => ((m - from * 60) / 60) * HOUR;
   const hours = Array.from({ length: to - from + 1 }, (_, i) => from + i);
   return (
@@ -34,8 +30,8 @@ function Timeline({ date, tasks, focus, dayPlan, onGap, onTask }) {
           const half = lay.blocks.some((o) => o !== b && o.lane !== b.lane && o.start < b.end && o.end > b.start);
           const task = b.taskId ? tasks.find((t) => t.id === b.taskId) : null;
           return (
-            <div key={b.id} role="listitem" className={`blk ${b.kind}${b.done ? ' done' : ''}`}
-              style={{ top: top(b.start), height: Math.max(22, top(b.end) - top(b.start) - 2), insetInlineStart: half ? (b.lane ? '52%' : '4px') : '4px', width: half ? '46%' : 'calc(100% - 8px)' }}>
+            <div key={b.id} role="listitem" className={`blk ${b.kind}${b.done ? ' done' : ''}${half ? ' half' : ''}`}
+              style={{ top: top(b.start), height: Math.max(28, top(b.end) - top(b.start) - 2), insetInlineStart: half ? (b.lane ? '52%' : '4px') : '4px', width: half ? '46%' : 'calc(100% - 8px)' }}>
               <button className="lnk" style={{ color: 'inherit', textAlign: 'right' }} onClick={() => task && onTask(task)}>{b.title}</button>
               {b.effort && <EffortMark effort={b.effort} />}
               {task && !task.done && <Link className="lnk" style={{ color: 'inherit' }} to={`/focus?task=${task.id}`}> · شروع تمرکز</Link>}
@@ -74,6 +70,7 @@ export function CalendarDay() {
       ) : tasks.length === 0 && sessions.length === 0 ? (
         <Empty title="این روز خالی است" text="خالی بودن یعنی چیزی ثبت نشده؛ نه کمبود." />
       ) : <TaskList tasks={tasks} />}
+      <div aria-hidden="true" style={{ height: 64 }} />
       <Fab label="افزودن کار" onClick={() => setAdding({})} />
       {adding && <TaskSheet date={d} preset={adding} onClose={() => setAdding(null)} />}
       {editing && <TaskSheet task={editing} date={d} onClose={() => setEditing(null)} />}

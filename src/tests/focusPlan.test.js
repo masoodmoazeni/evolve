@@ -91,3 +91,12 @@ describe('staleRun', () => {
     expect(staleRun(null)).toBe(false);
   });
 });
+
+describe('dayBounds', () => {
+  it('بلوک بیرون از ساعت‌های برنامه بازه را گسترش می‌دهد', async () => {
+    const { dayBounds, layoutDay } = await import('../timelineLogic.js');
+    const lay = layoutDay({ tasks: [], focus: [{ id: 1, date: 'd', start: '06:30', planned: 45 }, { id: 2, date: 'd', start: '22:30', planned: 60 }], dayPlan: null, date: 'd' });
+    expect(dayBounds(lay.blocks, null)).toEqual({ from: 6, to: 24 });
+    expect(dayBounds([], null)).toEqual({ from: 8, to: 22 });
+  });
+});

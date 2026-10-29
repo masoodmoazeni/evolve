@@ -54,7 +54,7 @@ export function Coach() {
     return { habits, habitLogs, tasksTomorrow, focus, focusAll, moods, notesCount, suggestions, dayPlan, rest };
   }, [today]);
 
-  if (!data || access === undefined) return <Page><Top title="مربی" back /><Skeleton /></Page>;
+  if (!data || access === undefined) return <Page><Top title="مربی" back="/profile" /><Skeleton /></Page>;
 
   const acc = { ...DEFAULT_ACCESS, ...access };
   const coach = buildCoach({ ...data, access: acc, tone: prefs?.tone ?? 'balanced', today });
@@ -72,7 +72,7 @@ export function Coach() {
 
   return (
     <Page>
-      <Top title="مربی" back />
+      <Top title="مربی" back="/profile" />
       <p className="s">مربی با چند قانون ساده و فقط روی داده‌های همین گوشی کار می‌کند. هیچ چیزی بدون تأیید تو تغییر نمی‌کند.</p>
 
       <Card>

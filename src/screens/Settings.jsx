@@ -99,7 +99,7 @@ export function ProfileEdit() {
   const toast = useToast();
   const [profile] = useKV('profile', null);
   const [name, setName] = useState(null);
-  if (profile === undefined) return <Page tabs={false}><Top title="ویرایش پروفایل" close /><Skeleton /></Page>;
+  if (profile === undefined) return <Page tabs={false}><Top title="ویرایش پروفایل" close="/profile" /><Skeleton /></Page>;
   const n = name ?? profile?.name ?? '';
   const save = async () => {
     await setKV('profile', { ...profile, name: n.trim() });
@@ -108,7 +108,7 @@ export function ProfileEdit() {
   };
   return (
     <Page tabs={false}>
-      <Top title="ویرایش پروفایل" close />
+      <Top title="ویرایش پروفایل" close="/profile" />
       <Field label="نام (اختیاری)"><input className="in" value={n} maxLength={30} onChange={(e) => setName(e.target.value)} /></Field>
       <button className="btn" onClick={save}>ذخیره</button>
     </Page>
@@ -121,12 +121,12 @@ export function Prefs() {
   const [ret, setRet] = useKV('retention', 60);
   const [todayMode, setTodayMode] = useKV('todayMode', 'full');
   const [dayPlan, setDayPlan] = useKV('dayPlan', null);
-  if (prefs === undefined || ret === undefined || todayMode === undefined || dayPlan === undefined) return <Page tabs={false}><Top title="ترجیحات" back /><Skeleton /></Page>;
+  if (prefs === undefined || ret === undefined || todayMode === undefined || dayPlan === undefined) return <Page tabs={false}><Top title="ترجیحات" back="/profile" /><Skeleton /></Page>;
   const p = { tone: 'balanced', big: false, reduce: false, ...prefs };
   const set = (patch) => setPrefs({ ...p, ...patch });
   return (
     <Page tabs={false}>
-      <Top title="ترجیحات" back />
+      <Top title="ترجیحات" back="/profile" />
       <LocalBadge />
       <Card>
         <span className="lbl">لحن مربی</span>
